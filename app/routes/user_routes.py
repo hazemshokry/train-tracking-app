@@ -163,3 +163,13 @@ class UserResource(Resource):
         db.session.delete(user)
         db.session.commit()
         return '', 204
+
+@api.route('/list')
+class UserList(Resource):
+    # @api.doc(security='apikey')  # Requires authentication
+    # @token_required  # Apply the token_required decorator
+    @api.marshal_list_with(user_model)
+    def get(self):
+        """List all users"""
+        users = User.query.all()
+        return users

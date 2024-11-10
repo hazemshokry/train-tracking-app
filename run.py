@@ -10,6 +10,7 @@ load_dotenv()
 # Initialize app with the correct configuration
 app = create_app(get_config())
 
+
 if __name__ == "__main__":
     # Get the PORT from the configuration
     port = app.config["PORT"]
