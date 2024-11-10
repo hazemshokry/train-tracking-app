@@ -1,0 +1,7 @@
+Flask
+flask-restx
+Flask-SQLAlchemy
+gunicorn
+mysqlclient
+python-dotenv
+PyJWT
