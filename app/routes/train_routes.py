@@ -43,9 +43,13 @@ train_model = api.model('Train', {
     'last_report_time': fields.String(description='Time of the last report for this train')
 })
 
+
+# Pagination and train list parser with additional 'page' argument for pagination
 train_list_parser = reqparse.RequestParser()
 train_list_parser.add_argument('departure_station_id', type=int, required=False, help='Filter by departure station ID')
 train_list_parser.add_argument('arrival_station_id', type=int, required=False, help='Filter by arrival station ID')
+train_list_parser.add_argument('page', type=int, required=False, default=1, help='Page number for pagination')
+
 
 from datetime import datetime, timedelta
 import statistics
@@ -54,6 +58,15 @@ from app.models.route import Route
 from app.models.user_reports import UserReport
 
 def calculate_average_time(report_times):
+    """
+    Calculates the average time from a list of datetime objects.
+
+    Args:
+    report_times (list): A list of datetime objects.
+
+    Returns:
+    datetime: The average time as a datetime object, or None if the list is empty.
+    """
     if not report_times:
         return None
 
@@ -153,8 +166,8 @@ def serialize_train(train, favourite_train_numbers, departure_station_id=None, a
                 'actual_arrival_time': actual_arrival_time.strftime('%H:%M:%S') if actual_arrival_time else None,
                 'actual_departure_time': actual_departure_time.strftime('%H:%M:%S') if actual_departure_time else None,
                 'delay_time': delay_time,
-                'number_of_reports': len(arrival_times) + len(departure_times),
-            }
+                'number_of_reports': len(arrival_times) + len(departure_times)
+                }
             list_of_stations.append(station_data)
 
         if arrival_station_id and station.id == arrival_station_id:
@@ -181,46 +194,50 @@ class TrainList(Resource):
     @api.expect(train_list_parser)
     @api.marshal_list_with(train_model)
     def get(self):
-        """List all trains with optional filters"""
+        """List all trains with optional filters and pagination"""
         user_id = 1  # For testing purposes
 
-        # Parse the query parameters
+        # Parse query parameters
         args = train_list_parser.parse_args()
         departure_station_id = args.get('departure_station_id')
         arrival_station_id = args.get('arrival_station_id')
+        page = args.get('page', 1)
 
-        # Build the base query
+        # Base query for trains
         query = db.session.query(Train).distinct()
 
-        if departure_station_id and arrival_station_id:
-            # Filter by both departure and arrival station IDs
-            RouteDeparture = aliased(Route)
-            RouteArrival = aliased(Route)
-            query = query.join(RouteDeparture, Train.train_number == RouteDeparture.train_number)\
-                         .join(RouteArrival, Train.train_number == RouteArrival.train_number)\
-                         .filter(
-                             RouteDeparture.station_id == departure_station_id,
-                             RouteArrival.station_id == arrival_station_id,
-                             RouteDeparture.sequence_number < RouteArrival.sequence_number
-                         )
-        elif departure_station_id:
-            # Filter by only departure_station_id
-            query = query.join(Route, Train.train_number == Route.train_number)\
-                         .filter(Route.station_id == departure_station_id)
-        elif arrival_station_id:
-            # Filter by only arrival_station_id
-            query = query.join(Route, Train.train_number == Route.train_number)\
-                         .filter(Route.station_id == arrival_station_id)
+        if departure_station_id or arrival_station_id:
+            # Only include trains that pass through the specified departure or arrival station
+            query = query.join(Route, Train.train_number == Route.train_number)
 
-        # Fetch trains from the database
-        trains = query.all()
+            # Filter for trains that include the specified stations in their route
+            if departure_station_id and arrival_station_id:
+                query = query.filter(
+                    db.or_(
+                        Route.station_id == departure_station_id,
+                        Route.station_id == arrival_station_id
+                    )
+                )
+            elif departure_station_id:
+                query = query.filter(Route.station_id == departure_station_id)
+            elif arrival_station_id:
+                query = query.filter(Route.station_id == arrival_station_id)
+
+        # Pagination: limit results to 10 per page
+        page_size = 10
+        offset = (page - 1) * page_size
+        trains = query.limit(page_size).offset(offset).all()
 
         # Fetch user's favourite trains
         favourite_train_numbers = [
             fav.train_number for fav in UserFavouriteTrain.query.filter_by(user_id=user_id).all()
         ]
 
-        train_list = [serialize_train(train, favourite_train_numbers, departure_station_id, arrival_station_id) for train in trains]
+        # Serialize train list with all route stations if the train passes through specified stations
+        train_list = [
+            serialize_train(train, favourite_train_numbers, departure_station_id, arrival_station_id)
+            for train in trains
+        ]
 
         return train_list
 
@@ -233,7 +250,7 @@ class TrainResource(Resource):
         """Get a specific train by train number with optional station filters"""
         user_id = 1  # For testing purposes
 
-        # Parse the query parameters
+        # Parse query parameters
         args = train_list_parser.parse_args()
         departure_station_id = args.get('departure_station_id')
         arrival_station_id = args.get('arrival_station_id')
