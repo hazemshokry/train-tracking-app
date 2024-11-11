@@ -1,14 +1,17 @@
 # run.py
-
 from app import create_app
-from app.config import Config  # Add this line
 from dotenv import load_dotenv
+from app.config import get_config
 import os
 
-load_dotenv()  # This will load variables from .env into the environment
+# Load environment variables from .env file for local development
+load_dotenv()
 
-app = create_app()
-app.config.from_object(Config)
+# Initialize app with the correct configuration
+app = create_app(get_config())
 
-if __name__ == '__main__':
-    app.run(port=5001)
+
+if __name__ == "__main__":
+    # Get the PORT from the configuration
+    port = app.config["PORT"]
+    app.run(host="0.0.0.0", port=port)

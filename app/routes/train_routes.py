@@ -1,16 +1,19 @@
-# app/routes/train_routes.py
-
 from flask import request
 from flask_restx import Namespace, Resource, fields, reqparse
 from app.models.train import Train
 from app.models.station import Station
 from app.models.route import Route
 from app.models.user_favourite_trains import UserFavouriteTrain
+from app.models.user_reports import UserReport  # Assuming user reports are in this model
 from app.extensions import db
+from sqlalchemy import func, or_
+from sqlalchemy.orm import aliased  # Import aliased from sqlalchemy.orm
+import statistics
+from datetime import datetime, timedelta
 
 api = Namespace('trains', description='Train related operations')
 
-# Serializer models
+# Update station model to include actual times and delays
 station_model = api.model('Station', {
     'id': fields.Integer,
     'name_en': fields.String,
@@ -18,27 +21,160 @@ station_model = api.model('Station', {
     'code': fields.String,
     'location_lat': fields.Float,
     'location_long': fields.Float,
-    'scheduled_arrival_time': fields.String(description='Arrival time at the station in HH:MM:SS format'),
-    'scheduled_departure_time': fields.String(description='Departure time from the station in HH:MM:SS format'),
+    'scheduled_arrival_time': fields.String(description='Scheduled arrival time at the station in HH:MM:SS format'),
+    'scheduled_departure_time': fields.String(description='Scheduled departure time from the station in HH:MM:SS format'),
+    'actual_arrival_time': fields.String(description='Actual arrival time based on user reports'),
+    'actual_departure_time': fields.String(description='Actual departure time based on user reports'),
+    'delay_time': fields.Integer(description='Delay time in minutes'),
+    'number_of_reports': fields.Integer(description='Number of user reports for this station'),
 })
 
+# Train model definition
 train_model = api.model('Train', {
     'train_number': fields.Integer,
     'train_type': fields.String,
     'departure_station': fields.Nested(station_model),
     'arrival_station': fields.Nested(station_model),
-    'number_of_votes': fields.Integer,
-    'delay_time': fields.Integer,
     'list_of_stations': fields.List(fields.Nested(station_model)),
     'number_of_stations': fields.Integer,
     'is_favourite': fields.Boolean,
     'notification_enabled': fields.Boolean,
+    'last_reported_station': fields.String(description='Last station reported by users'),
+    'last_report_time': fields.String(description='Time of the last report for this train')
 })
 
-# Request parser without scheduled times
 train_list_parser = reqparse.RequestParser()
 train_list_parser.add_argument('departure_station_id', type=int, required=False, help='Filter by departure station ID')
 train_list_parser.add_argument('arrival_station_id', type=int, required=False, help='Filter by arrival station ID')
+
+from datetime import datetime, timedelta
+import statistics
+from app import db
+from app.models.route import Route
+from app.models.user_reports import UserReport
+
+def calculate_average_time(report_times):
+    if not report_times:
+        return None
+
+    # Convert datetime objects to timestamps (seconds since epoch)
+    numeric_times = [time.timestamp() for time in report_times]
+
+    if len(numeric_times) > 2:
+        # Calculate the mean of the timestamps
+        avg_timestamp = statistics.mean(numeric_times)
+
+        # Convert the average timestamp back to a datetime object
+        return datetime.fromtimestamp(avg_timestamp)
+    else:
+        return report_times[0]
+
+def serialize_train(train, favourite_train_numbers, departure_station_id=None, arrival_station_id=None):
+    """
+    Helper function to serialize train data with actual times, delays, 
+    and last reported station information.
+    """
+
+    # Get the list of stations for the train
+    routes = Route.query.filter_by(train_number=train.train_number).order_by(Route.sequence_number).all()
+    list_of_stations = []
+    include_station = not departure_station_id  # Start including if departure_station_id is not specified
+
+    last_reported_station = None  # Initialize last_reported_station
+    last_report_time = None  # Initialize last_report_time
+
+    for route in routes:
+        station = route.station
+
+        # Initialize variables to avoid NameError
+        actual_arrival_time = None
+        actual_departure_time = None
+        delay_time = None
+
+        if not include_station and station.id == departure_station_id:
+            include_station = True
+
+        if include_station:
+            # Scheduled times
+            scheduled_arrival_time = route.scheduled_arrival_time.strftime('%H:%M:%S') if route.scheduled_arrival_time else None
+            scheduled_departure_time = route.scheduled_departure_time.strftime('%H:%M:%S') if route.scheduled_departure_time else None
+
+            # Fetch user reports for actual arrival/departure times at this station
+            arrival_reports = db.session.query(UserReport.reported_time).filter(
+                UserReport.train_number == train.train_number,
+                UserReport.station_id == station.id,
+                UserReport.report_type == 'arrival'
+            ).all()
+            departure_reports = db.session.query(UserReport.reported_time).filter(
+                UserReport.train_number == train.train_number,
+                UserReport.station_id == station.id,
+                UserReport.report_type == 'departure'
+            ).all()
+
+            # Process report times (remove outliers, calculate averages)
+            arrival_times = [report.reported_time for report in arrival_reports]
+            departure_times = [report.reported_time for report in departure_reports]
+
+            # Remove outliers if more than 2 reports
+            if len(arrival_times) > 2:
+                arrival_times_timestamps = [time.timestamp() for time in arrival_times]
+                median_arrival_time = datetime.fromtimestamp(statistics.median(arrival_times_timestamps))
+                arrival_times = [time for time in arrival_times if abs((time - median_arrival_time).total_seconds()) < 600]  # 10 min threshold
+            if len(departure_times) > 2:
+                departure_times_timestamps = [time.timestamp() for time in departure_times]
+                median_departure_time = datetime.fromtimestamp(statistics.median(departure_times_timestamps))
+                departure_times = [time for time in departure_times if abs((time - median_departure_time).total_seconds()) < 600]
+
+            # Calculate actual arrival/departure
+            actual_arrival_time = calculate_average_time(arrival_times)
+            actual_departure_time = calculate_average_time(departure_times)
+
+            # Calculate delay in minutes
+            if actual_arrival_time and route.scheduled_arrival_time:
+                scheduled_datetime = datetime.combine(actual_arrival_time.date(), route.scheduled_arrival_time)
+                time_diff_seconds = (actual_arrival_time - scheduled_datetime).total_seconds()
+                delay_time = int(round(time_diff_seconds / 60))  # Convert seconds to minutes
+
+            # Update last_reported_station and last_report_time
+            if arrival_times or departure_times:
+                last_report_time = max(arrival_times + departure_times)
+                last_reported_station = station.name_en
+
+            # Prepare station data
+            station_data = {
+                'id': station.id,
+                'name_en': station.name_en,
+                'name_ar': station.name_ar,
+                'code': station.code,
+                'location_lat': float(station.location_lat) if station.location_lat else None,
+                'location_long': float(station.location_long) if station.location_long else None,
+                'scheduled_arrival_time': scheduled_arrival_time,
+                'scheduled_departure_time': scheduled_departure_time,
+                'actual_arrival_time': actual_arrival_time.strftime('%H:%M:%S') if actual_arrival_time else None,
+                'actual_departure_time': actual_departure_time.strftime('%H:%M:%S') if actual_departure_time else None,
+                'delay_time': delay_time,
+                'number_of_reports': len(arrival_times) + len(departure_times),
+            }
+            list_of_stations.append(station_data)
+
+        if arrival_station_id and station.id == arrival_station_id:
+            break
+
+    # Compile the train data
+    train_data = {
+        'train_number': train.train_number,
+        'train_type': train.train_type,
+        'departure_station': list_of_stations[0] if list_of_stations else None,
+        'arrival_station': list_of_stations[-1] if list_of_stations else None,
+        'list_of_stations': list_of_stations,
+        'number_of_stations': len(list_of_stations),
+        'is_favourite': train.train_number in favourite_train_numbers,
+        'notification_enabled': False,  # Implement logic if needed
+        'last_reported_station': last_reported_station,
+        'last_report_time': last_report_time.strftime('%Y-%m-%d %H:%M:%S') if last_report_time else None
+    }
+
+    return train_data
 
 @api.route('/')
 class TrainList(Resource):
@@ -57,10 +193,9 @@ class TrainList(Resource):
         query = db.session.query(Train).distinct()
 
         if departure_station_id and arrival_station_id:
-            # Both departure and arrival station IDs are provided
+            # Filter by both departure and arrival station IDs
             RouteDeparture = aliased(Route)
             RouteArrival = aliased(Route)
-
             query = query.join(RouteDeparture, Train.train_number == RouteDeparture.train_number)\
                          .join(RouteArrival, Train.train_number == RouteArrival.train_number)\
                          .filter(
@@ -69,16 +204,13 @@ class TrainList(Resource):
                              RouteDeparture.sequence_number < RouteArrival.sequence_number
                          )
         elif departure_station_id:
-            # Only departure_station_id is provided
+            # Filter by only departure_station_id
             query = query.join(Route, Train.train_number == Route.train_number)\
                          .filter(Route.station_id == departure_station_id)
         elif arrival_station_id:
-            # Only arrival_station_id is provided
+            # Filter by only arrival_station_id
             query = query.join(Route, Train.train_number == Route.train_number)\
                          .filter(Route.station_id == arrival_station_id)
-        else:
-            # No filters, get all trains
-            pass
 
         # Fetch trains from the database
         trains = query.all()
@@ -88,10 +220,7 @@ class TrainList(Resource):
             fav.train_number for fav in UserFavouriteTrain.query.filter_by(user_id=user_id).all()
         ]
 
-        train_list = []
-        for train in trains:
-            train_data = serialize_train(train, favourite_train_numbers, departure_station_id, arrival_station_id)
-            train_list.append(train_data)
+        train_list = [serialize_train(train, favourite_train_numbers, departure_station_id, arrival_station_id) for train in trains]
 
         return train_list
 
@@ -123,111 +252,3 @@ class TrainResource(Resource):
         train_data = serialize_train(train, favourite_train_numbers, departure_station_id, arrival_station_id)
 
         return train_data
-
-@api.route('/favourites')
-class FavouriteTrains(Resource):
-    @api.marshal_list_with(train_model)
-    def get(self):
-        """List all trains favorited by the user"""
-        user_id = 1  # Assume user ID is known
-
-        # Retrieve favorite train numbers for the user
-        favourite_train_numbers = [
-            fav.train_number for fav in UserFavouriteTrain.query.filter_by(user_id=user_id).all()
-        ]
-
-        # Fetch train details for the favorite train numbers
-        favourite_trains = Train.query.filter(Train.train_number.in_(favourite_train_numbers)).all()
-
-        # Serialize the trains
-        train_list = [serialize_train(train, favourite_train_numbers) for train in favourite_trains]
-
-        return train_list
-
-@api.route('/favourites/delete_all')
-class DeleteAllFavourites(Resource):
-    def delete(self):
-        """Delete all favorite trains for the user"""
-        user_id = 1  # Assume user ID is known
-
-        # Delete all favorite trains for the user
-        UserFavouriteTrain.query.filter_by(user_id=user_id).delete()
-        db.session.commit()
-
-        return {'message': 'All favorite trains deleted successfully'}, 200
-
-def serialize_train(train, favourite_train_numbers, departure_station_id=None, arrival_station_id=None):
-    """Helper function to serialize train data"""
-    from datetime import datetime
-
-    # Serialize datetime fields as strings
-    scheduled_departure_timestamp_str = train.scheduled_departure_datetime.strftime('%Y-%m-%d %H:%M:%S') if hasattr(train, 'scheduled_departure_datetime') and train.scheduled_departure_datetime else None
-    scheduled_arrival_timestamp_str = train.scheduled_arrival_datetime.strftime('%Y-%m-%d %H:%M:%S') if hasattr(train, 'scheduled_arrival_datetime') and train.scheduled_arrival_datetime else None
-
-    # Get the list of stations for the train
-    routes = Route.query.filter_by(train_number=train.train_number).order_by(Route.sequence_number).all()
-
-    list_of_stations = []
-    include_station = not departure_station_id  # Start including if departure_station_id is not specified
-    for route in routes:
-        station = route.station
-
-        if not include_station and station.id == departure_station_id:
-            include_station = True  # Start including stations from departure_station_id
-
-        if include_station:
-            # Build station_data
-            arrival_time_str = route.scheduled_arrival_time.strftime('%H:%M:%S') if route.scheduled_arrival_time else None
-            departure_time_str = route.scheduled_departure_time.strftime('%H:%M:%S') if route.scheduled_departure_time else None
-
-            station_data = {
-                'id': station.id,
-                'name_en': station.name_en,
-                'name_ar': station.name_ar,
-                'code': station.code,
-                'location_lat': float(station.location_lat) if station.location_lat else None,
-                'location_long': float(station.location_long) if station.location_long else None,
-                'scheduled_arrival_time': arrival_time_str,
-                'scheduled_departure_time': departure_time_str,
-            }
-            list_of_stations.append(station_data)
-
-        if arrival_station_id and station.id == arrival_station_id:
-            # Include arrival station and stop
-            break
-
-    train_data = {
-        'train_id': train.id if hasattr(train, 'id') else None,
-        'train_number': train.train_number,
-        'train_type': train.train_type,
-        'departure_station': {
-            'id': train.departure_station.id,
-            'name_en': train.departure_station.name_en,
-            'name_ar': train.departure_station.name_ar,
-            'code': train.departure_station.code,
-            'location_lat': float(train.departure_station.location_lat) if train.departure_station.location_lat else None,
-            'location_long': float(train.departure_station.location_long) if train.departure_station.location_long else None,
-            'scheduled_arrival_time': None,
-            'scheduled_departure_time': None,
-        },
-        'scheduled_departure_timestamp': scheduled_departure_timestamp_str,
-        'arrival_station': {
-            'id': train.arrival_station.id,
-            'name_en': train.arrival_station.name_en,
-            'name_ar': train.arrival_station.name_ar,
-            'code': train.arrival_station.code,
-            'location_lat': float(train.arrival_station.location_lat) if train.arrival_station.location_lat else None,
-            'location_long': float(train.arrival_station.location_long) if train.arrival_station.location_long else None,
-            'scheduled_arrival_time': None,
-            'scheduled_departure_time': None,
-        },
-        'scheduled_arrival_timestamp': scheduled_arrival_timestamp_str,
-        'number_of_votes': None,  # Set to None as per your request
-        'delay_time': None,       # Set to None as per your request
-        'list_of_stations': list_of_stations,
-        'number_of_stations': len(list_of_stations),
-        'is_favourite': train.train_number in favourite_train_numbers,
-        'notification_enabled': False,  # Implement logic if needed
-    }
-
-    return train_data
