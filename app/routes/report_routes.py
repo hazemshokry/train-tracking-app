@@ -4,7 +4,8 @@ from flask import request
 from flask_restx import Namespace, Resource, fields
 from app.models import UserReport, Train, Station
 from app.extensions import db
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
+
 # from app.routes.user_routes import token_required  # Commented out for testing
 
 api = Namespace('reports', description='User report related operations')
@@ -68,12 +69,13 @@ class ReportList(Resource):
 
         # Parse reported_time from string to datetime
         try:
+            # Assuming the reported_time string includes timezone info
             reported_time = datetime.fromisoformat(reported_time_str)
         except ValueError:
             api.abort(400, 'Invalid reported_time format. Use ISO 8601 format.')
 
-        # Time validation (not in the future)
-        if reported_time > datetime.utcnow():
+        # Convert datetime.utcnow() to offset-aware by adding timezone info
+        if reported_time > datetime.utcnow().replace(tzinfo=timezone.utc):
             api.abort(400, 'Reported time cannot be in the future.')
 
         # Duplicate report check (example)

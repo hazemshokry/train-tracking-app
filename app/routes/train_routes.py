@@ -7,13 +7,13 @@ from app.models.user_favourite_trains import UserFavouriteTrain
 from app.models.user_reports import UserReport  # Assuming user reports are in this model
 from app.extensions import db
 from sqlalchemy import func, or_
-from sqlalchemy.orm import aliased  # Import aliased from sqlalchemy.orm
+from sqlalchemy.orm import aliased
 import statistics
 from datetime import datetime, timedelta
 
 api = Namespace('trains', description='Train related operations')
 
-# Update station model to include actual times and delays
+# Station model definition
 station_model = api.model('Station', {
     'id': fields.Integer,
     'name_en': fields.String,
@@ -43,63 +43,40 @@ train_model = api.model('Train', {
     'last_report_time': fields.String(description='Time of the last report for this train')
 })
 
+# Train list parser
 train_list_parser = reqparse.RequestParser()
 train_list_parser.add_argument('departure_station_id', type=int, required=False, help='Filter by departure station ID')
 train_list_parser.add_argument('arrival_station_id', type=int, required=False, help='Filter by arrival station ID')
-
-from datetime import datetime, timedelta
-import statistics
-from app import db
-from app.models.route import Route
-from app.models.user_reports import UserReport
+train_list_parser.add_argument('page', type=int, required=False, default=1, help='Page number for pagination')
 
 def calculate_average_time(report_times):
     if not report_times:
         return None
-
-    # Convert datetime objects to timestamps (seconds since epoch)
     numeric_times = [time.timestamp() for time in report_times]
-
     if len(numeric_times) > 2:
-        # Calculate the mean of the timestamps
         avg_timestamp = statistics.mean(numeric_times)
-
-        # Convert the average timestamp back to a datetime object
         return datetime.fromtimestamp(avg_timestamp)
     else:
         return report_times[0]
 
 def serialize_train(train, favourite_train_numbers, departure_station_id=None, arrival_station_id=None):
-    """
-    Helper function to serialize train data with actual times, delays, 
-    and last reported station information.
-    """
-
-    # Get the list of stations for the train
     routes = Route.query.filter_by(train_number=train.train_number).order_by(Route.sequence_number).all()
     list_of_stations = []
-    include_station = not departure_station_id  # Start including if departure_station_id is not specified
-
-    last_reported_station = None  # Initialize last_reported_station
-    last_report_time = None  # Initialize last_report_time
+    include_station = not departure_station_id
+    last_reported_station = None
+    last_report_time = None
 
     for route in routes:
         station = route.station
-
-        # Initialize variables to avoid NameError
-        actual_arrival_time = None
-        actual_departure_time = None
-        delay_time = None
+        actual_arrival_time = actual_departure_time = delay_time = None
 
         if not include_station and station.id == departure_station_id:
             include_station = True
 
         if include_station:
-            # Scheduled times
             scheduled_arrival_time = route.scheduled_arrival_time.strftime('%H:%M:%S') if route.scheduled_arrival_time else None
             scheduled_departure_time = route.scheduled_departure_time.strftime('%H:%M:%S') if route.scheduled_departure_time else None
 
-            # Fetch user reports for actual arrival/departure times at this station
             arrival_reports = db.session.query(UserReport.reported_time).filter(
                 UserReport.train_number == train.train_number,
                 UserReport.station_id == station.id,
@@ -111,36 +88,30 @@ def serialize_train(train, favourite_train_numbers, departure_station_id=None, a
                 UserReport.report_type == 'departure'
             ).all()
 
-            # Process report times (remove outliers, calculate averages)
             arrival_times = [report.reported_time for report in arrival_reports]
             departure_times = [report.reported_time for report in departure_reports]
 
-            # Remove outliers if more than 2 reports
             if len(arrival_times) > 2:
                 arrival_times_timestamps = [time.timestamp() for time in arrival_times]
                 median_arrival_time = datetime.fromtimestamp(statistics.median(arrival_times_timestamps))
-                arrival_times = [time for time in arrival_times if abs((time - median_arrival_time).total_seconds()) < 600]  # 10 min threshold
+                arrival_times = [time for time in arrival_times if abs((time - median_arrival_time).total_seconds()) < 600]
             if len(departure_times) > 2:
                 departure_times_timestamps = [time.timestamp() for time in departure_times]
                 median_departure_time = datetime.fromtimestamp(statistics.median(departure_times_timestamps))
                 departure_times = [time for time in departure_times if abs((time - median_departure_time).total_seconds()) < 600]
 
-            # Calculate actual arrival/departure
             actual_arrival_time = calculate_average_time(arrival_times)
             actual_departure_time = calculate_average_time(departure_times)
 
-            # Calculate delay in minutes
             if actual_arrival_time and route.scheduled_arrival_time:
                 scheduled_datetime = datetime.combine(actual_arrival_time.date(), route.scheduled_arrival_time)
                 time_diff_seconds = (actual_arrival_time - scheduled_datetime).total_seconds()
-                delay_time = int(round(time_diff_seconds / 60))  # Convert seconds to minutes
+                delay_time = int(round(time_diff_seconds / 60))
 
-            # Update last_reported_station and last_report_time
             if arrival_times or departure_times:
                 last_report_time = max(arrival_times + departure_times)
                 last_reported_station = station.name_en
 
-            # Prepare station data
             station_data = {
                 'id': station.id,
                 'name_en': station.name_en,
@@ -160,7 +131,6 @@ def serialize_train(train, favourite_train_numbers, departure_station_id=None, a
         if arrival_station_id and station.id == arrival_station_id:
             break
 
-    # Compile the train data
     train_data = {
         'train_number': train.train_number,
         'train_type': train.train_type,
@@ -169,7 +139,7 @@ def serialize_train(train, favourite_train_numbers, departure_station_id=None, a
         'list_of_stations': list_of_stations,
         'number_of_stations': len(list_of_stations),
         'is_favourite': train.train_number in favourite_train_numbers,
-        'notification_enabled': False,  # Implement logic if needed
+        'notification_enabled': False,
         'last_reported_station': last_reported_station,
         'last_report_time': last_report_time.strftime('%Y-%m-%d %H:%M:%S') if last_report_time else None
     }
@@ -181,45 +151,28 @@ class TrainList(Resource):
     @api.expect(train_list_parser)
     @api.marshal_list_with(train_model)
     def get(self):
-        """List all trains with optional filters"""
+        """List all trains with optional filters and pagination"""
         user_id = 1  # For testing purposes
-
-        # Parse the query parameters
         args = train_list_parser.parse_args()
         departure_station_id = args.get('departure_station_id')
         arrival_station_id = args.get('arrival_station_id')
+        page = args.get('page', 1)
 
-        # Build the base query
         query = db.session.query(Train).distinct()
+        if departure_station_id or arrival_station_id:
+            query = query.join(Route, Train.train_number == Route.train_number)
+            if departure_station_id and arrival_station_id:
+                query = query.filter(or_(Route.station_id == departure_station_id, Route.station_id == arrival_station_id))
+            elif departure_station_id:
+                query = query.filter(Route.station_id == departure_station_id)
+            elif arrival_station_id:
+                query = query.filter(Route.station_id == arrival_station_id)
 
-        if departure_station_id and arrival_station_id:
-            # Filter by both departure and arrival station IDs
-            RouteDeparture = aliased(Route)
-            RouteArrival = aliased(Route)
-            query = query.join(RouteDeparture, Train.train_number == RouteDeparture.train_number)\
-                         .join(RouteArrival, Train.train_number == RouteArrival.train_number)\
-                         .filter(
-                             RouteDeparture.station_id == departure_station_id,
-                             RouteArrival.station_id == arrival_station_id,
-                             RouteDeparture.sequence_number < RouteArrival.sequence_number
-                         )
-        elif departure_station_id:
-            # Filter by only departure_station_id
-            query = query.join(Route, Train.train_number == Route.train_number)\
-                         .filter(Route.station_id == departure_station_id)
-        elif arrival_station_id:
-            # Filter by only arrival_station_id
-            query = query.join(Route, Train.train_number == Route.train_number)\
-                         .filter(Route.station_id == arrival_station_id)
+        page_size = 10
+        offset = (page - 1) * page_size
+        trains = query.limit(page_size).offset(offset).all()
 
-        # Fetch trains from the database
-        trains = query.all()
-
-        # Fetch user's favourite trains
-        favourite_train_numbers = [
-            fav.train_number for fav in UserFavouriteTrain.query.filter_by(user_id=user_id).all()
-        ]
-
+        favourite_train_numbers = [fav.train_number for fav in UserFavouriteTrain.query.filter_by(user_id=user_id).all()]
         train_list = [serialize_train(train, favourite_train_numbers, departure_station_id, arrival_station_id) for train in trains]
 
         return train_list
@@ -232,23 +185,15 @@ class TrainResource(Resource):
     def get(self, train_number):
         """Get a specific train by train number with optional station filters"""
         user_id = 1  # For testing purposes
-
-        # Parse the query parameters
         args = train_list_parser.parse_args()
         departure_station_id = args.get('departure_station_id')
         arrival_station_id = args.get('arrival_station_id')
 
-        # Fetch the train from the database
         train = Train.query.filter_by(train_number=train_number).first()
         if not train:
             api.abort(404, f"Train {train_number} not found")
 
-        # Fetch user's favourite trains
-        favourite_train_numbers = [
-            fav.train_number for fav in UserFavouriteTrain.query.filter_by(user_id=user_id).all()
-        ]
-
-        # Serialize the train data with station filters
+        favourite_train_numbers = [fav.train_number for fav in UserFavouriteTrain.query.filter_by(user_id=user_id).all()]
         train_data = serialize_train(train, favourite_train_numbers, departure_station_id, arrival_station_id)
 
         return train_data
