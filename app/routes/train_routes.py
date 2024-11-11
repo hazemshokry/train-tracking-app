@@ -7,6 +7,7 @@ from app.models.user_favourite_trains import UserFavouriteTrain
 from app.models.user_reports import UserReport  # Assuming user reports are in this model
 from app.extensions import db
 from sqlalchemy import func, or_
+from sqlalchemy.orm import aliased  # Import aliased from sqlalchemy.orm
 import statistics
 from datetime import datetime, timedelta
 
@@ -46,6 +47,12 @@ train_list_parser = reqparse.RequestParser()
 train_list_parser.add_argument('departure_station_id', type=int, required=False, help='Filter by departure station ID')
 train_list_parser.add_argument('arrival_station_id', type=int, required=False, help='Filter by arrival station ID')
 
+from datetime import datetime, timedelta
+import statistics
+from app import db
+from app.models.route import Route
+from app.models.user_reports import UserReport
+
 def calculate_average_time(report_times):
     if not report_times:
         return None
@@ -67,7 +74,6 @@ def serialize_train(train, favourite_train_numbers, departure_station_id=None, a
     Helper function to serialize train data with actual times, delays, 
     and last reported station information.
     """
-    from datetime import datetime, timedelta
 
     # Get the list of stations for the train
     routes = Route.query.filter_by(train_number=train.train_number).order_by(Route.sequence_number).all()
@@ -79,6 +85,11 @@ def serialize_train(train, favourite_train_numbers, departure_station_id=None, a
 
     for route in routes:
         station = route.station
+
+        # Initialize variables to avoid NameError
+        actual_arrival_time = None
+        actual_departure_time = None
+        delay_time = None
 
         if not include_station and station.id == departure_station_id:
             include_station = True
@@ -106,25 +117,23 @@ def serialize_train(train, favourite_train_numbers, departure_station_id=None, a
 
             # Remove outliers if more than 2 reports
             if len(arrival_times) > 2:
-                arrival_times = [time for time in arrival_times if abs(time - statistics.median(arrival_times)).seconds < 600]  # 10 min threshold
+                arrival_times_timestamps = [time.timestamp() for time in arrival_times]
+                median_arrival_time = datetime.fromtimestamp(statistics.median(arrival_times_timestamps))
+                arrival_times = [time for time in arrival_times if abs((time - median_arrival_time).total_seconds()) < 600]  # 10 min threshold
             if len(departure_times) > 2:
-                departure_times = [time for time in departure_times if abs(time - statistics.median(departure_times)).seconds < 600]
+                departure_times_timestamps = [time.timestamp() for time in departure_times]
+                median_departure_time = datetime.fromtimestamp(statistics.median(departure_times_timestamps))
+                departure_times = [time for time in departure_times if abs((time - median_departure_time).total_seconds()) < 600]
 
             # Calculate actual arrival/departure
             actual_arrival_time = calculate_average_time(arrival_times)
             actual_departure_time = calculate_average_time(departure_times)
 
             # Calculate delay in minutes
-            delay_time = None
             if actual_arrival_time and route.scheduled_arrival_time:
-                # Combine the date from actual_arrival_time with the time from route.scheduled_arrival_time
-                scheduled_datetime = datetime.combine(actual_arrival_time.date(), route.scheduled_arrival_time)  
-                
-                # Calculate the time difference in seconds
-                time_diff_seconds = (actual_arrival_time - scheduled_datetime).total_seconds()  
-                
-                # Convert seconds to minutes and round to the nearest integer
-                delay_time = int(round(time_diff_seconds / 60)) 
+                scheduled_datetime = datetime.combine(actual_arrival_time.date(), route.scheduled_arrival_time)
+                time_diff_seconds = (actual_arrival_time - scheduled_datetime).total_seconds()
+                delay_time = int(round(time_diff_seconds / 60))  # Convert seconds to minutes
 
             # Update last_reported_station and last_report_time
             if arrival_times or departure_times:
