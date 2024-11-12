@@ -1,0 +1,624 @@
+Train Number,Train Type
+1,Russian
+2,Russian
+3,Russian
+4,Russian
+7,Russian
+8,Russian
+14,AC Russian
+15,Russian
+17,AC Russian
+18,Russian
+21,Russian
+23,Russian
+24,Russian
+28,Russian
+29,Russian
+31,Russian
+32,Russian
+35,Russian
+36,Russian
+37,Improved
+38,Improved
+39,Improved
+40,Mix
+41,Improved
+42,Improved
+43,Improved
+44,Improved
+45,Improved
+46,Improved
+47,Improved
+48,Improved
+49,Improved
+50,Improved
+51,Improved
+52,Improved
+53,Improved
+55,Improved
+57,Improved
+58,Improved
+59,Improved
+60,Improved
+61,Improved
+62,Improved
+63,Improved
+64,Improved
+65,Improved
+66,Improved
+67,Improved
+68,Improved
+69,Improved
+71,Improved
+72,Improved
+73,Improved
+75,Improved
+80,Russian
+81,Russian
+82,Sleep
+83,Sleep
+86,Sleep
+87,Sleep
+88,AC
+89,AC
+90,Russian
+91,Russian
+100,Improved
+101,Improved
+102,Improved
+103,Improved
+104,Improved
+105,Improved
+106,Improved
+107,Improved
+108,Improved
+109,Improved
+110,Improved
+112,Improved
+113,Improved
+115,Improved
+118,Russian
+119,Russian
+121,Improved
+122,Improved
+123,Improved
+124,Improved
+125,Improved
+127,Improved
+128,Russian
+129,Russian
+130,Improved
+131,Improved
+132,Russian
+134,Improved
+135,Improved
+136,Improved
+137,Improved
+138,Improved
+140,Improved
+141,Russian
+142,Russian
+143,Improved
+145,Improved
+146,Improved
+147,Improved
+150,Improved
+152,Improved
+153,Improved
+156,Improved
+157,Russian
+158,Russian
+159,AC Russian
+160,AC Russian
+162,Russian
+163,Russian
+164,Russian
+165,Russian
+170,Improved
+172,Improved
+173,Improved
+175,Improved
+177,Improved
+178,Improved
+185,AC Russian
+186,AC Russian
+187,Russian
+188,Russian
+189,Improved
+194,Improved
+196,AC Russian
+197,Improved
+202,Improved
+203,Improved
+204,Improved
+205,Improved
+206,Improved
+207,Improved
+208,Improved
+210,Improved
+211,Improved
+213,Improved
+214,Improved
+215,Improved
+216,Improved
+217,Improved
+218,Improved
+219,Improved
+226,Improved
+227,Improved
+228,Improved
+229,Improved
+230,Improved
+231,Improved
+232,Improved
+234,Improved
+235,Improved
+237,Improved
+238,Improved
+239,Improved
+240,Improved
+241,Improved
+243,Improved
+244,Improved
+246,Improved
+247,Improved
+255,Improved
+260,Improved
+264,Improved
+268,Improved
+270,Improved
+271,Improved
+272,Improved
+273,Improved
+274,Improved
+277,Improved
+278,Improved
+279,Improved
+281,Improved
+285,Improved
+286,Improved
+287,Improved
+288,Improved
+297,Improved
+298,Improved
+299,Improved
+300,Improved
+320,Improved
+321,Improved
+324,Improved
+325,Improved
+327,Improved
+328,Improved
+330,Improved
+332,Improved
+333,Improved
+334,Improved
+336,Improved
+339,Improved
+340,Improved
+341,Improved
+343,Improved
+345,Improved
+347,Improved
+374,Improved
+375,Improved
+376,Improved
+377,Improved
+378,Improved
+379,Improved
+380,Improved
+381,Improved
+382,Improved
+383,Improved
+384,Improved
+385,Improved
+386,Improved
+388,Improved
+389,Improved
+391,Russian
+392,Improved
+393,Improved
+394,Improved
+395,Improved
+397,Improved
+450,Improved
+453,Improved
+458,Improved
+459,Improved
+460,Improved
+461,Improved
+462,Improved
+463,Improved
+464,Improved
+465,Improved
+466,Improved
+467,Improved
+468,Improved
+469,Improved
+470,Improved
+471,Improved
+472,Improved
+473,Improved
+474,Improved
+485,Improved
+487,Improved
+488,Improved
+489,Improved
+490,Improved
+491,Improved
+492,Improved
+493,Improved
+494,Improved
+495,Improved
+496,Improved
+497,Improved
+498,Improved
+499,Improved
+500,Improved
+501,Improved
+502,Improved
+504,Improved
+506,Improved
+507,Improved
+508,Improved
+509,Improved
+510,Improved
+511,Improved
+512,Improved
+513,Improved
+514,Improved
+523,Improved
+524,Improved
+525,Improved
+526,Improved
+529,Improved
+530,Improved
+531,Improved
+532,Improved
+533,Improved
+534,Improved
+535,Improved
+536,Improved
+537,Improved
+538,Improved
+539,Improved
+540,Improved
+541,Improved
+543,Improved
+544,Improved
+545,Improved
+546,Improved
+547,Improved
+548,Improved
+549,Improved
+550,Improved
+551,Improved
+552,Improved
+553,Improved
+554,Improved
+555,Improved
+556,Improved
+557,Improved
+558,Improved
+560,Improved
+561,Improved
+562,Improved
+563,Improved
+564,Improved
+565,Improved
+593,Improved
+594,Improved
+603,Improved
+604,Improved
+605,Improved
+606,Improved
+607,Improved
+608,Improved
+609,Improved
+610,Improved
+611,Improved
+612,Improved
+613,Improved
+614,Improved
+615,Improved
+616,Improved
+617,Improved
+618,Improved
+619,Improved
+620,Improved
+621,Improved
+622,Improved
+623,Improved
+624,Improved
+625,Improved
+626,Improved
+647,Improved
+648,Improved
+649,Improved
+652,Improved
+653,Improved
+654,Improved
+655,Improved
+656,Improved
+657,Improved
+658,Improved
+661,Russian
+663,Improved
+664,Improved
+665,Improved
+666,Improved
+667,Improved
+668,Improved
+669,Improved
+670,Improved
+671,Improved
+672,Improved
+673,Improved
+674,Improved
+675,Improved
+676,Improved
+677,Improved
+678,Improved
+679,Improved
+680,Improved
+681,Improved
+682,Improved
+683,Improved
+684,Improved
+685,Improved
+686,Improved
+687,Improved
+688,Russian
+689,Improved
+690,Improved
+691,Improved
+692,Improved
+693,Improved
+694,Improved
+695,Improved
+696,Improved
+698,Improved
+703,Improved
+704,Improved
+718,Improved
+719,Improved
+722,Improved
+723,Improved
+732,Improved
+733,Improved
+735,Improved
+736,Improved
+738,Improved
+739,Improved
+744,Improved
+745,Improved
+746,Improved
+747,Improved
+748,Improved
+749,Improved
+750,Improved
+751,Improved
+752,Improved
+753,Improved
+754,Improved
+755,Improved
+756,Improved
+757,Improved
+758,Improved
+759,Improved
+782,Improved
+803,Improved
+804,Improved
+807,Russian
+808,Russian
+809,Mix
+810,Mix
+818,Improved
+833,Russian
+835,Improved
+844,Improved
+845,Improved
+846,Improved
+847,Improved
+848,Improved
+850,Improved
+851,Improved
+852,Improved
+853,Improved
+854,Improved
+855,Improved
+856,Improved
+857,Improved
+858,Improved
+859,Improved
+860,Improved
+861,Improved
+871,AC Russian
+872,AC Russian
+875,Improved
+876,Improved
+890,AC Russian
+891,AC Russian
+900,AC
+901,AC
+902,AC
+903,AC
+905,VIP
+906,VIP
+911,AC
+912,AC
+913,AC
+914,AC
+915,AC
+916,VIP
+917,VIP
+919,VIP
+921,VIP
+922,AC
+923,AC
+925,AC
+928,VIP
+930,AC
+931,VIP
+934,VIP
+935,VIP
+936,VIP
+937,VIP
+941,Mix
+944,Mix
+945,AC Russian
+946,AC Russian
+948,AC Russian
+949,AC Russian
+951,Improved
+952,AC Russian
+954,AC Russian
+955,AC Russian
+956,Russian
+957,Mix
+959,AC Russian
+960,Improved
+961,AC Russian
+962,AC Russian
+963,Improved
+964,AC Russian
+965,Mix
+966,Mix
+967,Russian
+968,Russian
+969,AC Russian
+971,AC
+972,Russian
+973,Russian
+974,Russian
+975,Russian
+976,VIP
+977,VIP
+978,AC Russian
+979,AC Russian
+980,VIP
+981,VIP
+982,VIP
+983,VIP
+986,AC
+987,AC
+988,AC Russian
+989,AC
+990,AC
+994,Mix
+996,VIP
+997,VIP
+1004,Russian
+1006,Russian
+1007,Russian
+1008,Russian
+1009,Russian
+1010,Russian
+1011,Russian
+1012,AC Russian
+1013,Russian
+1014,Russian
+1015,Russian
+1022,Improved
+1023,Improved
+1024,Improved
+1025,Improved
+1028,Improved
+1029,Improved
+1030,Improved
+1031,Improved
+1086,Sleep
+1087,Sleep
+1104,Improved
+1105,Improved
+1108,Russian
+1109,AC Russian
+1110,Russian
+1111,Russian
+1112,Improved
+1113,AC Russian
+1114,Improved
+1115,Improved
+1130,AC Russian
+1131,AC Russian
+1190,AC Russian
+1191,AC Russian
+1203,Russian
+1211,Russian
+1212,Russian
+1418,Improved
+1902,AC
+1903,AC Russian
+1904,VIP
+1914,Mix
+1915,Mix
+2006,VIP
+2007,VIP
+2008,VIP
+2009,AC
+2010,VIP
+2011,VIP
+2012,AC Russian
+2013,AC Russian
+2014,AC
+2015,AC
+2022,Talgo
+2023,Talgo
+2024,Talgo
+2025,Talgo
+2026,Talgo
+2027,Talgo
+2030,Talgo
+2031,Talgo
+3006,AC Russian
+3007,AC Russian
+3008,AC Russian
+3009,AC Russian
+3015,AC Russian
+3016,AC Russian
+3017,AC Russian
+3018,AC Russian
+3023,AC Russian
+3024,AC Russian
+3025,AC Russian
+3502,AC Russian
+3503,AC Russian
+4222,Improved
+4223,Improved
+4602,Improved
+4603,Improved
+4604,Improved
+4605,Improved
+1208-1209,Improved
+942-943,AC Russian
+939-940,AC Russian
+1205-1206,Improved
+1933-1934,AC Russian
+1935-1936,AC Russian
+586-587,AC Russian
+518-519,AC Russian
+3019-3020,AC Russian
+894-899,Improved
+801-802,Improved
+568-569,AC Russian
+572-573,AC Russian
+3012-3013,AC Russian
+588-589,AC Russian
+516-517,AC Russian
+566-567,AC Russian
+584-585,AC Russian
+3021-3022,AC Russian
+570-571,AC Russian
+3010-3011,AC Russian
+590-591,AC Russian
+883-884,Improved
+889-892,Improved
+1150-1151,AC Russian
+1152-1153,AC Russian
+811-812,Improved
+814-815,Improved
+54-56,Improved
+702-710,Improved
+168-712,Improved
+169-707,Improved
+701-713,Improved
