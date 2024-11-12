@@ -154,14 +154,32 @@ class TrainList(Resource):
         query = db.session.query(Train).distinct()
         if departure_station_id and arrival_station_id:
             # Trains that have both stations in their routes
-            train_numbers_with_departure_station = db.session.query(Route.train_number).filter(Route.station_id == departure_station_id).subquery()
-            train_numbers_with_arrival_station = db.session.query(Route.train_number).filter(Route.station_id == arrival_station_id).subquery()
-            query = query.filter(Train.train_number.in_(train_numbers_with_departure_station)).filter(Train.train_number.in_(train_numbers_with_arrival_station))
+            train_numbers_with_departure_station = db.session.query(Route.train_number).filter(
+                Route.station_id == departure_station_id
+            ).subquery().select()
+
+            train_numbers_with_arrival_station = db.session.query(Route.train_number).filter(
+                Route.station_id == arrival_station_id
+            ).subquery().select()
+
+            query = query.filter(
+                Train.train_number.in_(train_numbers_with_departure_station)
+            ).filter(
+                Train.train_number.in_(train_numbers_with_arrival_station)
+            )
+        
         elif departure_station_id:
-            train_numbers_with_departure_station = db.session.query(Route.train_number).filter(Route.station_id == departure_station_id)
+            train_numbers_with_departure_station = db.session.query(Route.train_number).filter(
+                Route.station_id == departure_station_id
+            ).subquery().select()
+
             query = query.filter(Train.train_number.in_(train_numbers_with_departure_station))
+        
         elif arrival_station_id:
-            train_numbers_with_arrival_station = db.session.query(Route.train_number).filter(Route.station_id == arrival_station_id)
+            train_numbers_with_arrival_station = db.session.query(Route.train_number).filter(
+                Route.station_id == arrival_station_id
+            ).subquery().select()
+
             query = query.filter(Train.train_number.in_(train_numbers_with_arrival_station))
 
         page_size = 10
