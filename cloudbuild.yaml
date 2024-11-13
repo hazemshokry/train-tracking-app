@@ -1,0 +1,27 @@
+steps:
+  # Step 1: Build Docker Image
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['build', '-t', 'gcr.io/spry-starlight-355813/train-tracking-app-v1', '.']
+
+  # Step 2: Push the Image to Google Container Registry (GCR)
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push', 'gcr.io/spry-starlight-355813/train-tracking-app-v1']
+
+  # Step 3: Deploy to Cloud Run
+  - name: 'gcr.io/cloud-builders/gcloud'
+    args: [
+      'run', 'deploy', 'train-tracking-app-v1',
+      '--image', 'gcr.io/spry-starlight-355813/train-tracking-app-v1',
+      '--platform', 'managed',
+      '--region', 'us-central1',
+      '--allow-unauthenticated',
+      '--set-env-vars', 'FLASK_ENV=production,DATABASE_URL=mysql://root:StrongP%23ssw0rd1%21@34.27.243.54:3306/traindb2'
+    ]
+
+# Define the branch filter for triggering
+substitutions:
+  _BRANCH_NAME: "dev"
+
+# Specify the trigger branch
+trigger:
+  branch: 'dev'

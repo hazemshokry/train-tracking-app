@@ -76,7 +76,7 @@ def serialize_train(train, favourite_train_numbers):
         db.session.add(operation_today)
         db.session.flush()
 
-    # Fetch Operation for yesterday and tomorrow for cross-day handling
+    # Fetch Operations for yesterday and tomorrow if they exist
     operation_yesterday = Operation.query.filter_by(train_number=train.train_number, operational_date=yesterday).first()
     operation_tomorrow = Operation.query.filter_by(train_number=train.train_number, operational_date=tomorrow).first()
 
@@ -102,8 +102,8 @@ def serialize_train(train, favourite_train_numbers):
             UserReport.operation_id == operation_today.id
         ).all()
 
-        # For trains that arrive past midnight, we include reports for both yesterday's and today's operations
-        if scheduled_arrival_time and scheduled_arrival_time.hour < 6:  # Adjust this as needed for your "next day" range
+        # For trains that arrive past midnight, include reports from the previous day's operation
+        if scheduled_arrival_time and scheduled_arrival_time.hour < 6 and operation_yesterday:
             arrival_reports_yesterday = db.session.query(UserReport.reported_time).filter(
                 UserReport.train_number == train.train_number,
                 UserReport.station_id == station.id,
@@ -112,7 +112,7 @@ def serialize_train(train, favourite_train_numbers):
             ).all()
             arrival_reports_today += arrival_reports_yesterday
 
-        # Retrieve departure reports in a similar manner
+        # Retrieve departure reports similarly, including next day's reports if needed
         departure_reports_today = db.session.query(UserReport.reported_time).filter(
             UserReport.train_number == train.train_number,
             UserReport.station_id == station.id,
@@ -120,8 +120,8 @@ def serialize_train(train, favourite_train_numbers):
             UserReport.operation_id == operation_today.id
         ).all()
 
-        # Include reports for both today's and tomorrow's operations for post-midnight departures
-        if scheduled_departure_time and scheduled_departure_time.hour < 6:  # Adjust as needed
+        # Include reports from tomorrow’s operation if the departure is scheduled past midnight
+        if scheduled_departure_time and scheduled_departure_time.hour < 6 and operation_tomorrow:
             departure_reports_tomorrow = db.session.query(UserReport.reported_time).filter(
                 UserReport.train_number == train.train_number,
                 UserReport.station_id == station.id,
@@ -197,36 +197,36 @@ class TrainList(Resource):
         page = args.get('page', 1)
 
         query = db.session.query(Train).distinct()
+        
         if departure_station_id and arrival_station_id:
-            # Trains that have both stations in their routes
-            train_numbers_with_departure_station = db.session.query(Route.train_number).filter(
+            # Get trains that have both stations in sequence
+            subquery_departure = db.session.query(Route.train_number, Route.sequence_number).filter(
                 Route.station_id == departure_station_id
-            ).subquery().select()
+            ).subquery()
 
-            train_numbers_with_arrival_station = db.session.query(Route.train_number).filter(
+            subquery_arrival = db.session.query(Route.train_number, Route.sequence_number).filter(
                 Route.station_id == arrival_station_id
-            ).subquery().select()
+            ).subquery()
 
-            query = query.filter(
-                Train.train_number.in_(train_numbers_with_departure_station)
-            ).filter(
-                Train.train_number.in_(train_numbers_with_arrival_station)
-            )
+            query = query.join(subquery_departure, Train.train_number == subquery_departure.c.train_number)
+            query = query.join(subquery_arrival, Train.train_number == subquery_arrival.c.train_number)
+
+            # Apply sequence constraint: arrival must come after departure in the route
+            query = query.filter(subquery_departure.c.sequence_number < subquery_arrival.c.sequence_number)
         
         elif departure_station_id:
             train_numbers_with_departure_station = db.session.query(Route.train_number).filter(
                 Route.station_id == departure_station_id
             ).subquery().select()
-
             query = query.filter(Train.train_number.in_(train_numbers_with_departure_station))
         
         elif arrival_station_id:
             train_numbers_with_arrival_station = db.session.query(Route.train_number).filter(
                 Route.station_id == arrival_station_id
             ).subquery().select()
-
             query = query.filter(Train.train_number.in_(train_numbers_with_arrival_station))
 
+        # Pagination
         page_size = 10
         offset = (page - 1) * page_size
         trains = query.limit(page_size).offset(offset).all()
