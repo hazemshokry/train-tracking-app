@@ -17,11 +17,3 @@ steps:
       '--allow-unauthenticated',
       '--set-env-vars', 'FLASK_ENV=production,DATABASE_URL=mysql://root:StrongP%23ssw0rd1%21@34.27.243.54:3306/traindb2'
     ]
-
-# Define the branch filter for triggering
-substitutions:
-  _BRANCH_NAME: "dev"
-
-# Specify the trigger branch
-trigger:
-  branch: 'dev'
