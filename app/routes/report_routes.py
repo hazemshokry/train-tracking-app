@@ -2,7 +2,7 @@
 
 from flask import request
 from flask_restx import Namespace, Resource, fields
-from app.models import UserReport, Train, Station
+from app.models import UserReport, Train, Station, Operation
 from app.extensions import db
 from datetime import datetime, timedelta, timezone
 
@@ -42,8 +42,6 @@ class UserReportList(Resource):
 
 @api.route('/')
 class ReportList(Resource):
-    # @api.doc(security='apikey')  # Commented out for testing
-    # @token_required  # Commented out for testing
     @api.expect(report_create_model)
     @api.marshal_with(report_model, code=201)
     def post(self):
@@ -69,16 +67,26 @@ class ReportList(Resource):
 
         # Parse reported_time from string to datetime
         try:
-            # Assuming the reported_time string includes timezone info
             reported_time = datetime.fromisoformat(reported_time_str)
         except ValueError:
             api.abort(400, 'Invalid reported_time format. Use ISO 8601 format.')
 
-        # Convert datetime.utcnow() to offset-aware by adding timezone info
-        if reported_time > datetime.utcnow().replace(tzinfo=timezone.utc):
-            api.abort(400, 'Reported time cannot be in the future.')
+        # Determine operational date based on train's scheduled departure
+        scheduled_departure_time = train.scheduled_departure_time
+        operational_date = reported_time.date() if reported_time.time() >= scheduled_departure_time else reported_time.date() - timedelta(days=1)
 
-        # Duplicate report check (example)
+        # Fetch or create an Operation for this train and operational date
+        operation = Operation.query.filter_by(train_number=train_number, operational_date=operational_date).first()
+        if not operation:
+            operation = Operation(
+                train_number=train_number,
+                operational_date=operational_date,
+                status="on time"
+            )
+            db.session.add(operation)
+            db.session.flush()  # Flush to get the operation ID without committing yet
+
+        # Duplicate report check
         time_threshold = datetime.utcnow() - timedelta(minutes=5)
         existing_report = UserReport.query.filter(
             UserReport.user_id == user_id,
@@ -94,9 +102,10 @@ class ReportList(Resource):
             new_report = UserReport(
                 user_id=user_id,
                 train_number=train_number,
+                operation_id=operation.id,  # Reference to the daily operation
                 station_id=station_id,
                 report_type=report_type,
-                reported_time=reported_time,
+                reported_time=reported_time
             )
             db.session.add(new_report)
             db.session.commit()
@@ -104,7 +113,6 @@ class ReportList(Resource):
         except Exception as e: 
             db.session.rollback()
             api.abort(500, f'Failed to create report: {str(e)}')
-
 
 @api.route('/<int:id>')
 @api.param('id', 'The report identifier')
