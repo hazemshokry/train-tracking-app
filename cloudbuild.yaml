@@ -20,8 +20,8 @@ steps:
 
 # Define the branch filter for triggering
 substitutions:
-  _BRANCH_NAME: "dev"
+  _BRANCH_NAME: "main"
 
 # Specify the trigger branch
 trigger:
-  branch: 'dev'
+  branch: 'main'
