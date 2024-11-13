@@ -9,6 +9,7 @@ from .user_reports import UserReport
 from .calculated_times import CalculatedTime
 from .notifications import Notification
 from .rewards import Reward
+from .operations import Operation
 from .user_notification_settings import UserNotificationSetting
 
 # Optionally, define __all__ to specify what is exported when 'from app.models import *' is used
@@ -23,4 +24,5 @@ __all__ = [
     'Notification',
     'Reward',
     'UserNotificationSetting',
+    'Operation'
 ]

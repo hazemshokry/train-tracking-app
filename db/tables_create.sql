@@ -63,10 +63,11 @@ CREATE TABLE IF NOT EXISTS routes (
 );
 
 DROP Table IF EXISTS userreports;
-CREATE TABLE userreports (
+CREATE TABLE user_reports (
     id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT NOT NULL,
     train_number BIGINT NOT NULL,
+    operation_id INT NOT NULL,
     station_id INT NOT NULL,
     report_type ENUM('arrival', 'departure', 'onboard', 'offboard') NOT NULL,
     reported_time DATETIME NOT NULL,
@@ -74,6 +75,7 @@ CREATE TABLE userreports (
     is_valid BOOLEAN DEFAULT TRUE,
     FOREIGN KEY (user_id) REFERENCES users(id),
     FOREIGN KEY (train_number) REFERENCES trains(train_number),
+    FOREIGN KEY (operation_id) REFERENCES operations(id),
     FOREIGN KEY (station_id) REFERENCES stations(id),
     INDEX (train_number),
     INDEX (station_id),
@@ -142,4 +144,15 @@ CREATE TABLE usernotificationsettings (
     notification_enabled BOOLEAN DEFAULT TRUE,
     FOREIGN KEY (user_id) REFERENCES users(id),
     UNIQUE KEY (user_id)
+);
+
+CREATE TABLE operations (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    train_number BIGINT NOT NULL,
+    operational_date DATE NOT NULL,
+    status VARCHAR(50) DEFAULT 'on time',
+    total_delay INT DEFAULT 0,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (train_number) REFERENCES trains(train_number)
 );

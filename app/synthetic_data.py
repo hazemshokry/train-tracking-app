@@ -1,6 +1,6 @@
 import random
 from datetime import datetime, timedelta
-from app.models import UserReport, Train, Route, User
+from app.models import UserReport, Train, Route, User, Operation
 from app.extensions import db
 from dotenv import load_dotenv
 
@@ -20,6 +20,19 @@ def get_route_for_train(train_number):
 def get_all_users():
     """Retrieve all available users to assign reports."""
     return db.session.query(User.id).all()
+
+def get_or_create_operation(train_number, operational_date):
+    """Retrieve or create an Operation entry for the given train and date."""
+    operation = db.session.query(Operation).filter_by(train_number=train_number, operational_date=operational_date).first()
+    if not operation:
+        operation = Operation(
+            train_number=train_number,
+            operational_date=operational_date,
+            status="on time"
+        )
+        db.session.add(operation)
+        db.session.flush()  # Ensures operation.id is available without committing
+    return operation
 
 def insert_synthetic_data(app, num_reports=10, train_number=None, user_id=None):
     """Insert synthetic user reports with accumulated delay for a random subset of stations on each train's route."""
@@ -48,6 +61,10 @@ def insert_synthetic_data(app, num_reports=10, train_number=None, user_id=None):
             accumulated_delay = timedelta(minutes=0)
             report_count = 0  # Reset the report count for each train
             
+            # Set operational date to today's date (or adjust as needed)
+            operational_date = datetime.today().date()
+            operation = get_or_create_operation(train_number, operational_date)
+            
             for station in selected_stations:
                 if report_count >= num_reports:
                     break
@@ -70,6 +87,7 @@ def insert_synthetic_data(app, num_reports=10, train_number=None, user_id=None):
                 new_report = UserReport(
                     user_id=selected_user_id,
                     train_number=train_number,
+                    operation_id=operation.id,  # Reference to the daily operation
                     station_id=station_id,
                     report_type=report_type,
                     reported_time=reported_time,
