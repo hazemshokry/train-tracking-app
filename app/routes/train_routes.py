@@ -21,10 +21,8 @@ station_model = api.model('Station', {
     'code': fields.String,
     'location_lat': fields.Float,
     'location_long': fields.Float,
-    'scheduled_arrival_time': fields.String(description='Scheduled arrival time at the station in HH:MM:SS format'),
-    'scheduled_departure_time': fields.String(description='Scheduled departure time from the station in HH:MM:SS format'),
-    'actual_arrival_time': fields.String(description='Actual arrival time based on user reports'),
-    'actual_departure_time': fields.String(description='Actual departure time based on user reports'),
+    'scheduled_time': fields.String(description='Scheduled time at the station in HH:MM:SS format'),
+    'actual_time': fields.String(description='Actual time based on user reports'),
     'delay_time': fields.Integer(description='Delay time in minutes'),
     'number_of_reports': fields.Integer(description='Number of user reports for this station'),
 })
@@ -88,71 +86,35 @@ def serialize_train(train, favourite_train_numbers):
 
     for route in routes:
         station = route.station
-        actual_arrival_time = actual_departure_time = delay_time = None
+        actual_time = delay_time = None
 
-        # Get scheduled arrival and departure times
-        scheduled_arrival_time = route.scheduled_arrival_time
-        scheduled_departure_time = route.scheduled_departure_time
+        # Select either scheduled arrival or departure time, based on availability
+        scheduled_time = route.scheduled_arrival_time or route.scheduled_departure_time
 
-        # Retrieve user reports based on operation date
-        arrival_reports_today = db.session.query(UserReport.reported_time).filter(
+        # Retrieve user reports for actual time, combining both arrival and departure types
+        report_times = db.session.query(UserReport.reported_time).filter(
             UserReport.train_number == train.train_number,
             UserReport.station_id == station.id,
-            UserReport.report_type.in_(['arrival', 'offboard']),
-            UserReport.operation_id == operation_today.id
+            UserReport.operation_id == operation_today.id,
+            UserReport.report_type.in_(['arrival', 'offboard', 'departure', 'onboard'])
         ).all()
 
-        # For trains that arrive past midnight, include reports from the previous day's operation
-        if scheduled_arrival_time and scheduled_arrival_time.hour < 6 and operation_yesterday:
-            arrival_reports_yesterday = db.session.query(UserReport.reported_time).filter(
-                UserReport.train_number == train.train_number,
-                UserReport.station_id == station.id,
-                UserReport.report_type.in_(['arrival', 'offboard']),
-                UserReport.operation_id == operation_yesterday.id
-            ).all()
-            arrival_reports_today += arrival_reports_yesterday
+        # Average the report times if available
+        report_times = [report.reported_time for report in report_times]
+        actual_time = calculate_average_time(report_times)
 
-        # Retrieve departure reports similarly, including next day's reports if needed
-        departure_reports_today = db.session.query(UserReport.reported_time).filter(
-            UserReport.train_number == train.train_number,
-            UserReport.station_id == station.id,
-            UserReport.report_type.in_(['departure', 'onboard']),
-            UserReport.operation_id == operation_today.id
-        ).all()
-
-        # Include reports from tomorrow’s operation if the departure is scheduled past midnight
-        if scheduled_departure_time and scheduled_departure_time.hour < 6 and operation_tomorrow:
-            departure_reports_tomorrow = db.session.query(UserReport.reported_time).filter(
-                UserReport.train_number == train.train_number,
-                UserReport.station_id == station.id,
-                UserReport.report_type.in_(['departure', 'onboard']),
-                UserReport.operation_id == operation_tomorrow.id
-            ).all()
-            departure_reports_today += departure_reports_tomorrow
-
-        # Combine and average the arrival and departure report times
-        arrival_times = [report.reported_time for report in arrival_reports_today]
-        departure_times = [report.reported_time for report in departure_reports_today]
-
-        actual_arrival_time = calculate_average_time(arrival_times)
-        actual_departure_time = calculate_average_time(departure_times)
-
-        # Calculate delay time
-        if actual_arrival_time and scheduled_arrival_time:
-            scheduled_datetime = datetime.combine(actual_arrival_time.date(), scheduled_arrival_time)
-            time_diff_seconds = (actual_arrival_time - scheduled_datetime).total_seconds()
-            delay_time = int(round(time_diff_seconds / 60))
-        elif actual_departure_time and scheduled_departure_time:
-            scheduled_datetime = datetime.combine(actual_departure_time.date(), scheduled_departure_time)
-            time_diff_seconds = (actual_departure_time - scheduled_datetime).total_seconds()
+        # Calculate delay time if both scheduled and actual times are available
+        if actual_time and scheduled_time:
+            scheduled_datetime = datetime.combine(actual_time.date(), scheduled_time)
+            time_diff_seconds = (actual_time - scheduled_datetime).total_seconds()
             delay_time = int(round(time_diff_seconds / 60))
 
         # Update last reported station based on any report at this station
-        if arrival_times or departure_times:
+        if report_times:
             last_reported_station = station.name_en
-            last_report_time = max([actual_arrival_time, actual_departure_time], key=lambda x: x if x else datetime.min)
+            last_report_time = actual_time
 
-        # Append station data
+        # Append station data with only one scheduled and one actual time
         station_data = {
             'id': station.id,
             'name_en': station.name_en,
@@ -160,12 +122,10 @@ def serialize_train(train, favourite_train_numbers):
             'code': station.code,
             'location_lat': float(station.location_lat) if station.location_lat else None,
             'location_long': float(station.location_long) if station.location_long else None,
-            'scheduled_arrival_time': scheduled_arrival_time.strftime('%H:%M:%S') if scheduled_arrival_time else None,
-            'scheduled_departure_time': scheduled_departure_time.strftime('%H:%M:%S') if scheduled_departure_time else None,
-            'actual_arrival_time': actual_arrival_time.strftime('%Y-%m-%d %H:%M:%S') if actual_arrival_time else None,
-            'actual_departure_time': actual_departure_time.strftime('%Y-%m-%d %H:%M:%S') if actual_departure_time else None,
+            'scheduled_time': scheduled_time.strftime('%H:%M:%S') if scheduled_time else None,
+            'actual_time': actual_time.strftime('%Y-%m-%d %H:%M:%S') if actual_time else None,
             'delay_time': delay_time,
-            'number_of_reports': len(arrival_times) + len(departure_times),
+            'number_of_reports': len(report_times),
         }
         list_of_stations.append(station_data)
 
