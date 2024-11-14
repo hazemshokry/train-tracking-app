@@ -37,10 +37,19 @@ train_model = api.model('Train', {
     'number_of_stations': fields.Integer,
     'is_favourite': fields.Boolean,
     'notification_enabled': fields.Boolean,
-    'last_reported_station': fields.String(description='Last station reported by users'),
-    'last_report_time': fields.String(description='Time of the last report for this train'),
-    'previous_station': fields.String(description='Previous station reported by users'),
-    'next_station': fields.String(description='Next station reported by users'),
+    'last_reported_station': fields.Nested(api.model('LastReportedStation', {
+        'name_ar': fields.String,
+        'name_en': fields.String,
+        'actual_time': fields.String,
+        'number_of_reports': fields.Integer
+    })),
+    'previous_station': fields.Nested(api.model('PreviousStation', {
+        'name_ar': fields.String,
+        'name_en': fields.String,
+        'actual_time': fields.String,
+        'number_of_reports': fields.Integer
+    }), allow_null=True),
+    'next_station': fields.String(description='Next station name in Arabic'),
 })
 
 # Train list parser
@@ -80,9 +89,7 @@ def serialize_train(train, favourite_train_numbers):
     routes = Route.query.filter_by(train_number=train.train_number).order_by(Route.sequence_number).all()
     list_of_stations = []
     last_reported_station = None
-    last_report_time = None
-    prev_station_ar = None
-    prev_station_actual_time = None
+    prev_station = None
     next_station_ar = None
 
     for i, route in enumerate(routes):
@@ -112,18 +119,28 @@ def serialize_train(train, favourite_train_numbers):
 
         # Update last reported station and neighboring stations
         if report_times:
-            last_reported_station = station.name_ar
-            last_report_time = actual_time
+            last_reported_station = {
+                'name_ar': station.name_ar,
+                'name_en': station.name_en,
+                'actual_time': actual_time.strftime('%Y-%m-%d %H:%M:%S') if actual_time else None,
+                'number_of_reports': len(report_times)
+            }
             if i > 0:
-                prev_station_ar = routes[i - 1].station.name_ar
-                prev_station_actual_time = calculate_average_time(
-                    [report.reported_time for report in db.session.query(UserReport.reported_time).filter(
-                        UserReport.train_number == train.train_number,
-                        UserReport.station_id == routes[i - 1].station.id,
-                        UserReport.operation_id == operation_today.id,
-                        UserReport.report_type.in_(['arrival', 'offboard', 'departure', 'onboard'])
-                    ).all()]
-                )
+                prev_station_obj = routes[i - 1].station
+                prev_report_times = db.session.query(UserReport.reported_time).filter(
+                    UserReport.train_number == train.train_number,
+                    UserReport.station_id == prev_station_obj.id,
+                    UserReport.operation_id == operation_today.id,
+                    UserReport.report_type.in_(['arrival', 'offboard', 'departure', 'onboard'])
+                ).all()
+                
+                prev_station_actual_time = calculate_average_time([report.reported_time for report in prev_report_times])
+                prev_station = {
+                    'name_ar': prev_station_obj.name_ar,
+                    'name_en': prev_station_obj.name_en,
+                    'actual_time': prev_station_actual_time.strftime('%Y-%m-%d %H:%M:%S') if prev_station_actual_time else None,
+                    'number_of_reports': len(prev_report_times)
+                }
             if i < len(routes) - 1:
                 next_station_ar = routes[i + 1].station.name_ar
 
@@ -142,7 +159,7 @@ def serialize_train(train, favourite_train_numbers):
         }
         list_of_stations.append(station_data)
 
-    # Construct train data with neighboring station names in Arabic and actual time for previous station
+    # Construct train data with neighboring station names in Arabic and additional details for last and previous stations
     train_data = {
         'train_number': train.train_number,
         'train_type': train.train_type,
@@ -153,11 +170,7 @@ def serialize_train(train, favourite_train_numbers):
         'is_favourite': train.train_number in favourite_train_numbers,
         'notification_enabled': False,
         'last_reported_station': last_reported_station,
-        'last_report_time': last_report_time.strftime('%Y-%m-%d %H:%M:%S') if last_report_time else None,
-        'previous_station': {
-            'name_ar': prev_station_ar,
-            'actual_time': prev_station_actual_time.strftime('%Y-%m-%d %H:%M:%S') if prev_station_actual_time else None
-        } if prev_station_ar else None,
+        'previous_station': prev_station,
         'next_station': next_station_ar
     }
 
