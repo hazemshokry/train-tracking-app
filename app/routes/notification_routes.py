@@ -5,7 +5,8 @@ from flask_restx import Namespace, Resource, fields
 from app.models import Notification, User, Train
 from app.extensions import db
 from datetime import datetime
-from app.routes.user_routes import token_required
+from app.utils.auth_utils import token_required
+
 
 api = Namespace('notifications', description='Notification related operations')
 

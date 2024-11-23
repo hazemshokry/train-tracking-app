@@ -146,6 +146,7 @@ CREATE TABLE usernotificationsettings (
     UNIQUE KEY (user_id)
 );
 
+DROP TABLE IF EXISTS operations;
 CREATE TABLE operations (
     id INT PRIMARY KEY AUTO_INCREMENT,
     train_number BIGINT NOT NULL,
