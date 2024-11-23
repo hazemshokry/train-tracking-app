@@ -15,6 +15,7 @@ from .report_routes import api as report_ns
 from .notification_routes import api as notification_ns
 from .reward_routes import api as reward_ns
 from .synthetic_data_routes import api as synthetic_api
+from .favourite_routes import api as favourite_ns  # Added import for favourite routes
 
 # Add namespaces
 api.add_namespace(train_ns, path='/trains')
@@ -24,5 +25,4 @@ api.add_namespace(report_ns, path='/reports')
 api.add_namespace(notification_ns, path='/notifications')
 api.add_namespace(reward_ns, path='/rewards')
 api.add_namespace(synthetic_api, path='/synthetic')
-
-
+api.add_namespace(favourite_ns, path='/favourites')  # Added namespace for favourites

@@ -2,7 +2,7 @@
 
 from flask import request
 from flask_restx import Namespace, Resource, fields
-from app.models import UserReport, Train, Station, Operation
+from app.models import UserReport, Train, Station, Operation, Reward
 from app.extensions import db
 from datetime import datetime, timedelta, timezone
 
@@ -45,7 +45,7 @@ class ReportList(Resource):
     @api.expect(report_create_model)
     @api.marshal_with(report_model, code=201)
     def post(self):
-        """Create a new report"""
+        """Create a new report and award 1 point to the user"""
         data = api.payload
         user_id = 1  # Assume user ID 1 for testing
         train_number = data['train_number']
@@ -73,7 +73,7 @@ class ReportList(Resource):
 
         # Determine operational date based on train's scheduled departure
         scheduled_departure_time = train.scheduled_departure_time
-        operational_date = reported_time.date() if reported_time.time() >= scheduled_departure_time else reported_time.date() - timedelta(days=1)
+        operational_date = reported_time.date() if reported_time.time() >= scheduled_departure_time.time() else reported_time.date() - timedelta(days=1)
 
         # Fetch or create an Operation for this train and operational date
         operation = Operation.query.filter_by(train_number=train_number, operational_date=operational_date).first()
@@ -105,9 +105,21 @@ class ReportList(Resource):
                 operation_id=operation.id,  # Reference to the daily operation
                 station_id=station_id,
                 report_type=report_type,
-                reported_time=reported_time
+                reported_time=reported_time,
+                created_at=datetime.utcnow(),
+                is_valid=True  # Assuming the report is valid upon creation
             )
             db.session.add(new_report)
+
+            # Award 1 point to the user by creating a Reward entry
+            new_reward = Reward(
+                user_id=user_id,
+                points=1,
+                date_awarded=datetime.utcnow(),
+                description='Reported a train'
+            )
+            db.session.add(new_reward)
+
             db.session.commit()
             return new_report, 201
         except Exception as e: 
