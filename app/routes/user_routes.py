@@ -108,15 +108,25 @@ class LoginValidateOTP(Resource):
                 'exp': datetime.utcnow() + timedelta(minutes=15)
             }, SECRET_KEY, algorithm='HS256')
 
-            # Generate refresh token
+            # Generate a new refresh token
             refresh_token_str = str(uuid.uuid4())
             expires_at = datetime.utcnow() + timedelta(days=7)
-            refresh_token = RefreshToken(
-                token=refresh_token_str,
-                user_id=user.id,
-                expires_at=expires_at
-            )
-            db.session.add(refresh_token)
+
+            # Update the refresh token in the database
+            existing_refresh_token = RefreshToken.query.filter_by(user_id=user.id).first()
+            if existing_refresh_token:
+                # Update existing token
+                existing_refresh_token.token = refresh_token_str
+                existing_refresh_token.expires_at = expires_at
+            else:
+                # Create a new refresh token record if none exists
+                refresh_token = RefreshToken(
+                    token=refresh_token_str,
+                    user_id=user.id,
+                    expires_at=expires_at
+                )
+                db.session.add(refresh_token)
+
             user.last_login = datetime.utcnow()
             db.session.commit()
 
