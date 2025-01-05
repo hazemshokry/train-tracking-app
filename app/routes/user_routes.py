@@ -197,12 +197,10 @@ class CompleteRegistration(Resource):
             temp_token = parts[1]
         else:
             return {'message': 'Invalid Authorization header format'}, 401
-        
+
         try:
             data_token = jwt.decode(temp_token, SECRET_KEY, algorithms=['HS256'])
             phone_number = data_token.get('phone_number')
-            print(f"Decoded token data: {data_token}")  # Debugging statement
-            print(f"Extracted phone_number: {phone_number}")  # Debugging statement
         except jwt.ExpiredSignatureError:
             return {'message': 'Temporary token has expired'}, 401
         except jwt.InvalidTokenError:
@@ -228,6 +226,17 @@ class CompleteRegistration(Resource):
         db.session.add(new_user)
         db.session.commit()
 
+        # Generate refresh token for the user
+        refresh_token_str = str(uuid.uuid4())
+        expires_at = datetime.utcnow() + timedelta(days=7)
+        refresh_token = RefreshToken(
+            token=refresh_token_str,
+            user_id=new_user.id,
+            expires_at=expires_at
+        )
+        db.session.add(refresh_token)
+        db.session.commit()
+
         user_data = {
             'id': new_user.id,
             'username': new_user.username,
@@ -238,7 +247,11 @@ class CompleteRegistration(Resource):
             'last_login': new_user.last_login.isoformat() if new_user.last_login else None,
         }
 
-        return new_user, 201
+        # Include the refresh token in the response
+        return {
+            **user_data,
+            'refresh_token': refresh_token_str
+        }, 201
 
 @api.route('/logout')
 class LogoutResource(Resource):
