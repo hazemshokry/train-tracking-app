@@ -75,7 +75,7 @@ class LoginSendOTP(Resource):
         # Send OTP to user's phone number (simulate or integrate with SMS service)
         print(f"Sending OTP {otp_code} to phone number {phone_number}")
 
-        return {'message': 'OTP sent successfully'}, 200
+        return {'message': f'OTP {otp_code} sent successfully'}, 200
 
 @api.route('/login/validate_otp')
 class LoginValidateOTP(Resource):
