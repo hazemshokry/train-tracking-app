@@ -4,6 +4,8 @@ from flask import request
 from flask_restx import Namespace, Resource, fields
 from app.models.station import Station
 from app.extensions import db
+from math import radians, sin, cos, sqrt, atan2
+
 
 api = Namespace('stations', description='Station related operations')
 
@@ -109,3 +111,64 @@ class StationResource(Resource):
         db.session.delete(station)
         db.session.commit()
         return '', 204
+
+@api.route('/nearest')
+class NearestStations(Resource):
+    @api.doc(params={
+        'lat': 'Latitude of the current location',
+        'lon': 'Longitude of the current location',
+        'radius': 'Search radius in kilometers'
+    })
+    def get(self):
+        """
+        Retrieve stations within a specified radius of a given point (lat, lon).
+        """
+        # Parse query parameters
+        lat = request.args.get('lat', type=float)
+        lon = request.args.get('lon', type=float)
+        radius = request.args.get('radius', type=float)
+
+        if lat is None or lon is None or radius is None:
+            api.abort(
+                400,
+                "Missing required query params: 'lat', 'lon', 'radius' (all floats)."
+            )
+        
+        # Query all stations that have valid lat/long
+        stations = Station.query.filter(
+            Station.location_lat.isnot(None),
+            Station.location_long.isnot(None)
+        ).all()
+
+        # Filter stations by distance
+        results = []
+        for station in stations:
+            distance_km = haversine(
+                lat, 
+                lon, 
+                float(station.location_lat), 
+                float(station.location_long)
+            )
+            if distance_km <= radius:
+                # Only return what you need (id, name_ar, name_en)
+                results.append({
+                    'id': station.id,
+                    'name_en': station.name_en,
+                    'name_ar': station.name_ar
+                })
+
+        return results, 200
+
+def haversine(lat1, lon1, lat2, lon2):
+    """
+    Calculate the great circle distance between two points
+    on the Earth (specified in decimal degrees).
+    Returns distance in kilometers.
+    """
+    R = 6371.0  # Radius of Earth in km
+    dLat = radians(lat2 - lat1)
+    dLon = radians(lon2 - lon1)
+    a = sin(dLat / 2)**2 + cos(radians(lat1)) * cos(radians(lat2)) * sin(dLon / 2)**2
+    c = 2 * atan2(sqrt(a), sqrt(1 - a))
+    distance = R * c
+    return distance
