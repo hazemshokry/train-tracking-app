@@ -133,7 +133,7 @@ class LoginValidateOTP(Resource):
             return {
                 'access_token': access_token,
                 'refresh_token': refresh_token_str,
-                'needs_registeration': False
+                'needs_registration': "false"
             }, 200
         else:
             # User does not exist, provide a temporary token for registration
@@ -144,7 +144,7 @@ class LoginValidateOTP(Resource):
 
             return {
                 'temp_token': temp_token,
-                'needs_registeration': True
+                'needs_registration': "true"
             }, 201
 
 @api.route('/refresh_token')
