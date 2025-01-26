@@ -15,5 +15,5 @@ steps:
       '--platform', 'managed',
       '--region', 'us-central1',
       '--allow-unauthenticated',
-      '--set-env-vars', 'FLASK_ENV=production,DATABASE_URL=mysql://root:StrongP%23ssw0rd1%21@34.27.243.54:3306/traindb2'
+      '--set-env-vars', 'FLASK_ENV=production,DATABASE_URL=mysql://root:hazemshokry@34.27.243.54:3306/traindb2'
     ]
