@@ -67,6 +67,8 @@ class ReportList(Resource):
 
         # Parse reported_time from string to datetime
         try:
+            # Replace 'Z' with '+00:00'
+            reported_time_str = reported_time_str.replace('Z', '+00:00')
             reported_time = datetime.fromisoformat(reported_time_str)
         except ValueError:
             api.abort(400, 'Invalid reported_time format. Use ISO 8601 format.')
