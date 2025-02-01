@@ -1,11 +1,8 @@
-# app/routes/report_routes.py
-
 from flask import request
 from flask_restx import Namespace, Resource, fields
 from app.models import UserReport, Train, Station, Operation, Reward
 from app.extensions import db
 from datetime import datetime, timedelta, timezone
-
 # from app.routes.user_routes import token_required  # Commented out for testing
 
 api = Namespace('reports', description='User report related operations')
@@ -25,7 +22,8 @@ report_model = api.model('UserReport', {
 report_create_model = api.model('UserReportCreate', {
     'train_number': fields.Integer(required=True, description='Train number'),
     'station_id': fields.Integer(required=True, description='Station ID'),
-    'report_type': fields.String(required=True, description='Type of report', enum=['arrival', 'departure', 'onboard', 'offboard']),
+    'report_type': fields.String(required=True, description='Type of report',
+                                 enum=['arrival', 'departure', 'onboard', 'offboard']),
     'reported_time': fields.DateTime(required=True, description='Time of the report in ISO 8601 format'),
 })
 
@@ -67,15 +65,20 @@ class ReportList(Resource):
 
         # Parse reported_time from string to datetime
         try:
-            # Replace 'Z' with '+00:00'
-            reported_time_str = reported_time_str.replace('Z', '+00:00')
+            # If your JSON has trailing 'Z', do a replace if necessary:
+            # reported_time_str = reported_time_str.replace('Z', '+00:00')
             reported_time = datetime.fromisoformat(reported_time_str)
         except ValueError:
             api.abort(400, 'Invalid reported_time format. Use ISO 8601 format.')
 
-        # Determine operational date based on train's scheduled departure
+        # Determine operational date based on train's scheduled departure (which is a time, not a datetime)
         scheduled_departure_time = train.scheduled_departure_time
-        operational_date = reported_time.date() if reported_time.time() >= scheduled_departure_time.time() else reported_time.date() - timedelta(days=1)
+        # Compare the .time() of the reported_time (datetime) with the scheduled_departure_time (time)
+        operational_date = (
+            reported_time.date()
+            if reported_time.time() >= scheduled_departure_time
+            else reported_time.date() - timedelta(days=1)
+        )
 
         # Fetch or create an Operation for this train and operational date
         operation = Operation.query.filter_by(train_number=train_number, operational_date=operational_date).first()
@@ -86,9 +89,9 @@ class ReportList(Resource):
                 status="on time"
             )
             db.session.add(operation)
-            db.session.flush()  # Flush to get the operation ID without committing yet
+            db.session.flush()  # Flush to get the operation ID
 
-        # Duplicate report check
+        # Duplicate report check (5-minute window)
         time_threshold = datetime.utcnow() - timedelta(minutes=5)
         existing_report = UserReport.query.filter(
             UserReport.user_id == user_id,
@@ -104,12 +107,12 @@ class ReportList(Resource):
             new_report = UserReport(
                 user_id=user_id,
                 train_number=train_number,
-                operation_id=operation.id,  # Reference to the daily operation
+                operation_id=operation.id,
                 station_id=station_id,
                 report_type=report_type,
                 reported_time=reported_time,
                 created_at=datetime.utcnow(),
-                is_valid=True  # Assuming the report is valid upon creation
+                is_valid=True  # Assuming valid on creation
             )
             db.session.add(new_report)
 
@@ -124,7 +127,7 @@ class ReportList(Resource):
 
             db.session.commit()
             return new_report, 201
-        except Exception as e: 
+        except Exception as e:
             db.session.rollback()
             api.abort(500, f'Failed to create report: {str(e)}')
 
@@ -141,7 +144,7 @@ class ReportResource(Resource):
     def delete(self, id):
         """Delete a report by ID"""
         report = UserReport.query.get_or_404(id)
-        # ... (For now, allow deletion without authentication) ...
+        # For now, allow deletion without authentication
         db.session.delete(report)
         db.session.commit()
         return '', 204
