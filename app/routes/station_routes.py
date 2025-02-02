@@ -115,15 +115,19 @@ class StationResource(Resource):
 @api.route('/nearest')
 class NearestFiveStations(Resource):
     @api.doc(params={
-        'lat': 'Latitude of the reference location',
-        'lon': 'Longitude of the reference location',
+        'lat': 'Latitude of the reference location (required)',
+        'lon': 'Longitude of the reference location (required)',
+        'radius': 'Search radius in kilometers (optional, defaults to 5)'
     })
     def get(self):
         """
-        Returns the nearest five stations to the given (lat, lon).
+        Returns up to five stations within the given or default radius (5 km),
+        sorted by ascending distance from the given (lat, lon).
         """
         lat = request.args.get('lat', type=float)
         lon = request.args.get('lon', type=float)
+        # Use 5 km as the default radius if none is provided
+        radius = request.args.get('radius', default=5.0, type=float)
 
         if lat is None or lon is None:
             api.abort(400, "Missing 'lat' or 'lon' query parameter.")
@@ -134,8 +138,8 @@ class NearestFiveStations(Resource):
             Station.location_long.isnot(None)
         ).all()
 
-        # Calculate distance for each station
-        stations_with_distance = []
+        # Calculate distance for each station, then filter by radius
+        stations_within_radius = []
         for station in stations:
             distance_km = haversine(
                 lat,
@@ -143,15 +147,16 @@ class NearestFiveStations(Resource):
                 float(station.location_lat),
                 float(station.location_long)
             )
-            stations_with_distance.append((station, distance_km))
+            if distance_km <= radius:
+                stations_within_radius.append((station, distance_km))
 
         # Sort by ascending distance
-        stations_with_distance.sort(key=lambda x: x[1])
+        stations_within_radius.sort(key=lambda x: x[1])
 
         # Take the first five
-        nearest_five = stations_with_distance[:5]
+        nearest_five = stations_within_radius[:5]
 
-        # Convert to a list of dicts with the info you need
+        # Convert to a list of dicts with the info you want
         results = []
         for station, dist in nearest_five:
             results.append({
