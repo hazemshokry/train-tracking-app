@@ -121,7 +121,7 @@ class NearestStations(Resource):
     })
     def get(self):
         """
-        Retrieve stations within a specified radius of a given point (lat, lon).
+        Retrieve the nearest 5 stations within a specified radius of a given point (lat, lon).
         """
         # Parse query parameters
         lat = request.args.get('lat', type=float)
@@ -140,7 +140,7 @@ class NearestStations(Resource):
             Station.location_long.isnot(None)
         ).all()
 
-        # Filter stations by distance
+        # Calculate distances and filter stations by distance
         results = []
         for station in stations:
             distance_km = haversine(
@@ -150,12 +150,15 @@ class NearestStations(Resource):
                 float(station.location_long)
             )
             if distance_km <= radius:
-                # Only return what you need (id, name_ar, name_en)
                 results.append({
                     'id': station.id,
                     'name_en': station.name_en,
-                    'name_ar': station.name_ar
+                    'name_ar': station.name_ar,
+                    'distance': distance_km
                 })
+
+        # Sort results by distance and return the nearest 5 stations
+        results = sorted(results, key=lambda x: x['distance'])[:5]
 
         return results, 200
 
