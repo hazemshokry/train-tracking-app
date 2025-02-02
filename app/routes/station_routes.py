@@ -112,53 +112,54 @@ class StationResource(Resource):
         db.session.commit()
         return '', 204
 
-@api.route('/nearest')
-class NearestStations(Resource):
+@api.route('/nearest-five')
+class NearestFiveStations(Resource):
     @api.doc(params={
-        'lat': 'Latitude of the current location',
-        'lon': 'Longitude of the current location',
-        'radius': 'Search radius in kilometers'
+        'lat': 'Latitude of the reference location',
+        'lon': 'Longitude of the reference location',
     })
     def get(self):
         """
-        Retrieve the nearest 5 stations within a specified radius of a given point (lat, lon).
+        Returns the nearest five stations to the given (lat, lon).
         """
-        # Parse query parameters
         lat = request.args.get('lat', type=float)
         lon = request.args.get('lon', type=float)
-        radius = request.args.get('radius', type=float)
 
-        if lat is None or lon is None or radius is None:
-            api.abort(
-                400,
-                "Missing required query params: 'lat', 'lon', 'radius' (all floats)."
-            )
-        
-        # Query all stations that have valid lat/long
+        if lat is None or lon is None:
+            api.abort(400, "Missing 'lat' or 'lon' query parameter.")
+
+        # Fetch stations that have valid lat/long
         stations = Station.query.filter(
             Station.location_lat.isnot(None),
             Station.location_long.isnot(None)
         ).all()
 
-        # Calculate distances and filter stations by distance
-        results = []
+        # Calculate distance for each station
+        stations_with_distance = []
         for station in stations:
             distance_km = haversine(
-                lat, 
-                lon, 
-                float(station.location_lat), 
+                lat,
+                lon,
+                float(station.location_lat),
                 float(station.location_long)
             )
-            if distance_km <= radius:
-                results.append({
-                    'id': station.id,
-                    'name_en': station.name_en,
-                    'name_ar': station.name_ar,
-                    'distance': distance_km
-                })
+            stations_with_distance.append((station, distance_km))
 
-        # Sort results by distance and return the nearest 5 stations
-        results = sorted(results, key=lambda x: x['distance'])[:5]
+        # Sort by ascending distance
+        stations_with_distance.sort(key=lambda x: x[1])
+
+        # Take the first five
+        nearest_five = stations_with_distance[:5]
+
+        # Convert to a list of dicts with the info you need
+        results = []
+        for station, dist in nearest_five:
+            results.append({
+                'id': station.id,
+                'name_en': station.name_en,
+                'name_ar': station.name_ar,
+                'distance_km': round(dist, 2)
+            })
 
         return results, 200
 
@@ -168,10 +169,10 @@ def haversine(lat1, lon1, lat2, lon2):
     on the Earth (specified in decimal degrees).
     Returns distance in kilometers.
     """
-    R = 6371.0  # Radius of Earth in km
+    R = 6371.0  # approximate radius of earth in km
     dLat = radians(lat2 - lat1)
     dLon = radians(lon2 - lon1)
-    a = sin(dLat / 2)**2 + cos(radians(lat1)) * cos(radians(lat2)) * sin(dLon / 2)**2
-    c = 2 * atan2(sqrt(a), sqrt(1 - a))
+    a = sin(dLat/2)**2 + cos(radians(lat1)) * cos(radians(lat2)) * sin(dLon/2)**2
+    c = 2 * atan2(sqrt(a), sqrt(1-a))
     distance = R * c
     return distance
