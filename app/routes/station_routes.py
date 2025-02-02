@@ -112,7 +112,7 @@ class StationResource(Resource):
         db.session.commit()
         return '', 204
 
-@api.route('/nearest-five')
+@api.route('/nearest')
 class NearestFiveStations(Resource):
     @api.doc(params={
         'lat': 'Latitude of the reference location',
