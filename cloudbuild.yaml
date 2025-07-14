@@ -1,17 +1,17 @@
 steps:
   # Step 1: Build Docker Image
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['build', '-t', 'gcr.io/spry-starlight-355813/train-tracking-app-v1', '.']
+    args: ['build', '-t', 'us-central1-docker.pkg.dev/spry-starlight-355813/train-tracking-repo/train-tracking-app-v1', '.']
 
-  # Step 2: Push the Image to Google Container Registry (GCR)
+  # Step 2: Push the Image to Artifact Registry
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['push', 'gcr.io/spry-starlight-355813/train-tracking-app-v1']
+    args: ['push', 'us-central1-docker.pkg.dev/spry-starlight-355813/train-tracking-repo/train-tracking-app-v1']
 
   # Step 3: Deploy to Cloud Run
   - name: 'gcr.io/cloud-builders/gcloud'
     args: [
       'run', 'deploy', 'train-tracking-app-v1',
-      '--image', 'gcr.io/spry-starlight-355813/train-tracking-app-v1',
+      '--image', 'us-central1-docker.pkg.dev/spry-starlight-355813/train-tracking-repo/train-tracking-app-v1',
       '--platform', 'managed',
       '--region', 'us-central1',
       '--allow-unauthenticated',
