@@ -196,6 +196,7 @@ class CompleteRegistration(Resource):
         """Complete registration after OTP validation."""
         # Get temp_token from headers
         auth_header = request.headers.get('Authorization')
+        print(f"Authorization Header: {auth_header}")
         if not auth_header:
             return {'message': 'Temporary token is missing'}, 401
 
@@ -226,8 +227,8 @@ class CompleteRegistration(Resource):
         # Ensure username and email are unique
         # if User.query.filter_by(username=username).first():
         #     return {'message': 'Username already exists'}, 400
-        if User.query.filter_by(email=email).first():
-            return {'message': 'Email already exists'}, 400
+        # if User.query.filter_by(email=email).first():
+        #     return {'message': 'Email already exists'}, 400
 
         # Create new user
         new_user = User(
