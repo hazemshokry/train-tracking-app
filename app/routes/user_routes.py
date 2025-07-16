@@ -224,8 +224,8 @@ class CompleteRegistration(Resource):
         email = data.get('email')
 
         # Ensure username and email are unique
-        if User.query.filter_by(username=username).first():
-            return {'message': 'Username already exists'}, 400
+        # if User.query.filter_by(username=username).first():
+        #     return {'message': 'Username already exists'}, 400
         if User.query.filter_by(email=email).first():
             return {'message': 'Email already exists'}, 400
 
