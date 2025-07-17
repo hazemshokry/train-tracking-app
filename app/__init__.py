@@ -4,6 +4,7 @@ from app.config import get_config
 from app.extensions import db
 from app.routes import api  # Import the Api instance with namespaces
 
+
 def create_app(config_class=None):
     app = Flask(__name__)
     app.config.from_object(config_class or get_config())

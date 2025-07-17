@@ -11,6 +11,8 @@ from .notifications import Notification
 from .rewards import Reward
 from .operations import Operation
 from .user_notification_settings import UserNotificationSetting
+from .user_reliability import UserReliability
+from .report_validation import ReportValidation
 
 # Optionally, define __all__ to specify what is exported when 'from app.models import *' is used
 __all__ = [
@@ -24,5 +26,7 @@ __all__ = [
     'Notification',
     'Reward',
     'UserNotificationSetting',
-    'Operation'
+    'Operation',
+    'UserReliability',
+    'ReportValidation'
 ]

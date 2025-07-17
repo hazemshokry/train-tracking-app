@@ -1,4 +1,5 @@
-# app/models/train.py
+# app
+# /models/train.py
 
 from app.extensions import db
 
