@@ -26,12 +26,15 @@ class ValidationService:
     def _validate_time(self):
         """
         Checks if the reported time is within a reasonable window (e.g., 2 hours from now).
-        Both datetimes are now timezone-aware.
         """
-        # --- THE FIX IS HERE ---
-        # Use datetime.now(timezone.utc) to get a timezone-aware current time
         aware_now = datetime.now(timezone.utc)
-        return abs((aware_now - self.report.reported_time).total_seconds()) < 7200
+        reported_time = self.report.reported_time
+
+        # If the reported time from the user is timezone-naive, assume it is UTC.
+        if reported_time.tzinfo is None or reported_time.tzinfo.utcoffset(reported_time) is None:
+            reported_time = reported_time.replace(tzinfo=timezone.utc)
+
+        return abs((aware_now - reported_time).total_seconds()) < 7200
 
     def _validate_location(self):
         """Validates if the user's submitted GPS coordinates are within 1km of the station."""
@@ -65,8 +68,8 @@ class ValidationService:
 
     def _validate_duplicate(self):
         """Checks for an identical report from the same user in the last 15 minutes."""
-        # Use a timezone-aware threshold
-        time_threshold = datetime.now(timezone.utc) - timedelta(minutes=15)
+        # Use a naive datetime for comparison, as `created_at` in the DB is likely naive.
+        time_threshold = datetime.utcnow() - timedelta(minutes=15)
         duplicate = UserReport.query.filter(
             UserReport.user_id == self.user.id,
             UserReport.train_number == self.report.train_number,
