@@ -5,7 +5,7 @@ class Config:
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
 class LocalConfig(Config):
-    SQLALCHEMY_DATABASE_URI = os.getenv("DATABASE_URL", "mysql://root:hazemshokry@localhost:3306/traindb2")
+    SQLALCHEMY_DATABASE_URI = os.getenv("DATABASE_URL", "mysql://root:hazemshokry@localhost:3306/db1")
     PORT = int(os.getenv("PORT", 5001))
 
 class CloudRunConfig(Config):

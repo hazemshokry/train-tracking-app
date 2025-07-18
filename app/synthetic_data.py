@@ -34,67 +34,58 @@ def get_or_create_operation(train_number, operational_date):
         db.session.flush()  # Ensures operation.id is available without committing
     return operation
 
-def insert_synthetic_data(app, num_reports=10, train_number=None, user_id=None):
-    """Insert synthetic user reports with accumulated delay for a random subset of stations on each train's route."""
+def insert_synthetic_data(app, num_reports=10, train_number=None):
+    """Insert synthetic user reports with a realistic, accumulating delay."""
     with app.app_context():
-        # Get all trains and filter if a specific train_number is provided
         if train_number:
-            # Explicitly filter to get only the specific train
             trains = db.session.query(Train).filter_by(train_number=train_number).all()
         else:
             trains = get_all_trains()
-        
-        # Get all users and filter if a specific user_id is provided
-        users = [user for user in get_all_users() if not user_id or user.id == user_id]
-        
+
+        users = get_all_users()
+        if not users:
+            print("No users found. Cannot generate reports.")
+            return
+
         for train in trains:
             train_number = train.train_number
             full_route = get_route_for_train(train_number)
+            if not full_route:
+                continue
+
+            # Create a list of 'num_reports' station events to generate
+            report_events = random.choices(full_route, k=num_reports)
             
-            if len(full_route) > 1:
-                num_stations = random.randint(1, len(full_route))
-                selected_stations = random.sample(full_route, num_stations)
-                selected_stations.sort(key=lambda x: full_route.index(x))
-            else:
-                selected_stations = full_route
-            
-            accumulated_delay = timedelta(minutes=0)
-            report_count = 0  # Reset the report count for each train
-            
-            # Set operational date to today's date (or adjust as needed)
+            # *** THE FIX IS HERE ***
+            # Sort the events by their actual sequence in the route to ensure chronological processing.
+            report_events.sort(key=lambda s: full_route.index(s))
+
+            total_accumulated_delay = timedelta(minutes=0)
             operational_date = datetime.today().date()
             operation = get_or_create_operation(train_number, operational_date)
-            
-            for station in selected_stations:
-                if report_count >= num_reports:
-                    break
+
+            for event_station in report_events:
+                station_id, scheduled_departure, scheduled_arrival = event_station
+
+                # Add a small, positive delay for each step in the journey
+                total_accumulated_delay += timedelta(minutes=random.randint(2, 10))
                 
-                station_id, scheduled_departure, scheduled_arrival = station
-                report_type = random.choice(['arrival', 'departure', 'onboard', 'offboard'])
-                base_time = scheduled_arrival if report_type == 'arrival' and scheduled_arrival else scheduled_departure
-                
+                base_time = scheduled_arrival or scheduled_departure
                 if not base_time:
                     continue
-                
-                additional_delay = timedelta(minutes=random.randint(1, 10))
-                accumulated_delay += additional_delay
-                reported_time = datetime.combine(datetime.today(), base_time) + accumulated_delay
-                
-                selected_user_id = random.choice(users).id if users else None
-                if selected_user_id is None:
-                    continue
+
+                reported_time = datetime.combine(operational_date, base_time) + total_accumulated_delay
                 
                 new_report = UserReport(
-                    user_id=selected_user_id,
+                    user_id=random.choice(users).id,
                     train_number=train_number,
-                    operation_id=operation.id,  # Reference to the daily operation
+                    operation_id=operation.id,
                     station_id=station_id,
-                    report_type=report_type,
+                    report_type=random.choice(['arrival', 'departure', 'onboard', 'offboard']),
                     reported_time=reported_time,
-                    is_valid=True
+                    is_valid=True,
+                    confidence_score=round(random.uniform(0.6, 0.95), 2)
                 )
-                
                 db.session.add(new_report)
-                report_count += 1  # Increment report count for each generated report
 
         db.session.commit()

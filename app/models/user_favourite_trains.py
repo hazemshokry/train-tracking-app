@@ -4,7 +4,7 @@ from app.extensions import db
 from datetime import datetime
 
 class UserFavouriteTrain(db.Model):
-    __tablename__ = 'userfavouritetrains'
+    __tablename__ = 'user_favourite_trains'
 
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)

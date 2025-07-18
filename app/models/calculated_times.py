@@ -3,7 +3,7 @@
 from app.extensions import db
 
 class CalculatedTime(db.Model):
-    __tablename__ = 'calculatedtimes'
+    __tablename__ = 'calculated_times'
 
     id = db.Column(db.Integer, primary_key=True)
     train_number = db.Column(db.BigInteger, db.ForeignKey('trains.train_number'), nullable=False)

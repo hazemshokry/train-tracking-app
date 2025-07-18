@@ -9,7 +9,7 @@ from app.models.operations import Operation
 from app.extensions import db
 from sqlalchemy import func, or_, and_
 import statistics
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from flask_restx import inputs
 
 api = Namespace('trains', description='Train related operations')
@@ -123,11 +123,19 @@ def serialize_train(train,favourite_train_numbers,*,include_stations: bool = Tru
         array (used by the list endpoint to keep payloads light).
     """
     # ── resolve operation (today) ───────────────────────────────────────────────
-    today = datetime.now().date()
-    operation_today = Operation.query.filter_by(
-        train_number=train.train_number, operational_date=today
-    ).first()
-    if not operation_today:
+    today = datetime.now(timezone.utc).date()
+    yesterday = today - timedelta(days=1)
+    
+    # Fetch operations for today and yesterday to handle overnight trains
+    operations = Operation.query.filter(
+        Operation.train_number == train.train_number,
+        Operation.operational_date.in_([today, yesterday])
+    ).all()
+    
+    operation_ids = [op.id for op in operations]
+
+    # If no recent operations found, create one for today
+    if not operations:
         operation_today = Operation(
             train_number=train.train_number,
             operational_date=today,
@@ -135,6 +143,8 @@ def serialize_train(train,favourite_train_numbers,*,include_stations: bool = Tru
         )
         db.session.add(operation_today)
         db.session.flush()
+        operation_ids.append(operation_today.id)
+
 
     # ── fetch ordered route records in a single query ──────────────────────────
     routes = (
@@ -195,7 +205,7 @@ def serialize_train(train,favourite_train_numbers,*,include_stations: bool = Tru
         report_q = db.session.query(UserReport.reported_time).filter(
             UserReport.train_number == train.train_number,
             UserReport.station_id == st.id,
-            UserReport.operation_id == operation_today.id,
+            UserReport.operation_id.in_(operation_ids),
             UserReport.report_type.in_(["arrival", "offboard", "departure", "onboard"]),
         )
         reports = [r.reported_time for r in report_q]
@@ -219,7 +229,7 @@ def serialize_train(train,favourite_train_numbers,*,include_stations: bool = Tru
                 prev_reports = db.session.query(UserReport.reported_time).filter(
                     UserReport.train_number == train.train_number,
                     UserReport.station_id == prev_st.id,
-                    UserReport.operation_id == operation_today.id,
+                    UserReport.operation_id.in_(operation_ids),
                     UserReport.report_type.in_(["arrival", "offboard", "departure", "onboard"]),
                 )
                 prev_times = [r.reported_time for r in prev_reports]
