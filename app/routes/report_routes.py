@@ -21,7 +21,7 @@ api = Namespace('reports', description='User report related operations')
 report_model = api.model('UserReport', {
     'id': fields.Integer(readOnly=True, description='Unique identifier of the report'),
     'user_id': fields.Integer(description='ID of the user who submitted the report'),
-    'train_number': fields.Integer(description='Train number'),
+    'train_number': fields.String(description='Train number'),
     'station_id': fields.Integer(description='Station ID'),
     'report_type': fields.String(description='Type of report', enum=['arrival', 'departure', 'onboard', 'offboard', 'delay', 'cancelled', 'passed_station']),
     'reported_time': fields.DateTime(description='Time of the report'),
@@ -32,7 +32,7 @@ report_model = api.model('UserReport', {
 
 # Model for creating a new report
 report_create_model = api.model('UserReportCreate', {
-    'train_number': fields.Integer(required=True, description='Train number'),
+    'train_number': fields.String(required=True, description='Train number'),
     'station_id': fields.Integer(required=True, description='Station ID'),
     'report_type': fields.String(required=True, description='Type of report', enum=['arrival', 'departure', 'onboard', 'offboard', 'delay', 'cancelled', 'passed_station']),
     'reported_time': fields.DateTime(required=True, description='Time of the report in ISO 8601 format'),

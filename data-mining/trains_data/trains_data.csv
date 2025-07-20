@@ -54,7 +54,7 @@ Train Number,Train Type
 73,Improved
 75,Improved
 80,Russian
-81,Russian
+81,AC Russian
 82,Sleep
 83,Sleep
 86,Sleep
@@ -194,12 +194,14 @@ Train Number,Train Type
 333,Improved
 334,Improved
 336,Improved
+337,Improved
 339,Improved
 340,Improved
 341,Improved
 343,Improved
 345,Improved
 347,Improved
+352,Improved
 374,Improved
 375,Improved
 376,Improved
@@ -240,6 +242,8 @@ Train Number,Train Type
 472,Improved
 473,Improved
 474,Improved
+483,Improved
+484,Improved
 485,Improved
 487,Improved
 488,Improved
@@ -267,6 +271,7 @@ Train Number,Train Type
 512,Improved
 513,Improved
 514,Improved
+522,Improved
 523,Improved
 524,Improved
 525,Improved
@@ -306,8 +311,8 @@ Train Number,Train Type
 563,Improved
 564,Improved
 565,Improved
-593,Improved
-594,Improved
+593,Russian
+594,Russian
 603,Improved
 604,Improved
 605,Improved
@@ -445,7 +450,8 @@ Train Number,Train Type
 903,AC
 905,VIP
 906,VIP
-911,AC
+910,VIP
+911,VIP
 912,AC
 913,AC
 914,AC
@@ -458,7 +464,6 @@ Train Number,Train Type
 923,AC
 925,AC
 928,VIP
-930,AC
 931,VIP
 934,VIP
 935,VIP
@@ -470,7 +475,7 @@ Train Number,Train Type
 946,AC Russian
 948,AC Russian
 949,AC Russian
-951,Improved
+951,Russian
 952,AC Russian
 954,AC Russian
 955,AC Russian
@@ -480,7 +485,7 @@ Train Number,Train Type
 960,Improved
 961,AC Russian
 962,AC Russian
-963,Improved
+963,Russian
 964,AC Russian
 965,Mix
 966,Mix
@@ -508,13 +513,15 @@ Train Number,Train Type
 994,Mix
 996,VIP
 997,VIP
-1004,Russian
+998,AC
+999,AC
+1004,AC Russian
 1006,Russian
 1007,Russian
 1008,Russian
-1009,Russian
-1010,Russian
-1011,Russian
+1009,AC Russian
+1010,AC Russian
+1011,AC Russian
 1012,AC Russian
 1013,Russian
 1014,Russian
@@ -527,15 +534,19 @@ Train Number,Train Type
 1029,Improved
 1030,Improved
 1031,Improved
+1082,Sleep
+1083,Sleep
 1086,Sleep
 1087,Sleep
+1088,Mix
+1089,Sleep
 1104,Improved
 1105,Improved
 1108,Russian
 1109,AC Russian
 1110,Russian
 1111,Russian
-1112,Improved
+1112,Russian
 1113,AC Russian
 1114,Improved
 1115,Improved
@@ -585,32 +596,28 @@ Train Number,Train Type
 3503,AC Russian
 4222,Improved
 4223,Improved
+4224,Improved
 4602,Improved
 4603,Improved
 4604,Improved
 4605,Improved
 1208-1209,Improved
-942-943,AC Russian
-939-940,AC Russian
-1205-1206,Improved
-1933-1934,AC Russian
+1205-1206,Russian
 1935-1936,AC Russian
+894-899,Improved
+572-573,AC Russian
+568-569,AC Russian
+588-589,Russian
+3012-3013,AC Russian
 586-587,AC Russian
 518-519,AC Russian
-3019-3020,AC Russian
-894-899,Improved
 801-802,Improved
-568-569,AC Russian
-572-573,AC Russian
-3012-3013,AC Russian
-588-589,AC Russian
-516-517,AC Russian
-566-567,AC Russian
 584-585,AC Russian
-3021-3022,AC Russian
+566-567,AC Russian
+516-517,AC Russian
 570-571,AC Russian
 3010-3011,AC Russian
-590-591,AC Russian
+590-591,Russian
 883-884,Improved
 889-892,Improved
 1150-1151,AC Russian

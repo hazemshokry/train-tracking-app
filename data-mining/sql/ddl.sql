@@ -10,6 +10,7 @@ CREATE TABLE IF NOT EXISTS users (
     is_active BOOLEAN DEFAULT TRUE,
     date_joined DATETIME DEFAULT CURRENT_TIMESTAMP,
     last_login DATETIME,
+    device_token VARCHAR(255) NULL,
     user_type ENUM('admin', 'verified', 'regular', 'new', 'flagged') DEFAULT 'new' NOT NULL,
     reliability_score FLOAT DEFAULT 0.5 NOT NULL,
     INDEX (username),
@@ -29,10 +30,10 @@ CREATE TABLE IF NOT EXISTS stations (
     INDEX (code)
 );
 
--- Table: trains (No changes)
+-- Table: trains (Updated)
 DROP TABLE IF EXISTS trains;
 CREATE TABLE IF NOT EXISTS trains (
-    train_number BIGINT PRIMARY KEY,
+    train_number VARCHAR(255) PRIMARY KEY,
     train_type VARCHAR(50),
     departure_station_id INT NOT NULL,
     arrival_station_id INT NOT NULL,
@@ -42,11 +43,11 @@ CREATE TABLE IF NOT EXISTS trains (
     CONSTRAINT fk_arrival_station FOREIGN KEY (arrival_station_id) REFERENCES stations(id)
 );
 
--- Table: routes (No changes)
+-- Table: routes (Updated)
 DROP TABLE IF EXISTS routes;
 CREATE TABLE IF NOT EXISTS routes (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    train_number BIGINT NOT NULL,
+    train_number VARCHAR(255) NOT NULL,
     station_id INT NOT NULL,
     sequence_number INT NOT NULL,
     scheduled_arrival_time TIME,
@@ -55,11 +56,11 @@ CREATE TABLE IF NOT EXISTS routes (
     FOREIGN KEY (station_id) REFERENCES stations(id)
 );
 
--- Table: operations (No changes)
+-- Table: operations (Updated)
 DROP TABLE IF EXISTS operations;
 CREATE TABLE operations (
     id INT PRIMARY KEY AUTO_INCREMENT,
-    train_number BIGINT NOT NULL,
+    train_number VARCHAR(255) NOT NULL,
     operational_date DATE NOT NULL,
     status VARCHAR(50) DEFAULT 'on time',
     total_delay INT DEFAULT 0,
@@ -68,12 +69,12 @@ CREATE TABLE operations (
     FOREIGN KEY (train_number) REFERENCES trains(train_number)
 );
 
--- Table: user_reports (Updated with new enum and fields)
+-- Table: user_reports (Updated)
 DROP TABLE IF EXISTS user_reports;
 CREATE TABLE user_reports (
     id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT NOT NULL,
-    train_number BIGINT NOT NULL,
+    train_number VARCHAR(255) NOT NULL,
     operation_id INT NOT NULL,
     station_id INT NOT NULL,
     report_type ENUM('arrival', 'departure', 'onboard', 'offboard', 'delay', 'cancelled', 'passed_station') NOT NULL,
@@ -88,11 +89,11 @@ CREATE TABLE user_reports (
     FOREIGN KEY (station_id) REFERENCES stations(id)
 );
 
--- Table: calculated_times (No changes from your provided DDL)
+-- Table: calculated_times (Updated)
 DROP TABLE IF EXISTS calculated_times;
 CREATE TABLE calculated_times (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    train_number BIGINT NOT NULL,
+    train_number VARCHAR(255) NOT NULL,
     station_id INT NOT NULL,
     calculated_arrival_time DATETIME,
     calculated_departure_time DATETIME,
@@ -103,12 +104,12 @@ CREATE TABLE calculated_times (
     INDEX (train_number, station_id)
 );
 
--- Table: notifications (No changes)
+-- Table: notifications (Updated)
 DROP TABLE IF EXISTS notifications;
 CREATE TABLE notifications (
     id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT NOT NULL,
-    train_number BIGINT,
+    train_number VARCHAR(255),
     title VARCHAR(255) NOT NULL,
     description TEXT,
     `time` DATETIME DEFAULT CURRENT_TIMESTAMP,
@@ -128,12 +129,12 @@ CREATE TABLE rewards (
     FOREIGN KEY (user_id) REFERENCES users(id)
 );
 
--- Table: user_favourite_trains (No changes)
+-- Table: user_favourite_trains (Updated)
 DROP TABLE IF EXISTS user_favourite_trains;
 CREATE TABLE user_favourite_trains (
     id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT NOT NULL,
-    train_number BIGINT NOT NULL,
+    train_number VARCHAR(255) NOT NULL,
     added_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (user_id) REFERENCES users(id),
     FOREIGN KEY (train_number) REFERENCES trains(train_number),

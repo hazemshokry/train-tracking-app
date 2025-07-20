@@ -66,7 +66,7 @@ class FavouriteTrainList(Resource):
 
         return new_favourite, 201
 
-@api.route('/<int:train_number>')
+@api.route('/<string:train_number>')
 @api.param('train_number', 'The train number')
 class FavouriteTrainResource(Resource):
     # @api.doc(security='BearerAuth')  # Commented out for testing

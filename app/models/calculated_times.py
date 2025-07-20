@@ -6,7 +6,7 @@ class CalculatedTime(db.Model):
     __tablename__ = 'calculated_times'
 
     id = db.Column(db.Integer, primary_key=True)
-    train_number = db.Column(db.BigInteger, db.ForeignKey('trains.train_number'), nullable=False)
+    train_number = db.Column(db.String(255), db.ForeignKey('trains.train_number'), nullable=False)
     station_id = db.Column(db.Integer, db.ForeignKey('stations.id'), nullable=False)
     calculated_arrival_time = db.Column(db.DateTime)
     calculated_departure_time = db.Column(db.DateTime)

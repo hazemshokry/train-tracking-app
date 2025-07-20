@@ -14,7 +14,7 @@ api = Namespace('notifications', description='Notification related operations')
 notification_model = api.model('Notification', {
     'id': fields.Integer(readOnly=True, description='Unique identifier of the notification'),
     'user_id': fields.Integer(description='ID of the user'),
-    'train_number': fields.Integer(description='Train number'),
+    'train_number': fields.String(description='Train number'),
     'title': fields.String(description='Title of the notification'),
     'description': fields.String(description='Description of the notification'),
     'time': fields.DateTime(description='Time the notification was created'),
@@ -22,7 +22,7 @@ notification_model = api.model('Notification', {
 })
 
 notification_create_model = api.model('NotificationCreate', {
-    'train_number': fields.Integer(description='Train number'),
+    'train_number': fields.String(description='Train number'),
     'title': fields.String(required=True, description='Title of the notification'),
     'description': fields.String(description='Description of the notification'),
 })

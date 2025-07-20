@@ -367,7 +367,7 @@ class TrainList(Resource):
             'total_items': paginated_trains.total
         }
 
-@api.route('/<int:train_number>')
+@api.route('/<string:train_number>')
 @api.param('train_number', 'The train number')
 class TrainResource(Resource):
     @api.marshal_with(train_model) # No change here, returns a single object

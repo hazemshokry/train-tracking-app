@@ -7,7 +7,7 @@ class Operation(db.Model):
     __tablename__ = 'operations'
     
     id = db.Column(db.Integer, primary_key=True)
-    train_number = db.Column(db.BigInteger, db.ForeignKey('trains.train_number'), nullable=False)
+    train_number = db.Column(db.String(255), db.ForeignKey('trains.train_number'), nullable=False)
     operational_date = db.Column(db.Date, nullable=False)
     status = db.Column(db.String(50), default='on time')  # Default status, can be updated
     total_delay = db.Column(db.Integer, default=0)  # Total delay in minutes

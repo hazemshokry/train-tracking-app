@@ -8,7 +8,7 @@ class Notification(db.Model):
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
-    train_number = db.Column(db.BigInteger, db.ForeignKey('trains.train_number'))
+    train_number = db.Column(db.String(255), db.ForeignKey('trains.train_number'))
     title = db.Column(db.String(255), nullable=False)
     description = db.Column(db.Text)
     time = db.Column(db.DateTime, default=datetime.utcnow)

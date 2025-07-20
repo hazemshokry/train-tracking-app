@@ -8,7 +8,7 @@ class UserFavouriteTrain(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
-    train_number = db.Column(db.BigInteger, db.ForeignKey('trains.train_number'), nullable=False)
+    train_number = db.Column(db.String(255), db.ForeignKey('trains.train_number'), nullable=False)
     added_at = db.Column(db.DateTime, default=datetime.utcnow)
 
     user = db.relationship('User', backref='favourite_trains')

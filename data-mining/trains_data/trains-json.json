@@ -1,0 +1,4420 @@
+{
+    "pageProps": {
+        "pageName": "Train",
+        "data": {
+            "trainsList": [
+                {
+                    "id": "1",
+                    "type": "Russian",
+                    "start": "Cairo",
+                    "end": "Alexandria",
+                    "stops": 14
+                },
+                {
+                    "id": "2",
+                    "type": "Russian",
+                    "start": "Alexandria",
+                    "end": "Cairo",
+                    "stops": 20
+                },
+                {
+                    "id": "3",
+                    "type": "Russian",
+                    "start": "Tanta",
+                    "end": "Alexandria",
+                    "stops": 9
+                },
+                {
+                    "id": "4",
+                    "type": "Russian",
+                    "start": "Tanta",
+                    "end": "Cairo",
+                    "stops": 7
+                },
+                {
+                    "id": "7",
+                    "type": "Russian",
+                    "start": "Cairo",
+                    "end": "Alexandria",
+                    "stops": 17
+                },
+                {
+                    "id": "8",
+                    "type": "Russian",
+                    "start": "Alexandria",
+                    "end": "Cairo",
+                    "stops": 16
+                },
+                {
+                    "id": "14",
+                    "type": "AC Russian",
+                    "start": "Alexandria",
+                    "end": "Cairo",
+                    "stops": 8
+                },
+                {
+                    "id": "15",
+                    "type": "Russian",
+                    "start": "Cairo",
+                    "end": "Alexandria",
+                    "stops": 14
+                },
+                {
+                    "id": "17",
+                    "type": "AC Russian",
+                    "start": "Cairo",
+                    "end": "Alexandria",
+                    "stops": 6
+                },
+                {
+                    "id": "18",
+                    "type": "Russian",
+                    "start": "Alexandria",
+                    "end": "Cairo",
+                    "stops": 16
+                },
+                {
+                    "id": "21",
+                    "type": "Russian",
+                    "start": "Cairo",
+                    "end": "Alexandria",
+                    "stops": 16
+                },
+                {
+                    "id": "23",
+                    "type": "Russian",
+                    "start": "Cairo",
+                    "end": "Alexandria",
+                    "stops": 16
+                },
+                {
+                    "id": "24",
+                    "type": "Russian",
+                    "start": "Alexandria",
+                    "end": "Cairo",
+                    "stops": 17
+                },
+                {
+                    "id": "28",
+                    "type": "Russian",
+                    "start": "Alexandria",
+                    "end": "Cairo",
+                    "stops": 17
+                },
+                {
+                    "id": "29",
+                    "type": "Russian",
+                    "start": "Cairo",
+                    "end": "Alexandria",
+                    "stops": 15
+                },
+                {
+                    "id": "31",
+                    "type": "Russian",
+                    "start": "Cairo",
+                    "end": "Alexandria",
+                    "stops": 13
+                },
+                {
+                    "id": "32",
+                    "type": "Russian",
+                    "start": "Alexandria",
+                    "end": "Cairo",
+                    "stops": 13
+                },
+                {
+                    "id": "35",
+                    "type": "Russian",
+                    "start": "Cairo",
+                    "end": "Tanta",
+                    "stops": 10
+                },
+                {
+                    "id": "36",
+                    "type": "Russian",
+                    "start": "Alexandria",
+                    "end": "Tanta",
+                    "stops": 9
+                },
+                {
+                    "id": "37",
+                    "type": "Improved",
+                    "start": "Mansoura",
+                    "end": "Damietta",
+                    "stops": 22
+                },
+                {
+                    "id": "38",
+                    "type": "Improved",
+                    "start": "Mansoura",
+                    "end": "Tanta",
+                    "stops": 18
+                },
+                {
+                    "id": "39",
+                    "type": "Improved",
+                    "start": "Tanta",
+                    "end": "Mansoura",
+                    "stops": 18
+                },
+                {
+                    "id": "40",
+                    "type": "Mix",
+                    "start": "Mansoura",
+                    "end": "Tanta",
+                    "stops": 18
+                },
+                {
+                    "id": "41",
+                    "type": "Improved",
+                    "start": "Tanta",
+                    "end": "Mansoura",
+                    "stops": 18
+                },
+                {
+                    "id": "42",
+                    "type": "Improved",
+                    "start": "Damietta",
+                    "end": "Tanta",
+                    "stops": 38
+                },
+                {
+                    "id": "43",
+                    "type": "Improved",
+                    "start": "Mansoura",
+                    "end": "Damietta",
+                    "stops": 22
+                },
+                {
+                    "id": "44",
+                    "type": "Improved",
+                    "start": "Mansoura",
+                    "end": "Tanta",
+                    "stops": 18
+                },
+                {
+                    "id": "45",
+                    "type": "Improved",
+                    "start": "Mansoura",
+                    "end": "Damietta",
+                    "stops": 22
+                },
+                {
+                    "id": "46",
+                    "type": "Improved",
+                    "start": "Damietta",
+                    "end": "Mansoura",
+                    "stops": 22
+                },
+                {
+                    "id": "47",
+                    "type": "Improved",
+                    "start": "Tanta",
+                    "end": "Damietta",
+                    "stops": 38
+                },
+                {
+                    "id": "48",
+                    "type": "Improved",
+                    "start": "Mansoura",
+                    "end": "Tanta",
+                    "stops": 18
+                },
+                {
+                    "id": "49",
+                    "type": "Improved",
+                    "start": "Tanta",
+                    "end": "Mansoura",
+                    "stops": 18
+                },
+                {
+                    "id": "50",
+                    "type": "Improved",
+                    "start": "Damietta",
+                    "end": "Tanta",
+                    "stops": 38
+                },
+                {
+                    "id": "51",
+                    "type": "Improved",
+                    "start": "Tanta",
+                    "end": "Mansoura",
+                    "stops": 18
+                },
+                {
+                    "id": "52",
+                    "type": "Improved",
+                    "start": "Mansoura",
+                    "end": "Tanta",
+                    "stops": 18
+                },
+                {
+                    "id": "53",
+                    "type": "Improved",
+                    "start": "Tanta",
+                    "end": "Damietta",
+                    "stops": 39
+                },
+                {
+                    "id": "55",
+                    "type": "Improved",
+                    "start": "Tanta",
+                    "end": "Mansoura",
+                    "stops": 18
+                },
+                {
+                    "id": "57",
+                    "type": "Improved",
+                    "start": "Mansoura",
+                    "end": "Damietta",
+                    "stops": 21
+                },
+                {
+                    "id": "58",
+                    "type": "Improved",
+                    "start": "Mansoura",
+                    "end": "Tanta",
+                    "stops": 18
+                },
+                {
+                    "id": "59",
+                    "type": "Improved",
+                    "start": "Tanta",
+                    "end": "Mansoura",
+                    "stops": 18
+                },
+                {
+                    "id": "60",
+                    "type": "Improved",
+                    "start": "Damietta",
+                    "end": "Tanta",
+                    "stops": 38
+                },
+                {
+                    "id": "61",
+                    "type": "Improved",
+                    "start": "Tanta",
+                    "end": "Damietta",
+                    "stops": 39
+                },
+                {
+                    "id": "62",
+                    "type": "Improved",
+                    "start": "Damietta",
+                    "end": "Mansoura",
+                    "stops": 22
+                },
+                {
+                    "id": "63",
+                    "type": "Improved",
+                    "start": "Tanta",
+                    "end": "Mansoura",
+                    "stops": 18
+                },
+                {
+                    "id": "64",
+                    "type": "Improved",
+                    "start": "Damietta",
+                    "end": "Tanta",
+                    "stops": 38
+                },
+                {
+                    "id": "65",
+                    "type": "Improved",
+                    "start": "Tanta",
+                    "end": "Mansoura",
+                    "stops": 18
+                },
+                {
+                    "id": "66",
+                    "type": "Improved",
+                    "start": "Mansoura",
+                    "end": "Tanta",
+                    "stops": 18
+                },
+                {
+                    "id": "67",
+                    "type": "Improved",
+                    "start": "Tanta",
+                    "end": "Mansoura",
+                    "stops": 18
+                },
+                {
+                    "id": "68",
+                    "type": "Improved",
+                    "start": "Damietta",
+                    "end": "Mansoura",
+                    "stops": 22
+                },
+                {
+                    "id": "69",
+                    "type": "Improved",
+                    "start": "Tanta",
+                    "end": "Mansoura",
+                    "stops": 18
+                },
+                {
+                    "id": "71",
+                    "type": "Improved",
+                    "start": "Tanta",
+                    "end": "Mansoura",
+                    "stops": 18
+                },
+                {
+                    "id": "72",
+                    "type": "Improved",
+                    "start": "Damietta",
+                    "end": "Tanta",
+                    "stops": 38
+                },
+                {
+                    "id": "73",
+                    "type": "Improved",
+                    "start": "Mansoura",
+                    "end": "Shirbin",
+                    "stops": 11
+                },
+                {
+                    "id": "75",
+                    "type": "Improved",
+                    "start": "Mansoura",
+                    "end": "Damietta",
+                    "stops": 22
+                },
+                {
+                    "id": "80",
+                    "type": "Russian",
+                    "start": "Cairo",
+                    "end": "Aswan",
+                    "stops": 61
+                },
+                {
+                    "id": "81",
+                    "type": "AC Russian",
+                    "start": "Aswan",
+                    "end": "Cairo",
+                    "stops": 59
+                },
+                {
+                    "id": "82",
+                    "type": "Sleep",
+                    "start": "Cairo",
+                    "end": "Aswan",
+                    "stops": 13
+                },
+                {
+                    "id": "83",
+                    "type": "Sleep",
+                    "start": "Aswan",
+                    "end": "Cairo",
+                    "stops": 13
+                },
+                {
+                    "id": "86",
+                    "type": "Sleep",
+                    "start": "Cairo",
+                    "end": "Aswan",
+                    "stops": 14
+                },
+                {
+                    "id": "87",
+                    "type": "Sleep",
+                    "start": "Aswan",
+                    "end": "Cairo",
+                    "stops": 14
+                },
+                {
+                    "id": "88",
+                    "type": "AC",
+                    "start": "Alexandria",
+                    "end": "Aswan",
+                    "stops": 37
+                },
+                {
+                    "id": "89",
+                    "type": "AC",
+                    "start": "Aswan",
+                    "end": "Alexandria",
+                    "stops": 37
+                },
+                {
+                    "id": "90",
+                    "type": "Russian",
+                    "start": "Cairo",
+                    "end": "The High Dam",
+                    "stops": 45
+                },
+                {
+                    "id": "91",
+                    "type": "Russian",
+                    "start": "The High Dam",
+                    "end": "Cairo",
+                    "stops": 41
+                },
+                {
+                    "id": "100",
+                    "type": "Improved",
+                    "start": "Suez",
+                    "end": "Ismailia",
+                    "stops": 21
+                },
+                {
+                    "id": "101",
+                    "type": "Improved",
+                    "start": "Ismailia",
+                    "end": "Suez",
+                    "stops": 21
+                },
+                {
+                    "id": "102",
+                    "type": "Improved",
+                    "start": "Suez",
+                    "end": "Ismailia",
+                    "stops": 21
+                },
+                {
+                    "id": "103",
+                    "type": "Improved",
+                    "start": "Ismailia",
+                    "end": "Suez",
+                    "stops": 21
+                },
+                {
+                    "id": "104",
+                    "type": "Improved",
+                    "start": "Suez",
+                    "end": "Ismailia",
+                    "stops": 21
+                },
+                {
+                    "id": "105",
+                    "type": "Improved",
+                    "start": "Ismailia",
+                    "end": "Suez",
+                    "stops": 21
+                },
+                {
+                    "id": "106",
+                    "type": "Improved",
+                    "start": "Suez",
+                    "end": "Ismailia",
+                    "stops": 21
+                },
+                {
+                    "id": "107",
+                    "type": "Improved",
+                    "start": "Ismailia",
+                    "end": "Suez",
+                    "stops": 21
+                },
+                {
+                    "id": "108",
+                    "type": "Improved",
+                    "start": "Suez",
+                    "end": "Ismailia",
+                    "stops": 21
+                },
+                {
+                    "id": "109",
+                    "type": "Improved",
+                    "start": "Ismailia",
+                    "end": "Suez",
+                    "stops": 21
+                },
+                {
+                    "id": "110",
+                    "type": "Improved",
+                    "start": "Suez",
+                    "end": "Ismailia",
+                    "stops": 21
+                },
+                {
+                    "id": "112",
+                    "type": "Improved",
+                    "start": "Suez",
+                    "end": "Ismailia",
+                    "stops": 21
+                },
+                {
+                    "id": "113",
+                    "type": "Improved",
+                    "start": "Ismailia",
+                    "end": "Suez",
+                    "stops": 21
+                },
+                {
+                    "id": "115",
+                    "type": "Improved",
+                    "start": "Ismailia",
+                    "end": "Suez",
+                    "stops": 21
+                },
+                {
+                    "id": "118",
+                    "type": "Russian",
+                    "start": "Alexandria",
+                    "end": "Cairo",
+                    "stops": 26
+                },
+                {
+                    "id": "119",
+                    "type": "Russian",
+                    "start": "Cairo",
+                    "end": "Alexandria",
+                    "stops": 25
+                },
+                {
+                    "id": "121",
+                    "type": "Improved",
+                    "start": "Cairo",
+                    "end": "Tanta",
+                    "stops": 31
+                },
+                {
+                    "id": "122",
+                    "type": "Improved",
+                    "start": "Tanta",
+                    "end": "Cairo",
+                    "stops": 21
+                },
+                {
+                    "id": "123",
+                    "type": "Improved",
+                    "start": "Cairo",
+                    "end": "Tanta",
+                    "stops": 18
+                },
+                {
+                    "id": "124",
+                    "type": "Improved",
+                    "start": "Tanta",
+                    "end": "Cairo",
+                    "stops": 19
+                },
+                {
+                    "id": "125",
+                    "type": "Improved",
+                    "start": "Faiyum",
+                    "end": "Wasta",
+                    "stops": 9
+                },
+                {
+                    "id": "127",
+                    "type": "Improved",
+                    "start": "Faiyum",
+                    "end": "Wasta",
+                    "stops": 9
+                },
+                {
+                    "id": "128",
+                    "type": "Russian",
+                    "start": "Alexandria",
+                    "end": "Tanta",
+                    "stops": 8
+                },
+                {
+                    "id": "129",
+                    "type": "Russian",
+                    "start": "Tanta",
+                    "end": "Alexandria",
+                    "stops": 9
+                },
+                {
+                    "id": "130",
+                    "type": "Improved",
+                    "start": "Wasta",
+                    "end": "Faiyum",
+                    "stops": 9
+                },
+                {
+                    "id": "131",
+                    "type": "Improved",
+                    "start": "Faiyum",
+                    "end": "Wasta",
+                    "stops": 9
+                },
+                {
+                    "id": "132",
+                    "type": "Russian",
+                    "start": "Alexandria",
+                    "end": "Cairo",
+                    "stops": 14
+                },
+                {
+                    "id": "134",
+                    "type": "Improved",
+                    "start": "Giza",
+                    "end": "Faiyum",
+                    "stops": 13
+                },
+                {
+                    "id": "135",
+                    "type": "Improved",
+                    "start": "Wasta",
+                    "end": "Giza",
+                    "stops": 5
+                },
+                {
+                    "id": "136",
+                    "type": "Improved",
+                    "start": "Wasta",
+                    "end": "Faiyum",
+                    "stops": 9
+                },
+                {
+                    "id": "137",
+                    "type": "Improved",
+                    "start": "Faiyum",
+                    "end": "Wasta",
+                    "stops": 9
+                },
+                {
+                    "id": "138",
+                    "type": "Improved",
+                    "start": "Wasta",
+                    "end": "Faiyum",
+                    "stops": 9
+                },
+                {
+                    "id": "140",
+                    "type": "Improved",
+                    "start": "Wasta",
+                    "end": "Faiyum",
+                    "stops": 9
+                },
+                {
+                    "id": "141",
+                    "type": "Russian",
+                    "start": "Faiyum",
+                    "end": "Cairo",
+                    "stops": 24
+                },
+                {
+                    "id": "142",
+                    "type": "Russian",
+                    "start": "Cairo",
+                    "end": "Faiyum",
+                    "stops": 19
+                },
+                {
+                    "id": "143",
+                    "type": "Improved",
+                    "start": "Faiyum",
+                    "end": "Giza",
+                    "stops": 21
+                },
+                {
+                    "id": "145",
+                    "type": "Improved",
+                    "start": "Faiyum",
+                    "end": "Wasta",
+                    "stops": 9
+                },
+                {
+                    "id": "146",
+                    "type": "Improved",
+                    "start": "Giza",
+                    "end": "Faiyum",
+                    "stops": 21
+                },
+                {
+                    "id": "147",
+                    "type": "Improved",
+                    "start": "Faiyum",
+                    "end": "Giza",
+                    "stops": 18
+                },
+                {
+                    "id": "150",
+                    "type": "Improved",
+                    "start": "Wasta",
+                    "end": "Faiyum",
+                    "stops": 9
+                },
+                {
+                    "id": "152",
+                    "type": "Improved",
+                    "start": "Giza",
+                    "end": "Faiyum",
+                    "stops": 22
+                },
+                {
+                    "id": "153",
+                    "type": "Improved",
+                    "start": "Faiyum",
+                    "end": "Giza",
+                    "stops": 19
+                },
+                {
+                    "id": "156",
+                    "type": "Improved",
+                    "start": "Giza",
+                    "end": "Wasta",
+                    "stops": 10
+                },
+                {
+                    "id": "157",
+                    "type": "Russian",
+                    "start": "Luxor",
+                    "end": "Alexandria",
+                    "stops": 36
+                },
+                {
+                    "id": "158",
+                    "type": "Russian",
+                    "start": "Alexandria",
+                    "end": "Luxor",
+                    "stops": 36
+                },
+                {
+                    "id": "159",
+                    "type": "AC Russian",
+                    "start": "Luxor",
+                    "end": "Cairo",
+                    "stops": 38
+                },
+                {
+                    "id": "160",
+                    "type": "AC Russian",
+                    "start": "Cairo",
+                    "end": "Luxor",
+                    "stops": 37
+                },
+                {
+                    "id": "162",
+                    "type": "Russian",
+                    "start": "Cairo",
+                    "end": "Asyut",
+                    "stops": 29
+                },
+                {
+                    "id": "163",
+                    "type": "Russian",
+                    "start": "Aswan",
+                    "end": "Alexandria",
+                    "stops": 47
+                },
+                {
+                    "id": "164",
+                    "type": "Russian",
+                    "start": "Alexandria",
+                    "end": "Aswan",
+                    "stops": 45
+                },
+                {
+                    "id": "165",
+                    "type": "Russian",
+                    "start": "Asyut",
+                    "end": "Cairo",
+                    "stops": 29
+                },
+                {
+                    "id": "170",
+                    "type": "Improved",
+                    "start": "Salheya",
+                    "end": "Zagazig",
+                    "stops": 21
+                },
+                {
+                    "id": "172",
+                    "type": "Improved",
+                    "start": "Salheya",
+                    "end": "Zagazig",
+                    "stops": 21
+                },
+                {
+                    "id": "173",
+                    "type": "Improved",
+                    "start": "Zagazig",
+                    "end": "Salheya",
+                    "stops": 18
+                },
+                {
+                    "id": "175",
+                    "type": "Improved",
+                    "start": "Zagazig",
+                    "end": "Salheya",
+                    "stops": 16
+                },
+                {
+                    "id": "177",
+                    "type": "Improved",
+                    "start": "Zagazig",
+                    "end": "Salheya",
+                    "stops": 16
+                },
+                {
+                    "id": "178",
+                    "type": "Improved",
+                    "start": "Salheya",
+                    "end": "Zagazig",
+                    "stops": 17
+                },
+                {
+                    "id": "185",
+                    "type": "AC Russian",
+                    "start": "Sohag",
+                    "end": "Port Said",
+                    "stops": 33
+                },
+                {
+                    "id": "186",
+                    "type": "AC Russian",
+                    "start": "Port Said",
+                    "end": "Sohag",
+                    "stops": 29
+                },
+                {
+                    "id": "187",
+                    "type": "Russian",
+                    "start": "The High Dam",
+                    "end": "Cairo",
+                    "stops": 47
+                },
+                {
+                    "id": "188",
+                    "type": "Russian",
+                    "start": "Cairo",
+                    "end": "The High Dam",
+                    "stops": 47
+                },
+                {
+                    "id": "189",
+                    "type": "Improved",
+                    "start": "Zagazig",
+                    "end": "Salheya",
+                    "stops": 21
+                },
+                {
+                    "id": "194",
+                    "type": "Improved",
+                    "start": "Salheya",
+                    "end": "Zagazig",
+                    "stops": 21
+                },
+                {
+                    "id": "196",
+                    "type": "AC Russian",
+                    "start": "Alexandria",
+                    "end": "Faiyum",
+                    "stops": 13
+                },
+                {
+                    "id": "197",
+                    "type": "Improved",
+                    "start": "Zagazig",
+                    "end": "Salheya",
+                    "stops": 18
+                },
+                {
+                    "id": "202",
+                    "type": "Improved",
+                    "start": "Matariyah",
+                    "end": "Mansoura",
+                    "stops": 25
+                },
+                {
+                    "id": "203",
+                    "type": "Improved",
+                    "start": "Mansoura",
+                    "end": "Matariyah",
+                    "stops": 25
+                },
+                {
+                    "id": "204",
+                    "type": "Improved",
+                    "start": "Matariyah",
+                    "end": "Mansoura",
+                    "stops": 25
+                },
+                {
+                    "id": "205",
+                    "type": "Improved",
+                    "start": "Mansoura",
+                    "end": "Matariyah",
+                    "stops": 25
+                },
+                {
+                    "id": "206",
+                    "type": "Improved",
+                    "start": "Matariyah",
+                    "end": "Mansoura",
+                    "stops": 25
+                },
+                {
+                    "id": "207",
+                    "type": "Improved",
+                    "start": "Mansoura",
+                    "end": "Matariyah",
+                    "stops": 25
+                },
+                {
+                    "id": "208",
+                    "type": "Improved",
+                    "start": "Matariyah",
+                    "end": "Mansoura",
+                    "stops": 25
+                },
+                {
+                    "id": "210",
+                    "type": "Improved",
+                    "start": "Matariyah",
+                    "end": "Mansoura",
+                    "stops": 25
+                },
+                {
+                    "id": "211",
+                    "type": "Improved",
+                    "start": "Mansoura",
+                    "end": "Matariyah",
+                    "stops": 25
+                },
+                {
+                    "id": "213",
+                    "type": "Improved",
+                    "start": "Mansoura",
+                    "end": "Matariyah",
+                    "stops": 25
+                },
+                {
+                    "id": "214",
+                    "type": "Improved",
+                    "start": "Matariyah",
+                    "end": "Mansoura",
+                    "stops": 25
+                },
+                {
+                    "id": "215",
+                    "type": "Improved",
+                    "start": "Mansoura",
+                    "end": "Matariyah",
+                    "stops": 25
+                },
+                {
+                    "id": "216",
+                    "type": "Improved",
+                    "start": "Matariyah",
+                    "end": "Mansoura",
+                    "stops": 25
+                },
+                {
+                    "id": "217",
+                    "type": "Improved",
+                    "start": "Mansoura",
+                    "end": "Matariyah",
+                    "stops": 25
+                },
+                {
+                    "id": "218",
+                    "type": "Improved",
+                    "start": "Matariyah",
+                    "end": "Mansoura",
+                    "stops": 25
+                },
+                {
+                    "id": "219",
+                    "type": "Improved",
+                    "start": "Mansoura",
+                    "end": "Matariyah",
+                    "stops": 25
+                },
+                {
+                    "id": "226",
+                    "type": "Improved",
+                    "start": "Zagazig",
+                    "end": "Tanta",
+                    "stops": 22
+                },
+                {
+                    "id": "227",
+                    "type": "Improved",
+                    "start": "Tanta",
+                    "end": "Zagazig",
+                    "stops": 22
+                },
+                {
+                    "id": "228",
+                    "type": "Improved",
+                    "start": "Zagazig",
+                    "end": "Tanta",
+                    "stops": 22
+                },
+                {
+                    "id": "229",
+                    "type": "Improved",
+                    "start": "Tanta",
+                    "end": "Zagazig",
+                    "stops": 23
+                },
+                {
+                    "id": "230",
+                    "type": "Improved",
+                    "start": "Zagazig",
+                    "end": "Tanta",
+                    "stops": 22
+                },
+                {
+                    "id": "231",
+                    "type": "Improved",
+                    "start": "Tanta",
+                    "end": "Zagazig",
+                    "stops": 23
+                },
+                {
+                    "id": "232",
+                    "type": "Improved",
+                    "start": "Zagazig",
+                    "end": "Tanta",
+                    "stops": 23
+                },
+                {
+                    "id": "234",
+                    "type": "Improved",
+                    "start": "Zagazig",
+                    "end": "Tanta",
+                    "stops": 22
+                },
+                {
+                    "id": "235",
+                    "type": "Improved",
+                    "start": "Tanta",
+                    "end": "Zagazig",
+                    "stops": 22
+                },
+                {
+                    "id": "237",
+                    "type": "Improved",
+                    "start": "Tanta",
+                    "end": "Zagazig",
+                    "stops": 22
+                },
+                {
+                    "id": "238",
+                    "type": "Improved",
+                    "start": "Zagazig",
+                    "end": "Tanta",
+                    "stops": 22
+                },
+                {
+                    "id": "239",
+                    "type": "Improved",
+                    "start": "Tanta",
+                    "end": "Zagazig",
+                    "stops": 22
+                },
+                {
+                    "id": "240",
+                    "type": "Improved",
+                    "start": "Zagazig",
+                    "end": "Tanta",
+                    "stops": 22
+                },
+                {
+                    "id": "241",
+                    "type": "Improved",
+                    "start": "Tanta",
+                    "end": "Zagazig",
+                    "stops": 22
+                },
+                {
+                    "id": "243",
+                    "type": "Improved",
+                    "start": "Tanta",
+                    "end": "Zagazig",
+                    "stops": 22
+                },
+                {
+                    "id": "244",
+                    "type": "Improved",
+                    "start": "Zagazig",
+                    "end": "Tanta",
+                    "stops": 22
+                },
+                {
+                    "id": "246",
+                    "type": "Improved",
+                    "start": "Zagazig",
+                    "end": "Tanta",
+                    "stops": 22
+                },
+                {
+                    "id": "247",
+                    "type": "Improved",
+                    "start": "Tanta",
+                    "end": "Zagazig",
+                    "stops": 22
+                },
+                {
+                    "id": "255",
+                    "type": "Improved",
+                    "start": "Banha",
+                    "end": "Ismailia",
+                    "stops": 27
+                },
+                {
+                    "id": "260",
+                    "type": "Improved",
+                    "start": "Ismailia",
+                    "end": "Banha",
+                    "stops": 27
+                },
+                {
+                    "id": "264",
+                    "type": "Improved",
+                    "start": "Ismailia",
+                    "end": "Zagazig",
+                    "stops": 17
+                },
+                {
+                    "id": "268",
+                    "type": "Improved",
+                    "start": "Mansoura",
+                    "end": "Tanta",
+                    "stops": 18
+                },
+                {
+                    "id": "270",
+                    "type": "Improved",
+                    "start": "Ismailia",
+                    "end": "Banha",
+                    "stops": 27
+                },
+                {
+                    "id": "271",
+                    "type": "Improved",
+                    "start": "Zagazig",
+                    "end": "Ismailia",
+                    "stops": 17
+                },
+                {
+                    "id": "272",
+                    "type": "Improved",
+                    "start": "Ismailia",
+                    "end": "Zagazig",
+                    "stops": 17
+                },
+                {
+                    "id": "273",
+                    "type": "Improved",
+                    "start": "Zagazig",
+                    "end": "Ismailia",
+                    "stops": 17
+                },
+                {
+                    "id": "274",
+                    "type": "Improved",
+                    "start": "Ismailia",
+                    "end": "Zagazig",
+                    "stops": 17
+                },
+                {
+                    "id": "277",
+                    "type": "Improved",
+                    "start": "Zagazig",
+                    "end": "Ismailia",
+                    "stops": 17
+                },
+                {
+                    "id": "278",
+                    "type": "Improved",
+                    "start": "Ismailia",
+                    "end": "Zagazig",
+                    "stops": 17
+                },
+                {
+                    "id": "279",
+                    "type": "Improved",
+                    "start": "Zagazig",
+                    "end": "Ismailia",
+                    "stops": 17
+                },
+                {
+                    "id": "281",
+                    "type": "Improved",
+                    "start": "Zagazig",
+                    "end": "Ismailia",
+                    "stops": 17
+                },
+                {
+                    "id": "285",
+                    "type": "Improved",
+                    "start": "Ismailia",
+                    "end": "Port Said",
+                    "stops": 10
+                },
+                {
+                    "id": "286",
+                    "type": "Improved",
+                    "start": "Port Said",
+                    "end": "Ismailia",
+                    "stops": 10
+                },
+                {
+                    "id": "287",
+                    "type": "Improved",
+                    "start": "Ismailia",
+                    "end": "Port Said",
+                    "stops": 11
+                },
+                {
+                    "id": "288",
+                    "type": "Improved",
+                    "start": "Port Said",
+                    "end": "Ismailia",
+                    "stops": 10
+                },
+                {
+                    "id": "297",
+                    "type": "Improved",
+                    "start": "Tanta",
+                    "end": "Mansoura",
+                    "stops": 10
+                },
+                {
+                    "id": "298",
+                    "type": "Improved",
+                    "start": "Mansoura",
+                    "end": "Tanta",
+                    "stops": 18
+                },
+                {
+                    "id": "299",
+                    "type": "Improved",
+                    "start": "Marsa Matruh",
+                    "end": "Moharam Beek",
+                    "stops": 21
+                },
+                {
+                    "id": "300",
+                    "type": "Improved",
+                    "start": "Moharam Beek",
+                    "end": "Marsa Matruh",
+                    "stops": 18
+                },
+                {
+                    "id": "320",
+                    "type": "Improved",
+                    "start": "Shibin Qanatir",
+                    "end": "Cairo",
+                    "stops": 11
+                },
+                {
+                    "id": "321",
+                    "type": "Improved",
+                    "start": "Cairo",
+                    "end": "Shibin Qanatir",
+                    "stops": 11
+                },
+                {
+                    "id": "324",
+                    "type": "Improved",
+                    "start": "Shibin Qanatir",
+                    "end": "Cairo",
+                    "stops": 11
+                },
+                {
+                    "id": "325",
+                    "type": "Improved",
+                    "start": "Cairo",
+                    "end": "Shibin Qanatir",
+                    "stops": 11
+                },
+                {
+                    "id": "327",
+                    "type": "Improved",
+                    "start": "Cairo",
+                    "end": "Shibin Qanatir",
+                    "stops": 11
+                },
+                {
+                    "id": "328",
+                    "type": "Improved",
+                    "start": "Shibin Qanatir",
+                    "end": "Cairo",
+                    "stops": 11
+                },
+                {
+                    "id": "330",
+                    "type": "Improved",
+                    "start": "Mansoura",
+                    "end": "Zagazig",
+                    "stops": 23
+                },
+                {
+                    "id": "332",
+                    "type": "Improved",
+                    "start": "Salheya",
+                    "end": "Cairo",
+                    "stops": 32
+                },
+                {
+                    "id": "333",
+                    "type": "Improved",
+                    "start": "Cairo",
+                    "end": "Mansoura",
+                    "stops": 18
+                },
+                {
+                    "id": "334",
+                    "type": "Improved",
+                    "start": "Mansoura",
+                    "end": "Cairo",
+                    "stops": 20
+                },
+                {
+                    "id": "336",
+                    "type": "Improved",
+                    "start": "Mansoura",
+                    "end": "Cairo",
+                    "stops": 18
+                },
+                {
+                    "id": "337",
+                    "type": "Improved",
+                    "start": "Tanta",
+                    "end": "Santa",
+                    "stops": 4
+                },
+                {
+                    "id": "339",
+                    "type": "Improved",
+                    "start": "Cairo",
+                    "end": "Mansoura",
+                    "stops": 19
+                },
+                {
+                    "id": "340",
+                    "type": "Improved",
+                    "start": "Mansoura",
+                    "end": "Cairo",
+                    "stops": 16
+                },
+                {
+                    "id": "341",
+                    "type": "Improved",
+                    "start": "Cairo",
+                    "end": "Mansoura",
+                    "stops": 18
+                },
+                {
+                    "id": "343",
+                    "type": "Improved",
+                    "start": "Cairo",
+                    "end": "Salheya",
+                    "stops": 25
+                },
+                {
+                    "id": "345",
+                    "type": "Improved",
+                    "start": "Zagazig",
+                    "end": "Mansoura",
+                    "stops": 23
+                },
+                {
+                    "id": "347",
+                    "type": "Improved",
+                    "start": "Minuf",
+                    "end": "Tanta",
+                    "stops": 12
+                },
+                {
+                    "id": "352",
+                    "type": "Improved",
+                    "start": "Santa",
+                    "end": "Tanta",
+                    "stops": 4
+                },
+                {
+                    "id": "374",
+                    "type": "Improved",
+                    "start": "Zagazig",
+                    "end": "Cairo",
+                    "stops": 22
+                },
+                {
+                    "id": "375",
+                    "type": "Improved",
+                    "start": "Zagazig",
+                    "end": "Mansoura",
+                    "stops": 23
+                },
+                {
+                    "id": "376",
+                    "type": "Improved",
+                    "start": "Zagazig",
+                    "end": "Cairo",
+                    "stops": 22
+                },
+                {
+                    "id": "377",
+                    "type": "Improved",
+                    "start": "Cairo",
+                    "end": "Mansoura",
+                    "stops": 44
+                },
+                {
+                    "id": "378",
+                    "type": "Improved",
+                    "start": "Mansoura",
+                    "end": "Cairo",
+                    "stops": 44
+                },
+                {
+                    "id": "379",
+                    "type": "Improved",
+                    "start": "Cairo",
+                    "end": "Mansoura",
+                    "stops": 43
+                },
+                {
+                    "id": "380",
+                    "type": "Improved",
+                    "start": "Mansoura",
+                    "end": "Cairo",
+                    "stops": 44
+                },
+                {
+                    "id": "381",
+                    "type": "Improved",
+                    "start": "Cairo",
+                    "end": "Mansoura",
+                    "stops": 44
+                },
+                {
+                    "id": "382",
+                    "type": "Improved",
+                    "start": "Mansoura",
+                    "end": "Cairo",
+                    "stops": 44
+                },
+                {
+                    "id": "383",
+                    "type": "Improved",
+                    "start": "Cairo",
+                    "end": "Mansoura",
+                    "stops": 44
+                },
+                {
+                    "id": "384",
+                    "type": "Improved",
+                    "start": "Mansoura",
+                    "end": "Cairo",
+                    "stops": 44
+                },
+                {
+                    "id": "385",
+                    "type": "Improved",
+                    "start": "Cairo",
+                    "end": "Mansoura",
+                    "stops": 44
+                },
+                {
+                    "id": "386",
+                    "type": "Improved",
+                    "start": "Mansoura",
+                    "end": "Cairo",
+                    "stops": 44
+                },
+                {
+                    "id": "388",
+                    "type": "Improved",
+                    "start": "Mansoura",
+                    "end": "Cairo",
+                    "stops": 44
+                },
+                {
+                    "id": "389",
+                    "type": "Improved",
+                    "start": "Cairo",
+                    "end": "Mansoura",
+                    "stops": 44
+                },
+                {
+                    "id": "391",
+                    "type": "Russian",
+                    "start": "Cairo",
+                    "end": "Mansoura",
+                    "stops": 44
+                },
+                {
+                    "id": "392",
+                    "type": "Improved",
+                    "start": "Mansoura",
+                    "end": "Cairo",
+                    "stops": 44
+                },
+                {
+                    "id": "393",
+                    "type": "Improved",
+                    "start": "Cairo",
+                    "end": "Mansoura",
+                    "stops": 44
+                },
+                {
+                    "id": "394",
+                    "type": "Improved",
+                    "start": "Mansoura",
+                    "end": "Zagazig",
+                    "stops": 23
+                },
+                {
+                    "id": "395",
+                    "type": "Improved",
+                    "start": "Cairo",
+                    "end": "Zagazig",
+                    "stops": 22
+                },
+                {
+                    "id": "397",
+                    "type": "Improved",
+                    "start": "Cairo",
+                    "end": "Zagazig",
+                    "stops": 22
+                },
+                {
+                    "id": "450",
+                    "type": "Improved",
+                    "start": "Damanhour",
+                    "end": "Tanta",
+                    "stops": 27
+                },
+                {
+                    "id": "453",
+                    "type": "Improved",
+                    "start": "Qleen",
+                    "end": "Damanhour",
+                    "stops": 15
+                },
+                {
+                    "id": "458",
+                    "type": "Improved",
+                    "start": "Damanhour",
+                    "end": "Qleen",
+                    "stops": 15
+                },
+                {
+                    "id": "459",
+                    "type": "Improved",
+                    "start": "Qleen",
+                    "end": "Damanhour",
+                    "stops": 15
+                },
+                {
+                    "id": "460",
+                    "type": "Improved",
+                    "start": "Damanhour",
+                    "end": "Qleen",
+                    "stops": 15
+                },
+                {
+                    "id": "461",
+                    "type": "Improved",
+                    "start": "Tanta",
+                    "end": "Damanhour",
+                    "stops": 27
+                },
+                {
+                    "id": "462",
+                    "type": "Improved",
+                    "start": "Damanhour",
+                    "end": "Tanta",
+                    "stops": 27
+                },
+                {
+                    "id": "463",
+                    "type": "Improved",
+                    "start": "Qleen",
+                    "end": "Damanhour",
+                    "stops": 15
+                },
+                {
+                    "id": "464",
+                    "type": "Improved",
+                    "start": "Damanhour",
+                    "end": "Qleen",
+                    "stops": 15
+                },
+                {
+                    "id": "465",
+                    "type": "Improved",
+                    "start": "Tanta",
+                    "end": "Damanhour",
+                    "stops": 27
+                },
+                {
+                    "id": "466",
+                    "type": "Improved",
+                    "start": "Damanhour",
+                    "end": "Tanta",
+                    "stops": 27
+                },
+                {
+                    "id": "467",
+                    "type": "Improved",
+                    "start": "Qleen",
+                    "end": "Damanhour",
+                    "stops": 15
+                },
+                {
+                    "id": "468",
+                    "type": "Improved",
+                    "start": "Damanhour",
+                    "end": "Qleen",
+                    "stops": 15
+                },
+                {
+                    "id": "469",
+                    "type": "Improved",
+                    "start": "Tanta",
+                    "end": "Damanhour",
+                    "stops": 27
+                },
+                {
+                    "id": "470",
+                    "type": "Improved",
+                    "start": "Damanhour",
+                    "end": "Tanta",
+                    "stops": 27
+                },
+                {
+                    "id": "471",
+                    "type": "Improved",
+                    "start": "Qleen",
+                    "end": "Damanhour",
+                    "stops": 15
+                },
+                {
+                    "id": "472",
+                    "type": "Improved",
+                    "start": "Damanhour",
+                    "end": "Qleen",
+                    "stops": 15
+                },
+                {
+                    "id": "473",
+                    "type": "Improved",
+                    "start": "Tanta",
+                    "end": "Damanhour",
+                    "stops": 27
+                },
+                {
+                    "id": "474",
+                    "type": "Improved",
+                    "start": "Damanhour",
+                    "end": "Qleen",
+                    "stops": 15
+                },
+                {
+                    "id": "483",
+                    "type": "Improved",
+                    "start": "Qleen",
+                    "end": "Mansoura",
+                    "stops": 30
+                },
+                {
+                    "id": "484",
+                    "type": "Improved",
+                    "start": "Mansoura",
+                    "end": "Qleen",
+                    "stops": 30
+                },
+                {
+                    "id": "485",
+                    "type": "Improved",
+                    "start": "Qleen",
+                    "end": "Shirbin",
+                    "stops": 25
+                },
+                {
+                    "id": "487",
+                    "type": "Improved",
+                    "start": "Tanta",
+                    "end": "Shirbin",
+                    "stops": 37
+                },
+                {
+                    "id": "488",
+                    "type": "Improved",
+                    "start": "Biyala",
+                    "end": "Tanta",
+                    "stops": 30
+                },
+                {
+                    "id": "489",
+                    "type": "Improved",
+                    "start": "Tanta",
+                    "end": "Shirbin",
+                    "stops": 37
+                },
+                {
+                    "id": "490",
+                    "type": "Improved",
+                    "start": "Shirbin",
+                    "end": "Qleen",
+                    "stops": 25
+                },
+                {
+                    "id": "491",
+                    "type": "Improved",
+                    "start": "Tanta",
+                    "end": "Shirbin",
+                    "stops": 37
+                },
+                {
+                    "id": "492",
+                    "type": "Improved",
+                    "start": "Shirbin",
+                    "end": "Tanta",
+                    "stops": 37
+                },
+                {
+                    "id": "493",
+                    "type": "Improved",
+                    "start": "Qleen",
+                    "end": "Shirbin",
+                    "stops": 25
+                },
+                {
+                    "id": "494",
+                    "type": "Improved",
+                    "start": "Shirbin",
+                    "end": "Tanta",
+                    "stops": 37
+                },
+                {
+                    "id": "495",
+                    "type": "Improved",
+                    "start": "Tanta",
+                    "end": "Shirbin",
+                    "stops": 37
+                },
+                {
+                    "id": "496",
+                    "type": "Improved",
+                    "start": "Shirbin",
+                    "end": "Tanta",
+                    "stops": 37
+                },
+                {
+                    "id": "497",
+                    "type": "Improved",
+                    "start": "Qleen",
+                    "end": "Shirbin",
+                    "stops": 25
+                },
+                {
+                    "id": "498",
+                    "type": "Improved",
+                    "start": "Shirbin",
+                    "end": "Qleen",
+                    "stops": 25
+                },
+                {
+                    "id": "499",
+                    "type": "Improved",
+                    "start": "Tanta",
+                    "end": "Shirbin",
+                    "stops": 37
+                },
+                {
+                    "id": "500",
+                    "type": "Improved",
+                    "start": "Shirbin",
+                    "end": "Qleen",
+                    "stops": 13
+                },
+                {
+                    "id": "501",
+                    "type": "Improved",
+                    "start": "Tanta",
+                    "end": "Shirbin",
+                    "stops": 37
+                },
+                {
+                    "id": "502",
+                    "type": "Improved",
+                    "start": "Shirbin",
+                    "end": "Tanta",
+                    "stops": 37
+                },
+                {
+                    "id": "504",
+                    "type": "Improved",
+                    "start": "Shirbin",
+                    "end": "Qleen",
+                    "stops": 25
+                },
+                {
+                    "id": "506",
+                    "type": "Improved",
+                    "start": "Shirbin",
+                    "end": "Tanta",
+                    "stops": 37
+                },
+                {
+                    "id": "507",
+                    "type": "Improved",
+                    "start": "Qleen",
+                    "end": "Shirbin",
+                    "stops": 25
+                },
+                {
+                    "id": "508",
+                    "type": "Improved",
+                    "start": "Shirbin",
+                    "end": "Qleen",
+                    "stops": 25
+                },
+                {
+                    "id": "509",
+                    "type": "Improved",
+                    "start": "Qleen",
+                    "end": "Shirbin",
+                    "stops": 25
+                },
+                {
+                    "id": "510",
+                    "type": "Improved",
+                    "start": "Qanatir N",
+                    "end": "Cairo",
+                    "stops": 6
+                },
+                {
+                    "id": "511",
+                    "type": "Improved",
+                    "start": "Cairo",
+                    "end": "Qanatir N",
+                    "stops": 6
+                },
+                {
+                    "id": "512",
+                    "type": "Improved",
+                    "start": "Minuf",
+                    "end": "Cairo",
+                    "stops": 20
+                },
+                {
+                    "id": "513",
+                    "type": "Improved",
+                    "start": "Cairo",
+                    "end": "Shalaqan",
+                    "stops": 5
+                },
+                {
+                    "id": "514",
+                    "type": "Improved",
+                    "start": "Qanatir N",
+                    "end": "Cairo",
+                    "stops": 6
+                },
+                {
+                    "id": "522",
+                    "type": "Improved",
+                    "start": "Santa",
+                    "end": "Tanta",
+                    "stops": 4
+                },
+                {
+                    "id": "523",
+                    "type": "Improved",
+                    "start": "Cairo",
+                    "end": "Shalaqan",
+                    "stops": 5
+                },
+                {
+                    "id": "524",
+                    "type": "Improved",
+                    "start": "Qanatir N",
+                    "end": "Cairo",
+                    "stops": 6
+                },
+                {
+                    "id": "525",
+                    "type": "Improved",
+                    "start": "Cairo",
+                    "end": "Qanatir N",
+                    "stops": 6
+                },
+                {
+                    "id": "526",
+                    "type": "Improved",
+                    "start": "Qanatir N",
+                    "end": "Cairo",
+                    "stops": 6
+                },
+                {
+                    "id": "529",
+                    "type": "Improved",
+                    "start": "Cairo",
+                    "end": "Minuf",
+                    "stops": 20
+                },
+                {
+                    "id": "530",
+                    "type": "Improved",
+                    "start": "Minuf",
+                    "end": "Cairo",
+                    "stops": 20
+                },
+                {
+                    "id": "531",
+                    "type": "Improved",
+                    "start": "Minuf",
+                    "end": "Tanta",
+                    "stops": 12
+                },
+                {
+                    "id": "532",
+                    "type": "Improved",
+                    "start": "Minuf",
+                    "end": "Cairo",
+                    "stops": 20
+                },
+                {
+                    "id": "533",
+                    "type": "Improved",
+                    "start": "Cairo",
+                    "end": "Minuf",
+                    "stops": 20
+                },
+                {
+                    "id": "534",
+                    "type": "Improved",
+                    "start": "Tanta",
+                    "end": "Cairo",
+                    "stops": 31
+                },
+                {
+                    "id": "535",
+                    "type": "Improved",
+                    "start": "Cairo",
+                    "end": "Tanta",
+                    "stops": 31
+                },
+                {
+                    "id": "536",
+                    "type": "Improved",
+                    "start": "Tanta",
+                    "end": "Minuf",
+                    "stops": 12
+                },
+                {
+                    "id": "537",
+                    "type": "Improved",
+                    "start": "Cairo",
+                    "end": "Tanta",
+                    "stops": 31
+                },
+                {
+                    "id": "538",
+                    "type": "Improved",
+                    "start": "Kafr Zayat",
+                    "end": "Cairo",
+                    "stops": 37
+                },
+                {
+                    "id": "539",
+                    "type": "Improved",
+                    "start": "Cairo",
+                    "end": "Kafr Zayat",
+                    "stops": 37
+                },
+                {
+                    "id": "540",
+                    "type": "Improved",
+                    "start": "Tanta",
+                    "end": "Cairo",
+                    "stops": 31
+                },
+                {
+                    "id": "541",
+                    "type": "Improved",
+                    "start": "Minuf",
+                    "end": "Tanta",
+                    "stops": 12
+                },
+                {
+                    "id": "543",
+                    "type": "Improved",
+                    "start": "Cairo",
+                    "end": "Tanta",
+                    "stops": 31
+                },
+                {
+                    "id": "544",
+                    "type": "Improved",
+                    "start": "Tanta",
+                    "end": "Cairo",
+                    "stops": 31
+                },
+                {
+                    "id": "545",
+                    "type": "Improved",
+                    "start": "Cairo",
+                    "end": "Tanta",
+                    "stops": 31
+                },
+                {
+                    "id": "546",
+                    "type": "Improved",
+                    "start": "Tanta",
+                    "end": "Cairo",
+                    "stops": 31
+                },
+                {
+                    "id": "547",
+                    "type": "Improved",
+                    "start": "Cairo",
+                    "end": "Tanta",
+                    "stops": 31
+                },
+                {
+                    "id": "548",
+                    "type": "Improved",
+                    "start": "Tanta",
+                    "end": "Cairo",
+                    "stops": 31
+                },
+                {
+                    "id": "549",
+                    "type": "Improved",
+                    "start": "Cairo",
+                    "end": "Tanta",
+                    "stops": 31
+                },
+                {
+                    "id": "550",
+                    "type": "Improved",
+                    "start": "Tanta",
+                    "end": "Cairo",
+                    "stops": 31
+                },
+                {
+                    "id": "551",
+                    "type": "Improved",
+                    "start": "Cairo",
+                    "end": "Tanta",
+                    "stops": 31
+                },
+                {
+                    "id": "552",
+                    "type": "Improved",
+                    "start": "Tanta",
+                    "end": "Cairo",
+                    "stops": 31
+                },
+                {
+                    "id": "553",
+                    "type": "Improved",
+                    "start": "Cairo",
+                    "end": "Tanta",
+                    "stops": 31
+                },
+                {
+                    "id": "554",
+                    "type": "Improved",
+                    "start": "Tanta",
+                    "end": "Cairo",
+                    "stops": 31
+                },
+                {
+                    "id": "555",
+                    "type": "Improved",
+                    "start": "Cairo",
+                    "end": "Tanta",
+                    "stops": 31
+                },
+                {
+                    "id": "556",
+                    "type": "Improved",
+                    "start": "Tanta",
+                    "end": "Cairo",
+                    "stops": 31
+                },
+                {
+                    "id": "557",
+                    "type": "Improved",
+                    "start": "Cairo",
+                    "end": "Kafr Zayat",
+                    "stops": 37
+                },
+                {
+                    "id": "558",
+                    "type": "Improved",
+                    "start": "Tanta",
+                    "end": "Cairo",
+                    "stops": 31
+                },
+                {
+                    "id": "560",
+                    "type": "Improved",
+                    "start": "Tanta",
+                    "end": "Minuf",
+                    "stops": 12
+                },
+                {
+                    "id": "561",
+                    "type": "Improved",
+                    "start": "Cairo",
+                    "end": "Minuf",
+                    "stops": 20
+                },
+                {
+                    "id": "562",
+                    "type": "Improved",
+                    "start": "Tanta",
+                    "end": "Cairo",
+                    "stops": 31
+                },
+                {
+                    "id": "563",
+                    "type": "Improved",
+                    "start": "Cairo",
+                    "end": "Tanta",
+                    "stops": 31
+                },
+                {
+                    "id": "564",
+                    "type": "Improved",
+                    "start": "Tanta",
+                    "end": "Minuf",
+                    "stops": 12
+                },
+                {
+                    "id": "565",
+                    "type": "Improved",
+                    "start": "Minuf",
+                    "end": "Tanta",
+                    "stops": 12
+                },
+                {
+                    "id": "593",
+                    "type": "Russian",
+                    "start": "Cairo",
+                    "end": "Suez",
+                    "stops": 18
+                },
+                {
+                    "id": "594",
+                    "type": "Russian",
+                    "start": "Suez",
+                    "end": "Cairo",
+                    "stops": 19
+                },
+                {
+                    "id": "603",
+                    "type": "Improved",
+                    "start": "Banha",
+                    "end": "Minuf",
+                    "stops": 10
+                },
+                {
+                    "id": "604",
+                    "type": "Improved",
+                    "start": "Minuf",
+                    "end": "Banha",
+                    "stops": 10
+                },
+                {
+                    "id": "605",
+                    "type": "Improved",
+                    "start": "Banha",
+                    "end": "Minuf",
+                    "stops": 10
+                },
+                {
+                    "id": "606",
+                    "type": "Improved",
+                    "start": "Minuf",
+                    "end": "Banha",
+                    "stops": 10
+                },
+                {
+                    "id": "607",
+                    "type": "Improved",
+                    "start": "Banha",
+                    "end": "Minuf",
+                    "stops": 10
+                },
+                {
+                    "id": "608",
+                    "type": "Improved",
+                    "start": "Minuf",
+                    "end": "Banha",
+                    "stops": 10
+                },
+                {
+                    "id": "609",
+                    "type": "Improved",
+                    "start": "Banha",
+                    "end": "Minuf",
+                    "stops": 10
+                },
+                {
+                    "id": "610",
+                    "type": "Improved",
+                    "start": "Minuf",
+                    "end": "Banha",
+                    "stops": 10
+                },
+                {
+                    "id": "611",
+                    "type": "Improved",
+                    "start": "Banha",
+                    "end": "Minuf",
+                    "stops": 10
+                },
+                {
+                    "id": "612",
+                    "type": "Improved",
+                    "start": "Minuf",
+                    "end": "Banha",
+                    "stops": 10
+                },
+                {
+                    "id": "613",
+                    "type": "Improved",
+                    "start": "Banha",
+                    "end": "Minuf",
+                    "stops": 10
+                },
+                {
+                    "id": "614",
+                    "type": "Improved",
+                    "start": "Minuf",
+                    "end": "Banha",
+                    "stops": 10
+                },
+                {
+                    "id": "615",
+                    "type": "Improved",
+                    "start": "Banha",
+                    "end": "Minuf",
+                    "stops": 10
+                },
+                {
+                    "id": "616",
+                    "type": "Improved",
+                    "start": "Minuf",
+                    "end": "Banha",
+                    "stops": 10
+                },
+                {
+                    "id": "617",
+                    "type": "Improved",
+                    "start": "Banha",
+                    "end": "Minuf",
+                    "stops": 10
+                },
+                {
+                    "id": "618",
+                    "type": "Improved",
+                    "start": "Minuf",
+                    "end": "Banha",
+                    "stops": 10
+                },
+                {
+                    "id": "619",
+                    "type": "Improved",
+                    "start": "Banha",
+                    "end": "Minuf",
+                    "stops": 10
+                },
+                {
+                    "id": "620",
+                    "type": "Improved",
+                    "start": "Minuf",
+                    "end": "Banha",
+                    "stops": 10
+                },
+                {
+                    "id": "621",
+                    "type": "Improved",
+                    "start": "Banha",
+                    "end": "Minuf",
+                    "stops": 10
+                },
+                {
+                    "id": "622",
+                    "type": "Improved",
+                    "start": "Minuf",
+                    "end": "Banha",
+                    "stops": 10
+                },
+                {
+                    "id": "623",
+                    "type": "Improved",
+                    "start": "Banha",
+                    "end": "Minuf",
+                    "stops": 10
+                },
+                {
+                    "id": "624",
+                    "type": "Improved",
+                    "start": "Minuf",
+                    "end": "Banha",
+                    "stops": 10
+                },
+                {
+                    "id": "625",
+                    "type": "Improved",
+                    "start": "Banha",
+                    "end": "Minuf",
+                    "stops": 10
+                },
+                {
+                    "id": "626",
+                    "type": "Improved",
+                    "start": "Minuf",
+                    "end": "Banha",
+                    "stops": 10
+                },
+                {
+                    "id": "647",
+                    "type": "Improved",
+                    "start": "Hammam",
+                    "end": "Moharam Beek",
+                    "stops": 15
+                },
+                {
+                    "id": "648",
+                    "type": "Improved",
+                    "start": "Moharam Beek",
+                    "end": "Dabaa",
+                    "stops": 23
+                },
+                {
+                    "id": "649",
+                    "type": "Improved",
+                    "start": "Marsa Matruh",
+                    "end": "Moharam Beek",
+                    "stops": 34
+                },
+                {
+                    "id": "652",
+                    "type": "Improved",
+                    "start": "Moharam Beek",
+                    "end": "Hammam",
+                    "stops": 15
+                },
+                {
+                    "id": "653",
+                    "type": "Improved",
+                    "start": "Hammam",
+                    "end": "Moharam Beek",
+                    "stops": 15
+                },
+                {
+                    "id": "654",
+                    "type": "Improved",
+                    "start": "Moharam Beek",
+                    "end": "Marsa Matruh",
+                    "stops": 34
+                },
+                {
+                    "id": "655",
+                    "type": "Improved",
+                    "start": "Dabaa",
+                    "end": "Moharam Beek",
+                    "stops": 23
+                },
+                {
+                    "id": "656",
+                    "type": "Improved",
+                    "start": "Moharam Beek",
+                    "end": "Hammam",
+                    "stops": 15
+                },
+                {
+                    "id": "657",
+                    "type": "Improved",
+                    "start": "Burj Arab O",
+                    "end": "Moharam Beek",
+                    "stops": 2
+                },
+                {
+                    "id": "658",
+                    "type": "Improved",
+                    "start": "Moharam Beek",
+                    "end": "Hammam",
+                    "stops": 15
+                },
+                {
+                    "id": "661",
+                    "type": "Russian",
+                    "start": "Werdan",
+                    "end": "Alexandria",
+                    "stops": 26
+                },
+                {
+                    "id": "663",
+                    "type": "Improved",
+                    "start": "Bashtil",
+                    "end": "Itay Barud",
+                    "stops": 26
+                },
+                {
+                    "id": "664",
+                    "type": "Improved",
+                    "start": "Itay Barud",
+                    "end": "Bashtil",
+                    "stops": 34
+                },
+                {
+                    "id": "665",
+                    "type": "Improved",
+                    "start": "Bashtil",
+                    "end": "Itay Barud",
+                    "stops": 34
+                },
+                {
+                    "id": "666",
+                    "type": "Improved",
+                    "start": "Itay Barud",
+                    "end": "Bashtil",
+                    "stops": 19
+                },
+                {
+                    "id": "667",
+                    "type": "Improved",
+                    "start": "Bashtil",
+                    "end": "Itay Barud",
+                    "stops": 34
+                },
+                {
+                    "id": "668",
+                    "type": "Improved",
+                    "start": "Itay Barud",
+                    "end": "Bashtil",
+                    "stops": 21
+                },
+                {
+                    "id": "669",
+                    "type": "Improved",
+                    "start": "Bashtil",
+                    "end": "Itay Barud",
+                    "stops": 20
+                },
+                {
+                    "id": "670",
+                    "type": "Improved",
+                    "start": "Itay Barud",
+                    "end": "Bashtil",
+                    "stops": 34
+                },
+                {
+                    "id": "671",
+                    "type": "Improved",
+                    "start": "Bashtil",
+                    "end": "Itay Barud",
+                    "stops": 34
+                },
+                {
+                    "id": "672",
+                    "type": "Improved",
+                    "start": "Itay Barud",
+                    "end": "Bashtil",
+                    "stops": 34
+                },
+                {
+                    "id": "673",
+                    "type": "Improved",
+                    "start": "Bashtil",
+                    "end": "Itay Barud",
+                    "stops": 34
+                },
+                {
+                    "id": "674",
+                    "type": "Improved",
+                    "start": "Itay Barud",
+                    "end": "Bashtil",
+                    "stops": 14
+                },
+                {
+                    "id": "675",
+                    "type": "Improved",
+                    "start": "Bashtil",
+                    "end": "Itay Barud",
+                    "stops": 34
+                },
+                {
+                    "id": "676",
+                    "type": "Improved",
+                    "start": "Itay Barud",
+                    "end": "Bashtil",
+                    "stops": 34
+                },
+                {
+                    "id": "677",
+                    "type": "Improved",
+                    "start": "Bashtil",
+                    "end": "Itay Barud",
+                    "stops": 34
+                },
+                {
+                    "id": "678",
+                    "type": "Improved",
+                    "start": "Itay Barud",
+                    "end": "Bashtil",
+                    "stops": 16
+                },
+                {
+                    "id": "679",
+                    "type": "Improved",
+                    "start": "Bashtil",
+                    "end": "Itay Barud",
+                    "stops": 34
+                },
+                {
+                    "id": "680",
+                    "type": "Improved",
+                    "start": "Itay Barud",
+                    "end": "Bashtil",
+                    "stops": 34
+                },
+                {
+                    "id": "681",
+                    "type": "Improved",
+                    "start": "Bashtil",
+                    "end": "Itay Barud",
+                    "stops": 34
+                },
+                {
+                    "id": "682",
+                    "type": "Improved",
+                    "start": "Itay Barud",
+                    "end": "Bashtil",
+                    "stops": 34
+                },
+                {
+                    "id": "683",
+                    "type": "Improved",
+                    "start": "Bashtil",
+                    "end": "Itay Barud",
+                    "stops": 34
+                },
+                {
+                    "id": "684",
+                    "type": "Improved",
+                    "start": "Itay Barud",
+                    "end": "Bashtil",
+                    "stops": 34
+                },
+                {
+                    "id": "685",
+                    "type": "Improved",
+                    "start": "Bashtil",
+                    "end": "Itay Barud",
+                    "stops": 18
+                },
+                {
+                    "id": "686",
+                    "type": "Improved",
+                    "start": "Itay Barud",
+                    "end": "Bashtil",
+                    "stops": 34
+                },
+                {
+                    "id": "687",
+                    "type": "Improved",
+                    "start": "Bashtil",
+                    "end": "Itay Barud",
+                    "stops": 16
+                },
+                {
+                    "id": "688",
+                    "type": "Russian",
+                    "start": "Alexandria",
+                    "end": "Bashtil",
+                    "stops": 39
+                },
+                {
+                    "id": "689",
+                    "type": "Improved",
+                    "start": "Bashtil",
+                    "end": "Itay Barud",
+                    "stops": 34
+                },
+                {
+                    "id": "690",
+                    "type": "Improved",
+                    "start": "Itay Barud",
+                    "end": "Bashtil",
+                    "stops": 34
+                },
+                {
+                    "id": "691",
+                    "type": "Improved",
+                    "start": "Bashtil",
+                    "end": "Itay Barud",
+                    "stops": 34
+                },
+                {
+                    "id": "692",
+                    "type": "Improved",
+                    "start": "Itay Barud",
+                    "end": "Bashtil",
+                    "stops": 13
+                },
+                {
+                    "id": "693",
+                    "type": "Improved",
+                    "start": "Bashtil",
+                    "end": "Itay Barud",
+                    "stops": 17
+                },
+                {
+                    "id": "694",
+                    "type": "Improved",
+                    "start": "Itay Barud",
+                    "end": "Bashtil",
+                    "stops": 34
+                },
+                {
+                    "id": "695",
+                    "type": "Improved",
+                    "start": "Bashtil",
+                    "end": "Itay Barud",
+                    "stops": 34
+                },
+                {
+                    "id": "696",
+                    "type": "Improved",
+                    "start": "Itay Barud",
+                    "end": "Modiriyat Tahrir",
+                    "stops": 13
+                },
+                {
+                    "id": "698",
+                    "type": "Improved",
+                    "start": "Itay Barud",
+                    "end": "Modiriyat Tahrir",
+                    "stops": 13
+                },
+                {
+                    "id": "703",
+                    "type": "Improved",
+                    "start": "Monshaa",
+                    "end": "Maghagha",
+                    "stops": 23
+                },
+                {
+                    "id": "704",
+                    "type": "Improved",
+                    "start": "Maghagha",
+                    "end": "Monshaa",
+                    "stops": 24
+                },
+                {
+                    "id": "718",
+                    "type": "Improved",
+                    "start": "Asyut",
+                    "end": "Sohag",
+                    "stops": 19
+                },
+                {
+                    "id": "719",
+                    "type": "Improved",
+                    "start": "Sohag",
+                    "end": "Asyut",
+                    "stops": 19
+                },
+                {
+                    "id": "722",
+                    "type": "Improved",
+                    "start": "Asyut",
+                    "end": "Sohag",
+                    "stops": 19
+                },
+                {
+                    "id": "723",
+                    "type": "Improved",
+                    "start": "Sohag",
+                    "end": "Asyut",
+                    "stops": 19
+                },
+                {
+                    "id": "732",
+                    "type": "Improved",
+                    "start": "Sohag",
+                    "end": "Nagaa Hammadi",
+                    "stops": 20
+                },
+                {
+                    "id": "733",
+                    "type": "Improved",
+                    "start": "Nagaa Hammadi",
+                    "end": "Sohag",
+                    "stops": 20
+                },
+                {
+                    "id": "735",
+                    "type": "Improved",
+                    "start": "Nagaa Hammadi",
+                    "end": "Sohag",
+                    "stops": 20
+                },
+                {
+                    "id": "736",
+                    "type": "Improved",
+                    "start": "Sohag",
+                    "end": "Nagaa Hammadi",
+                    "stops": 20
+                },
+                {
+                    "id": "738",
+                    "type": "Improved",
+                    "start": "Edfu",
+                    "end": "Aswan",
+                    "stops": 26
+                },
+                {
+                    "id": "739",
+                    "type": "Improved",
+                    "start": "Edfu",
+                    "end": "Luxor",
+                    "stops": 25
+                },
+                {
+                    "id": "744",
+                    "type": "Improved",
+                    "start": "Nagaa Hammadi",
+                    "end": "Luxor",
+                    "stops": 27
+                },
+                {
+                    "id": "745",
+                    "type": "Improved",
+                    "start": "Luxor",
+                    "end": "Nagaa Hammadi",
+                    "stops": 25
+                },
+                {
+                    "id": "746",
+                    "type": "Improved",
+                    "start": "Nagaa Hammadi",
+                    "end": "Luxor",
+                    "stops": 27
+                },
+                {
+                    "id": "747",
+                    "type": "Improved",
+                    "start": "Luxor",
+                    "end": "Nagaa Hammadi",
+                    "stops": 27
+                },
+                {
+                    "id": "748",
+                    "type": "Improved",
+                    "start": "Nagaa Hammadi",
+                    "end": "Luxor",
+                    "stops": 27
+                },
+                {
+                    "id": "749",
+                    "type": "Improved",
+                    "start": "Luxor",
+                    "end": "Nagaa Hammadi",
+                    "stops": 27
+                },
+                {
+                    "id": "750",
+                    "type": "Improved",
+                    "start": "Edfu",
+                    "end": "Aswan",
+                    "stops": 26
+                },
+                {
+                    "id": "751",
+                    "type": "Improved",
+                    "start": "Edfu",
+                    "end": "Luxor",
+                    "stops": 25
+                },
+                {
+                    "id": "752",
+                    "type": "Improved",
+                    "start": "Luxor",
+                    "end": "Edfu",
+                    "stops": 24
+                },
+                {
+                    "id": "753",
+                    "type": "Improved",
+                    "start": "Aswan",
+                    "end": "Edfu",
+                    "stops": 26
+                },
+                {
+                    "id": "754",
+                    "type": "Improved",
+                    "start": "Edfu",
+                    "end": "Aswan",
+                    "stops": 26
+                },
+                {
+                    "id": "755",
+                    "type": "Improved",
+                    "start": "Edfu",
+                    "end": "Luxor",
+                    "stops": 25
+                },
+                {
+                    "id": "756",
+                    "type": "Improved",
+                    "start": "Luxor",
+                    "end": "Edfu",
+                    "stops": 25
+                },
+                {
+                    "id": "757",
+                    "type": "Improved",
+                    "start": "Aswan",
+                    "end": "Edfu",
+                    "stops": 26
+                },
+                {
+                    "id": "758",
+                    "type": "Improved",
+                    "start": "Luxor",
+                    "end": "Edfu",
+                    "stops": 25
+                },
+                {
+                    "id": "759",
+                    "type": "Improved",
+                    "start": "Aswan",
+                    "end": "Edfu",
+                    "stops": 26
+                },
+                {
+                    "id": "782",
+                    "type": "Improved",
+                    "start": "Mamurah",
+                    "end": "Busayli",
+                    "stops": 13
+                },
+                {
+                    "id": "803",
+                    "type": "Improved",
+                    "start": "Tanta",
+                    "end": "Shirbin",
+                    "stops": 21
+                },
+                {
+                    "id": "804",
+                    "type": "Improved",
+                    "start": "Kafr Sheikh",
+                    "end": "Tanta",
+                    "stops": 12
+                },
+                {
+                    "id": "807",
+                    "type": "Russian",
+                    "start": "Cairo",
+                    "end": "Mansoura",
+                    "stops": 12
+                },
+                {
+                    "id": "808",
+                    "type": "Russian",
+                    "start": "Mansoura",
+                    "end": "Cairo",
+                    "stops": 14
+                },
+                {
+                    "id": "809",
+                    "type": "Mix",
+                    "start": "Cairo",
+                    "end": "Shirbin",
+                    "stops": 25
+                },
+                {
+                    "id": "810",
+                    "type": "Mix",
+                    "start": "Shirbin",
+                    "end": "Cairo",
+                    "stops": 21
+                },
+                {
+                    "id": "818",
+                    "type": "Improved",
+                    "start": "Mit Ghamer",
+                    "end": "Cairo",
+                    "stops": 16
+                },
+                {
+                    "id": "833",
+                    "type": "Russian",
+                    "start": "Aswan",
+                    "end": "Cairo",
+                    "stops": 57
+                },
+                {
+                    "id": "835",
+                    "type": "Improved",
+                    "start": "Cairo",
+                    "end": "Mit Ghamer",
+                    "stops": 16
+                },
+                {
+                    "id": "844",
+                    "type": "Improved",
+                    "start": "Kafr Zayat",
+                    "end": "Minuf",
+                    "stops": 18
+                },
+                {
+                    "id": "845",
+                    "type": "Improved",
+                    "start": "Minuf",
+                    "end": "Kafr Zayat",
+                    "stops": 18
+                },
+                {
+                    "id": "846",
+                    "type": "Improved",
+                    "start": "Kafr Zayat",
+                    "end": "Minuf",
+                    "stops": 18
+                },
+                {
+                    "id": "847",
+                    "type": "Improved",
+                    "start": "Minuf",
+                    "end": "Kafr Zayat",
+                    "stops": 18
+                },
+                {
+                    "id": "848",
+                    "type": "Improved",
+                    "start": "Kafr Zayat",
+                    "end": "Minuf",
+                    "stops": 18
+                },
+                {
+                    "id": "850",
+                    "type": "Improved",
+                    "start": "Kafr Zayat",
+                    "end": "Minuf",
+                    "stops": 18
+                },
+                {
+                    "id": "851",
+                    "type": "Improved",
+                    "start": "Minuf",
+                    "end": "Kafr Zayat",
+                    "stops": 18
+                },
+                {
+                    "id": "852",
+                    "type": "Improved",
+                    "start": "Kafr Zayat",
+                    "end": "Minuf",
+                    "stops": 18
+                },
+                {
+                    "id": "853",
+                    "type": "Improved",
+                    "start": "Minuf",
+                    "end": "Kafr Zayat",
+                    "stops": 18
+                },
+                {
+                    "id": "854",
+                    "type": "Improved",
+                    "start": "Kafr Zayat",
+                    "end": "Minuf",
+                    "stops": 18
+                },
+                {
+                    "id": "855",
+                    "type": "Improved",
+                    "start": "Minuf",
+                    "end": "Kafr Zayat",
+                    "stops": 18
+                },
+                {
+                    "id": "856",
+                    "type": "Improved",
+                    "start": "Kafr Zayat",
+                    "end": "Minuf",
+                    "stops": 18
+                },
+                {
+                    "id": "857",
+                    "type": "Improved",
+                    "start": "Minuf",
+                    "end": "Kafr Zayat",
+                    "stops": 18
+                },
+                {
+                    "id": "858",
+                    "type": "Improved",
+                    "start": "Kafr Zayat",
+                    "end": "Minuf",
+                    "stops": 18
+                },
+                {
+                    "id": "859",
+                    "type": "Improved",
+                    "start": "Minuf",
+                    "end": "Kafr Zayat",
+                    "stops": 18
+                },
+                {
+                    "id": "860",
+                    "type": "Improved",
+                    "start": "Kafr Zayat",
+                    "end": "Minuf",
+                    "stops": 18
+                },
+                {
+                    "id": "861",
+                    "type": "Improved",
+                    "start": "Minuf",
+                    "end": "Kafr Zayat",
+                    "stops": 18
+                },
+                {
+                    "id": "871",
+                    "type": "AC Russian",
+                    "start": "Asyut",
+                    "end": "Cairo",
+                    "stops": 16
+                },
+                {
+                    "id": "872",
+                    "type": "AC Russian",
+                    "start": "Cairo",
+                    "end": "Asyut",
+                    "stops": 17
+                },
+                {
+                    "id": "875",
+                    "type": "Improved",
+                    "start": "Tanta",
+                    "end": "Kafr Sheikh",
+                    "stops": 12
+                },
+                {
+                    "id": "876",
+                    "type": "Improved",
+                    "start": "Shirbin",
+                    "end": "Tanta",
+                    "stops": 20
+                },
+                {
+                    "id": "890",
+                    "type": "AC Russian",
+                    "start": "Cairo",
+                    "end": "Sohag",
+                    "stops": 12
+                },
+                {
+                    "id": "891",
+                    "type": "AC Russian",
+                    "start": "Sohag",
+                    "end": "Cairo",
+                    "stops": 12
+                },
+                {
+                    "id": "900",
+                    "type": "AC",
+                    "start": "Alexandria",
+                    "end": "Cairo",
+                    "stops": 6
+                },
+                {
+                    "id": "901",
+                    "type": "AC",
+                    "start": "Cairo",
+                    "end": "Alexandria",
+                    "stops": 6
+                },
+                {
+                    "id": "902",
+                    "type": "AC",
+                    "start": "Alexandria",
+                    "end": "Cairo",
+                    "stops": 10
+                },
+                {
+                    "id": "903",
+                    "type": "AC",
+                    "start": "Cairo",
+                    "end": "Alexandria",
+                    "stops": 10
+                },
+                {
+                    "id": "905",
+                    "type": "VIP",
+                    "start": "Cairo",
+                    "end": "Alexandria",
+                    "stops": 3
+                },
+                {
+                    "id": "906",
+                    "type": "VIP",
+                    "start": "Alexandria",
+                    "end": "Cairo",
+                    "stops": 3
+                },
+                {
+                    "id": "910",
+                    "type": "VIP",
+                    "start": "Alexandria",
+                    "end": "Cairo",
+                    "stops": 5
+                },
+                {
+                    "id": "911",
+                    "type": "VIP",
+                    "start": "Cairo",
+                    "end": "Alexandria",
+                    "stops": 6
+                },
+                {
+                    "id": "912",
+                    "type": "AC",
+                    "start": "Alexandria",
+                    "end": "Cairo",
+                    "stops": 5
+                },
+                {
+                    "id": "913",
+                    "type": "AC",
+                    "start": "Cairo",
+                    "end": "Alexandria",
+                    "stops": 5
+                },
+                {
+                    "id": "914",
+                    "type": "AC",
+                    "start": "Alexandria",
+                    "end": "Cairo",
+                    "stops": 10
+                },
+                {
+                    "id": "915",
+                    "type": "AC",
+                    "start": "Cairo",
+                    "end": "Alexandria",
+                    "stops": 6
+                },
+                {
+                    "id": "916",
+                    "type": "VIP",
+                    "start": "Alexandria",
+                    "end": "Cairo",
+                    "stops": 3
+                },
+                {
+                    "id": "917",
+                    "type": "VIP",
+                    "start": "Cairo",
+                    "end": "Alexandria",
+                    "stops": 3
+                },
+                {
+                    "id": "919",
+                    "type": "VIP",
+                    "start": "Cairo",
+                    "end": "Alexandria",
+                    "stops": 10
+                },
+                {
+                    "id": "921",
+                    "type": "VIP",
+                    "start": "Cairo",
+                    "end": "Alexandria",
+                    "stops": 4
+                },
+                {
+                    "id": "922",
+                    "type": "AC",
+                    "start": "Alexandria",
+                    "end": "Cairo",
+                    "stops": 8
+                },
+                {
+                    "id": "923",
+                    "type": "AC",
+                    "start": "Cairo",
+                    "end": "Alexandria",
+                    "stops": 10
+                },
+                {
+                    "id": "925",
+                    "type": "AC",
+                    "start": "Cairo",
+                    "end": "Tanta",
+                    "stops": 5
+                },
+                {
+                    "id": "928",
+                    "type": "VIP",
+                    "start": "Alexandria",
+                    "end": "Cairo",
+                    "stops": 4
+                },
+                {
+                    "id": "931",
+                    "type": "VIP",
+                    "start": "Cairo",
+                    "end": "Alexandria",
+                    "stops": 9
+                },
+                {
+                    "id": "934",
+                    "type": "VIP",
+                    "start": "Alexandria",
+                    "end": "Luxor",
+                    "stops": 16
+                },
+                {
+                    "id": "935",
+                    "type": "VIP",
+                    "start": "Luxor",
+                    "end": "Alexandria",
+                    "stops": 16
+                },
+                {
+                    "id": "936",
+                    "type": "VIP",
+                    "start": "Tanta",
+                    "end": "Minya",
+                    "stops": 11
+                },
+                {
+                    "id": "937",
+                    "type": "VIP",
+                    "start": "Minya",
+                    "end": "Cairo",
+                    "stops": 7
+                },
+                {
+                    "id": "941",
+                    "type": "Mix",
+                    "start": "Cairo",
+                    "end": "Damietta",
+                    "stops": 19
+                },
+                {
+                    "id": "944",
+                    "type": "Mix",
+                    "start": "Zagazig",
+                    "end": "Cairo",
+                    "stops": 8
+                },
+                {
+                    "id": "945",
+                    "type": "AC Russian",
+                    "start": "Cairo",
+                    "end": "Port Said",
+                    "stops": 11
+                },
+                {
+                    "id": "946",
+                    "type": "AC Russian",
+                    "start": "Ismailia",
+                    "end": "Cairo",
+                    "stops": 12
+                },
+                {
+                    "id": "948",
+                    "type": "AC Russian",
+                    "start": "Mansoura",
+                    "end": "Cairo",
+                    "stops": 11
+                },
+                {
+                    "id": "949",
+                    "type": "AC Russian",
+                    "start": "Cairo",
+                    "end": "Mansoura",
+                    "stops": 11
+                },
+                {
+                    "id": "951",
+                    "type": "Russian",
+                    "start": "Cairo",
+                    "end": "Port Said",
+                    "stops": 17
+                },
+                {
+                    "id": "952",
+                    "type": "AC Russian",
+                    "start": "Port Said",
+                    "end": "Cairo",
+                    "stops": 13
+                },
+                {
+                    "id": "954",
+                    "type": "AC Russian",
+                    "start": "Ismailia",
+                    "end": "Cairo",
+                    "stops": 11
+                },
+                {
+                    "id": "955",
+                    "type": "AC Russian",
+                    "start": "Cairo",
+                    "end": "Port Said",
+                    "stops": 15
+                },
+                {
+                    "id": "956",
+                    "type": "Russian",
+                    "start": "Port Said",
+                    "end": "Cairo",
+                    "stops": 14
+                },
+                {
+                    "id": "957",
+                    "type": "Mix",
+                    "start": "Cairo",
+                    "end": "Zagazig",
+                    "stops": 9
+                },
+                {
+                    "id": "959",
+                    "type": "AC Russian",
+                    "start": "Cairo",
+                    "end": "Ismailia",
+                    "stops": 12
+                },
+                {
+                    "id": "960",
+                    "type": "Improved",
+                    "start": "Port Said",
+                    "end": "Cairo",
+                    "stops": 12
+                },
+                {
+                    "id": "961",
+                    "type": "AC Russian",
+                    "start": "Cairo",
+                    "end": "Ismailia",
+                    "stops": 10
+                },
+                {
+                    "id": "962",
+                    "type": "AC Russian",
+                    "start": "Ismailia",
+                    "end": "Cairo",
+                    "stops": 10
+                },
+                {
+                    "id": "963",
+                    "type": "Russian",
+                    "start": "Cairo",
+                    "end": "Ismailia",
+                    "stops": 11
+                },
+                {
+                    "id": "964",
+                    "type": "AC Russian",
+                    "start": "Damietta",
+                    "end": "Cairo",
+                    "stops": 13
+                },
+                {
+                    "id": "965",
+                    "type": "Mix",
+                    "start": "Cairo",
+                    "end": "Damietta",
+                    "stops": 11
+                },
+                {
+                    "id": "966",
+                    "type": "Mix",
+                    "start": "Damietta",
+                    "end": "Cairo",
+                    "stops": 15
+                },
+                {
+                    "id": "967",
+                    "type": "Russian",
+                    "start": "Cairo",
+                    "end": "Damietta",
+                    "stops": 15
+                },
+                {
+                    "id": "968",
+                    "type": "Russian",
+                    "start": "Damietta",
+                    "end": "Cairo",
+                    "stops": 14
+                },
+                {
+                    "id": "969",
+                    "type": "AC Russian",
+                    "start": "Cairo",
+                    "end": "Damietta",
+                    "stops": 15
+                },
+                {
+                    "id": "971",
+                    "type": "AC",
+                    "start": "Sohag",
+                    "end": "Cairo",
+                    "stops": 25
+                },
+                {
+                    "id": "972",
+                    "type": "Russian",
+                    "start": "Cairo",
+                    "end": "Asyut",
+                    "stops": 25
+                },
+                {
+                    "id": "973",
+                    "type": "Russian",
+                    "start": "Asyut",
+                    "end": "Cairo",
+                    "stops": 27
+                },
+                {
+                    "id": "974",
+                    "type": "Russian",
+                    "start": "Cairo",
+                    "end": "Luxor",
+                    "stops": 45
+                },
+                {
+                    "id": "975",
+                    "type": "Russian",
+                    "start": "Luxor",
+                    "end": "Cairo",
+                    "stops": 42
+                },
+                {
+                    "id": "976",
+                    "type": "VIP",
+                    "start": "Cairo",
+                    "end": "Luxor",
+                    "stops": 17
+                },
+                {
+                    "id": "977",
+                    "type": "VIP",
+                    "start": "Luxor",
+                    "end": "Cairo",
+                    "stops": 17
+                },
+                {
+                    "id": "978",
+                    "type": "AC Russian",
+                    "start": "Cairo",
+                    "end": "Asyut",
+                    "stops": 18
+                },
+                {
+                    "id": "979",
+                    "type": "AC Russian",
+                    "start": "Asyut",
+                    "end": "Cairo",
+                    "stops": 18
+                },
+                {
+                    "id": "980",
+                    "type": "VIP",
+                    "start": "Cairo",
+                    "end": "Aswan",
+                    "stops": 31
+                },
+                {
+                    "id": "981",
+                    "type": "VIP",
+                    "start": "Aswan",
+                    "end": "Cairo",
+                    "stops": 31
+                },
+                {
+                    "id": "982",
+                    "type": "VIP",
+                    "start": "Cairo",
+                    "end": "Aswan",
+                    "stops": 32
+                },
+                {
+                    "id": "983",
+                    "type": "VIP",
+                    "start": "Aswan",
+                    "end": "Cairo",
+                    "stops": 32
+                },
+                {
+                    "id": "986",
+                    "type": "AC",
+                    "start": "Cairo",
+                    "end": "Luxor",
+                    "stops": 26
+                },
+                {
+                    "id": "987",
+                    "type": "AC",
+                    "start": "Luxor",
+                    "end": "Cairo",
+                    "stops": 27
+                },
+                {
+                    "id": "988",
+                    "type": "AC Russian",
+                    "start": "Cairo",
+                    "end": "Aswan",
+                    "stops": 16
+                },
+                {
+                    "id": "989",
+                    "type": "AC",
+                    "start": "Aswan",
+                    "end": "Cairo",
+                    "stops": 16
+                },
+                {
+                    "id": "990",
+                    "type": "AC",
+                    "start": "Cairo",
+                    "end": "Sohag",
+                    "stops": 24
+                },
+                {
+                    "id": "994",
+                    "type": "Mix",
+                    "start": "Damietta",
+                    "end": "Cairo",
+                    "stops": 13
+                },
+                {
+                    "id": "996",
+                    "type": "VIP",
+                    "start": "Cairo",
+                    "end": "Aswan",
+                    "stops": 15
+                },
+                {
+                    "id": "997",
+                    "type": "VIP",
+                    "start": "Aswan",
+                    "end": "Cairo",
+                    "stops": 15
+                },
+                {
+                    "id": "998",
+                    "type": "AC",
+                    "start": "Cairo",
+                    "end": "Sohag",
+                    "stops": 11
+                },
+                {
+                    "id": "999",
+                    "type": "AC",
+                    "start": "Sohag",
+                    "end": "Cairo",
+                    "stops": 11
+                },
+                {
+                    "id": "1004",
+                    "type": "AC Russian",
+                    "start": "Cairo",
+                    "end": "Aswan",
+                    "stops": 23
+                },
+                {
+                    "id": "1006",
+                    "type": "Russian",
+                    "start": "Cairo",
+                    "end": "Nagaa Hammadi",
+                    "stops": 18
+                },
+                {
+                    "id": "1007",
+                    "type": "Russian",
+                    "start": "Nagaa Hammadi",
+                    "end": "Cairo",
+                    "stops": 17
+                },
+                {
+                    "id": "1008",
+                    "type": "Russian",
+                    "start": "Alexandria",
+                    "end": "Aswan",
+                    "stops": 27
+                },
+                {
+                    "id": "1009",
+                    "type": "AC Russian",
+                    "start": "Aswan",
+                    "end": "Cairo",
+                    "stops": 21
+                },
+                {
+                    "id": "1010",
+                    "type": "AC Russian",
+                    "start": "Cairo",
+                    "end": "Aswan",
+                    "stops": 28
+                },
+                {
+                    "id": "1011",
+                    "type": "AC Russian",
+                    "start": "Aswan",
+                    "end": "Cairo",
+                    "stops": 25
+                },
+                {
+                    "id": "1012",
+                    "type": "AC Russian",
+                    "start": "Cairo",
+                    "end": "Aswan",
+                    "stops": 29
+                },
+                {
+                    "id": "1013",
+                    "type": "Russian",
+                    "start": "Aswan",
+                    "end": "Cairo",
+                    "stops": 32
+                },
+                {
+                    "id": "1014",
+                    "type": "Russian",
+                    "start": "Cairo",
+                    "end": "Aswan",
+                    "stops": 27
+                },
+                {
+                    "id": "1015",
+                    "type": "Russian",
+                    "start": "Aswan",
+                    "end": "Alexandria",
+                    "stops": 37
+                },
+                {
+                    "id": "1022",
+                    "type": "Improved",
+                    "start": "Aswan",
+                    "end": "The High Dam",
+                    "stops": 5
+                },
+                {
+                    "id": "1023",
+                    "type": "Improved",
+                    "start": "The High Dam",
+                    "end": "Aswan",
+                    "stops": 5
+                },
+                {
+                    "id": "1024",
+                    "type": "Improved",
+                    "start": "Aswan",
+                    "end": "The High Dam",
+                    "stops": 5
+                },
+                {
+                    "id": "1025",
+                    "type": "Improved",
+                    "start": "The High Dam",
+                    "end": "Aswan",
+                    "stops": 5
+                },
+                {
+                    "id": "1028",
+                    "type": "Improved",
+                    "start": "Aswan",
+                    "end": "The High Dam",
+                    "stops": 5
+                },
+                {
+                    "id": "1029",
+                    "type": "Improved",
+                    "start": "The High Dam",
+                    "end": "Aswan",
+                    "stops": 5
+                },
+                {
+                    "id": "1030",
+                    "type": "Improved",
+                    "start": "Aswan",
+                    "end": "The High Dam",
+                    "stops": 5
+                },
+                {
+                    "id": "1031",
+                    "type": "Improved",
+                    "start": "The High Dam",
+                    "end": "Aswan",
+                    "stops": 5
+                },
+                {
+                    "id": "1082",
+                    "type": "Sleep",
+                    "start": "Alexandria",
+                    "end": "Cairo",
+                    "stops": 3
+                },
+                {
+                    "id": "1083",
+                    "type": "Sleep",
+                    "start": "Cairo",
+                    "end": "Alexandria",
+                    "stops": 3
+                },
+                {
+                    "id": "1086",
+                    "type": "Sleep",
+                    "start": "Cairo",
+                    "end": "Aswan",
+                    "stops": 13
+                },
+                {
+                    "id": "1087",
+                    "type": "Sleep",
+                    "start": "Aswan",
+                    "end": "Cairo",
+                    "stops": 13
+                },
+                {
+                    "id": "1088",
+                    "type": "Mix",
+                    "start": "Alexandria",
+                    "end": "Aswan",
+                    "stops": 12
+                },
+                {
+                    "id": "1089",
+                    "type": "Sleep",
+                    "start": "Aswan",
+                    "end": "Alexandria",
+                    "stops": 12
+                },
+                {
+                    "id": "1104",
+                    "type": "Improved",
+                    "start": "Wasta",
+                    "end": "Faiyum",
+                    "stops": 9
+                },
+                {
+                    "id": "1105",
+                    "type": "Improved",
+                    "start": "Faiyum",
+                    "end": "Wasta",
+                    "stops": 9
+                },
+                {
+                    "id": "1108",
+                    "type": "Russian",
+                    "start": "Alexandria",
+                    "end": "Cairo",
+                    "stops": 13
+                },
+                {
+                    "id": "1109",
+                    "type": "AC Russian",
+                    "start": "Faiyum",
+                    "end": "Alexandria",
+                    "stops": 14
+                },
+                {
+                    "id": "1110",
+                    "type": "Russian",
+                    "start": "Cairo",
+                    "end": "Faiyum",
+                    "stops": 6
+                },
+                {
+                    "id": "1111",
+                    "type": "Russian",
+                    "start": "Faiyum",
+                    "end": "Cairo",
+                    "stops": 6
+                },
+                {
+                    "id": "1112",
+                    "type": "Russian",
+                    "start": "Ismailia",
+                    "end": "Cairo",
+                    "stops": 18
+                },
+                {
+                    "id": "1113",
+                    "type": "AC Russian",
+                    "start": "Cairo",
+                    "end": "Ismailia",
+                    "stops": 22
+                },
+                {
+                    "id": "1114",
+                    "type": "Improved",
+                    "start": "Port Said",
+                    "end": "Tanta",
+                    "stops": 18
+                },
+                {
+                    "id": "1115",
+                    "type": "Improved",
+                    "start": "Tanta",
+                    "end": "Port Said",
+                    "stops": 17
+                },
+                {
+                    "id": "1130",
+                    "type": "AC Russian",
+                    "start": "Alexandria",
+                    "end": "Cairo",
+                    "stops": 7
+                },
+                {
+                    "id": "1131",
+                    "type": "AC Russian",
+                    "start": "Cairo",
+                    "end": "Alexandria",
+                    "stops": 7
+                },
+                {
+                    "id": "1190",
+                    "type": "AC Russian",
+                    "start": "Tanta",
+                    "end": "Cairo",
+                    "stops": 9
+                },
+                {
+                    "id": "1191",
+                    "type": "AC Russian",
+                    "start": "Cairo",
+                    "end": "Tanta",
+                    "stops": 9
+                },
+                {
+                    "id": "1203",
+                    "type": "Russian",
+                    "start": "Cairo",
+                    "end": "Alexandria",
+                    "stops": 13
+                },
+                {
+                    "id": "1211",
+                    "type": "Russian",
+                    "start": "Cairo",
+                    "end": "Alexandria",
+                    "stops": 17
+                },
+                {
+                    "id": "1212",
+                    "type": "Russian",
+                    "start": "Alexandria",
+                    "end": "Cairo",
+                    "stops": 17
+                },
+                {
+                    "id": "1418",
+                    "type": "Improved",
+                    "start": "Zagazig",
+                    "end": "Cairo",
+                    "stops": 17
+                },
+                {
+                    "id": "1902",
+                    "type": "AC",
+                    "start": "Alexandria",
+                    "end": "Aswan",
+                    "stops": 25
+                },
+                {
+                    "id": "1903",
+                    "type": "AC Russian",
+                    "start": "Aswan",
+                    "end": "Cairo",
+                    "stops": 18
+                },
+                {
+                    "id": "1904",
+                    "type": "VIP",
+                    "start": "Alexandria",
+                    "end": "Cairo",
+                    "stops": 10
+                },
+                {
+                    "id": "1914",
+                    "type": "Mix",
+                    "start": "Mansoura",
+                    "end": "Cairo",
+                    "stops": 6
+                },
+                {
+                    "id": "1915",
+                    "type": "Mix",
+                    "start": "Cairo",
+                    "end": "Mansoura",
+                    "stops": 6
+                },
+                {
+                    "id": "2006",
+                    "type": "VIP",
+                    "start": "Cairo",
+                    "end": "Aswan",
+                    "stops": 12
+                },
+                {
+                    "id": "2007",
+                    "type": "VIP",
+                    "start": "Aswan",
+                    "end": "Alexandria",
+                    "stops": 18
+                },
+                {
+                    "id": "2008",
+                    "type": "VIP",
+                    "start": "Alexandria",
+                    "end": "Aswan",
+                    "stops": 16
+                },
+                {
+                    "id": "2009",
+                    "type": "AC",
+                    "start": "Aswan",
+                    "end": "Cairo",
+                    "stops": 13
+                },
+                {
+                    "id": "2010",
+                    "type": "VIP",
+                    "start": "Cairo",
+                    "end": "Aswan",
+                    "stops": 15
+                },
+                {
+                    "id": "2011",
+                    "type": "VIP",
+                    "start": "Aswan",
+                    "end": "Cairo",
+                    "stops": 16
+                },
+                {
+                    "id": "2012",
+                    "type": "AC Russian",
+                    "start": "Cairo",
+                    "end": "Aswan",
+                    "stops": 16
+                },
+                {
+                    "id": "2013",
+                    "type": "AC Russian",
+                    "start": "Aswan",
+                    "end": "Cairo",
+                    "stops": 16
+                },
+                {
+                    "id": "2014",
+                    "type": "AC",
+                    "start": "Cairo",
+                    "end": "Aswan",
+                    "stops": 13
+                },
+                {
+                    "id": "2015",
+                    "type": "AC",
+                    "start": "Aswan",
+                    "end": "Cairo",
+                    "stops": 13
+                },
+                {
+                    "id": "2022",
+                    "type": "Talgo",
+                    "start": "Alexandria",
+                    "end": "Cairo",
+                    "stops": 3
+                },
+                {
+                    "id": "2023",
+                    "type": "Talgo",
+                    "start": "Cairo",
+                    "end": "Alexandria",
+                    "stops": 3
+                },
+                {
+                    "id": "2024",
+                    "type": "Talgo",
+                    "start": "Alexandria",
+                    "end": "Cairo",
+                    "stops": 3
+                },
+                {
+                    "id": "2025",
+                    "type": "Talgo",
+                    "start": "Cairo",
+                    "end": "Alexandria",
+                    "stops": 3
+                },
+                {
+                    "id": "2026",
+                    "type": "Talgo",
+                    "start": "Alexandria",
+                    "end": "Cairo",
+                    "stops": 3
+                },
+                {
+                    "id": "2027",
+                    "type": "Talgo",
+                    "start": "Cairo",
+                    "end": "Alexandria",
+                    "stops": 3
+                },
+                {
+                    "id": "2030",
+                    "type": "Talgo",
+                    "start": "Cairo",
+                    "end": "Aswan",
+                    "stops": 11
+                },
+                {
+                    "id": "2031",
+                    "type": "Talgo",
+                    "start": "Aswan",
+                    "end": "Cairo",
+                    "stops": 11
+                },
+                {
+                    "id": "3006",
+                    "type": "AC Russian",
+                    "start": "Alexandria",
+                    "end": "Aswan",
+                    "stops": 18
+                },
+                {
+                    "id": "3007",
+                    "type": "AC Russian",
+                    "start": "Aswan",
+                    "end": "Alexandria",
+                    "stops": 18
+                },
+                {
+                    "id": "3008",
+                    "type": "AC Russian",
+                    "start": "Alexandria",
+                    "end": "Aswan",
+                    "stops": 32
+                },
+                {
+                    "id": "3009",
+                    "type": "AC Russian",
+                    "start": "Cairo",
+                    "end": "Alexandria",
+                    "stops": 6
+                },
+                {
+                    "id": "3015",
+                    "type": "AC Russian",
+                    "start": "Cairo",
+                    "end": "Port Said",
+                    "stops": 9
+                },
+                {
+                    "id": "3016",
+                    "type": "AC Russian",
+                    "start": "Port Said",
+                    "end": "Cairo",
+                    "stops": 8
+                },
+                {
+                    "id": "3017",
+                    "type": "AC Russian",
+                    "start": "Cairo",
+                    "end": "Mansoura",
+                    "stops": 8
+                },
+                {
+                    "id": "3018",
+                    "type": "AC Russian",
+                    "start": "Mansoura",
+                    "end": "Cairo",
+                    "stops": 8
+                },
+                {
+                    "id": "3023",
+                    "type": "AC Russian",
+                    "start": "Cairo",
+                    "end": "Alexandria",
+                    "stops": 6
+                },
+                {
+                    "id": "3024",
+                    "type": "AC Russian",
+                    "start": "Alexandria",
+                    "end": "Cairo",
+                    "stops": 8
+                },
+                {
+                    "id": "3025",
+                    "type": "AC Russian",
+                    "start": "Aswan",
+                    "end": "Cairo",
+                    "stops": 15
+                },
+                {
+                    "id": "3502",
+                    "type": "AC Russian",
+                    "start": "Cairo",
+                    "end": "Asyut",
+                    "stops": 20
+                },
+                {
+                    "id": "3503",
+                    "type": "AC Russian",
+                    "start": "Asyut",
+                    "end": "Cairo",
+                    "stops": 18
+                },
+                {
+                    "id": "4222",
+                    "type": "Improved",
+                    "start": "Sidi Gaber",
+                    "end": "Burj Arab N",
+                    "stops": 10
+                },
+                {
+                    "id": "4223",
+                    "type": "Improved",
+                    "start": "Burj Arab N",
+                    "end": "Sidi Gaber",
+                    "stops": 10
+                },
+                {
+                    "id": "4224",
+                    "type": "Improved",
+                    "start": "Moharam Beek",
+                    "end": "Hammam",
+                    "stops": 15
+                },
+                {
+                    "id": "4602",
+                    "type": "Improved",
+                    "start": "Suez",
+                    "end": "Adly Mansour",
+                    "stops": 11
+                },
+                {
+                    "id": "4603",
+                    "type": "Improved",
+                    "start": "Adly Mansour",
+                    "end": "Suez",
+                    "stops": 11
+                },
+                {
+                    "id": "4604",
+                    "type": "Improved",
+                    "start": "Suez",
+                    "end": "Adly Mansour",
+                    "stops": 11
+                },
+                {
+                    "id": "4605",
+                    "type": "Improved",
+                    "start": "Adly Mansour",
+                    "end": "Suez",
+                    "stops": 11
+                },
+                {
+                    "id": "1208-1209",
+                    "type": "Improved",
+                    "start": "Marsa Matruh",
+                    "end": "Cairo",
+                    "stops": 24
+                },
+                {
+                    "id": "1205-1206",
+                    "type": "Russian",
+                    "start": "Cairo",
+                    "end": "Marsa Matruh",
+                    "stops": 21
+                },
+                {
+                    "id": "1935-1936",
+                    "type": "AC Russian",
+                    "start": "Marsa Matruh",
+                    "end": "Cairo",
+                    "stops": 11
+                },
+                {
+                    "id": "894-899",
+                    "type": "Improved",
+                    "start": "Alexandria",
+                    "end": "Shirbin",
+                    "stops": 25
+                },
+                {
+                    "id": "572-573",
+                    "type": "AC Russian",
+                    "start": "Alexandria",
+                    "end": "Port Said",
+                    "stops": 21
+                },
+                {
+                    "id": "568-569",
+                    "type": "AC Russian",
+                    "start": "Alexandria",
+                    "end": "Damietta",
+                    "stops": 15
+                },
+                {
+                    "id": "588-589",
+                    "type": "Russian",
+                    "start": "Alexandria",
+                    "end": "Port Said",
+                    "stops": 22
+                },
+                {
+                    "id": "3012-3013",
+                    "type": "AC Russian",
+                    "start": "Alexandria",
+                    "end": "Port Said",
+                    "stops": 14
+                },
+                {
+                    "id": "586-587",
+                    "type": "AC Russian",
+                    "start": "Alexandria",
+                    "end": "Mansoura",
+                    "stops": 11
+                },
+                {
+                    "id": "518-519",
+                    "type": "AC Russian",
+                    "start": "Alexandria",
+                    "end": "Mansoura",
+                    "stops": 9
+                },
+                {
+                    "id": "801-802",
+                    "type": "Improved",
+                    "start": "Alexandria",
+                    "end": "Biyala",
+                    "stops": 22
+                },
+                {
+                    "id": "584-585",
+                    "type": "AC Russian",
+                    "start": "Mansoura",
+                    "end": "Alexandria",
+                    "stops": 11
+                },
+                {
+                    "id": "566-567",
+                    "type": "AC Russian",
+                    "start": "Damietta",
+                    "end": "Alexandria",
+                    "stops": 17
+                },
+                {
+                    "id": "516-517",
+                    "type": "AC Russian",
+                    "start": "Mansoura",
+                    "end": "Alexandria",
+                    "stops": 9
+                },
+                {
+                    "id": "570-571",
+                    "type": "AC Russian",
+                    "start": "Port Said",
+                    "end": "Alexandria",
+                    "stops": 21
+                },
+                {
+                    "id": "3010-3011",
+                    "type": "AC Russian",
+                    "start": "Port Said",
+                    "end": "Alexandria",
+                    "stops": 14
+                },
+                {
+                    "id": "590-591",
+                    "type": "Russian",
+                    "start": "Port Said",
+                    "end": "Alexandria",
+                    "stops": 21
+                },
+                {
+                    "id": "883-884",
+                    "type": "Improved",
+                    "start": "Biyala",
+                    "end": "Alexandria",
+                    "stops": 23
+                },
+                {
+                    "id": "889-892",
+                    "type": "Improved",
+                    "start": "Shirbin",
+                    "end": "Alexandria",
+                    "stops": 25
+                },
+                {
+                    "id": "1150-1151",
+                    "type": "AC Russian",
+                    "start": "Kafr Sheikh",
+                    "end": "Alexandria",
+                    "stops": 11
+                },
+                {
+                    "id": "1152-1153",
+                    "type": "AC Russian",
+                    "start": "Alexandria",
+                    "end": "Kafr Sheikh",
+                    "stops": 11
+                },
+                {
+                    "id": "811-812",
+                    "type": "Improved",
+                    "start": "Damanhour",
+                    "end": "Shirbin",
+                    "stops": 35
+                },
+                {
+                    "id": "814-815",
+                    "type": "Improved",
+                    "start": "Shirbin",
+                    "end": "Damanhour",
+                    "stops": 35
+                },
+                {
+                    "id": "54-56",
+                    "type": "Improved",
+                    "start": "Damietta",
+                    "end": "Tanta",
+                    "stops": 39
+                },
+                {
+                    "id": "702-710",
+                    "type": "Improved",
+                    "start": "Wasta",
+                    "end": "Asyut",
+                    "stops": 39
+                },
+                {
+                    "id": "168-712",
+                    "type": "Improved",
+                    "start": "Wasta",
+                    "end": "Asyut",
+                    "stops": 31
+                },
+                {
+                    "id": "169-707",
+                    "type": "Improved",
+                    "start": "Asyut",
+                    "end": "Wasta",
+                    "stops": 43
+                },
+                {
+                    "id": "701-713",
+                    "type": "Improved",
+                    "start": "Asyut",
+                    "end": "Wasta",
+                    "stops": 19
+                }
+            ]
+        }
+    },
+    "__N_SSG": true
+}

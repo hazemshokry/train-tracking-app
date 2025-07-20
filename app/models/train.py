@@ -5,7 +5,7 @@ from app.extensions import db
 class Train(db.Model):
     __tablename__ = 'trains'
 
-    train_number = db.Column(db.BigInteger, primary_key=True)
+    train_number = db.Column(db.String(255), primary_key=True)
     train_type = db.Column(db.String(50))
 
     departure_station_id = db.Column(db.Integer, db.ForeignKey('stations.id'), nullable=False)

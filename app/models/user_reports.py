@@ -8,7 +8,7 @@ class UserReport(db.Model):
     
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
-    train_number = db.Column(db.BigInteger, nullable=False)
+    train_number = db.Column(db.String(255), nullable=False)
     operation_id = db.Column(db.Integer, db.ForeignKey('operations.id'), nullable=False)
     station_id = db.Column(db.Integer, db.ForeignKey('stations.id'), nullable=False)
     
