@@ -69,7 +69,8 @@ class ValidationService:
     def _validate_duplicate(self):
         """Checks for an identical report from the same user in the last 15 minutes."""
         # Use a naive datetime for comparison, as `created_at` in the DB is likely naive.
-        time_threshold = datetime.utcnow() - timedelta(minutes=15)
+        # time_threshold = datetime.utcnow() - timedelta(minutes=15)
+        time_threshold = datetime.utcnow() - timedelta(minutes=0.2)
         duplicate = UserReport.query.filter(
             UserReport.user_id == self.user.id,
             UserReport.train_number == self.report.train_number,
