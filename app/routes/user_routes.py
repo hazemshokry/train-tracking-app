@@ -41,6 +41,7 @@ user_model = api.model('User', {
     'is_active': fields.Boolean(description='Active status'),
     'date_joined': fields.DateTime(description='Date joined'),
     'last_login': fields.DateTime(description='Last login time'),
+    'reliability_score': fields.Float(description='User reliability score'),
 })
 
 token_model = api.model('Tokens', {
