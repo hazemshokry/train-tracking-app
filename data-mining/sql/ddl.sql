@@ -3,7 +3,7 @@ USE db1;
 -- Table: users (Updated with user_type and reliability_score)
 DROP TABLE IF EXISTS users;
 CREATE TABLE IF NOT EXISTS users (
-    id INT AUTO_INCREMENT PRIMARY KEY,
+    id CHAR(36) PRIMARY KEY,
     username VARCHAR(255) NOT NULL UNIQUE,
     email VARCHAR(255) NOT NULL UNIQUE,
     phone_number VARCHAR(255) NOT NULL UNIQUE,
@@ -73,7 +73,7 @@ CREATE TABLE operations (
 DROP TABLE IF EXISTS user_reports;
 CREATE TABLE user_reports (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    user_id INT NOT NULL,
+    user_id CHAR(36) NOT NULL,
     train_number VARCHAR(255) NOT NULL,
     operation_id INT NOT NULL,
     station_id INT NOT NULL,
@@ -108,7 +108,7 @@ CREATE TABLE calculated_times (
 DROP TABLE IF EXISTS notifications;
 CREATE TABLE notifications (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    user_id INT NOT NULL,
+    user_id CHAR(36) NOT NULL,
     train_number VARCHAR(255),
     title VARCHAR(255) NOT NULL,
     description TEXT,
@@ -122,7 +122,7 @@ CREATE TABLE notifications (
 DROP TABLE IF EXISTS rewards;
 CREATE TABLE rewards (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    user_id INT NOT NULL,
+    user_id CHAR(36) NOT NULL,
     points INT NOT NULL,
     date_awarded DATETIME DEFAULT CURRENT_TIMESTAMP,
     description VARCHAR(255),
@@ -133,7 +133,7 @@ CREATE TABLE rewards (
 DROP TABLE IF EXISTS user_favourite_trains;
 CREATE TABLE user_favourite_trains (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    user_id INT NOT NULL,
+    user_id CHAR(36) NOT NULL,
     train_number VARCHAR(255) NOT NULL,
     added_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (user_id) REFERENCES users(id),
@@ -145,7 +145,7 @@ CREATE TABLE user_favourite_trains (
 DROP TABLE IF EXISTS user_notification_settings;
 CREATE TABLE user_notification_settings (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    user_id INT NOT NULL,
+    user_id CHAR(36) NOT NULL,
     notification_enabled BOOLEAN DEFAULT TRUE,
     FOREIGN KEY (user_id) REFERENCES users(id),
     UNIQUE KEY (user_id)
@@ -156,7 +156,7 @@ DROP TABLE IF EXISTS refresh_tokens;
 CREATE TABLE refresh_tokens (
     id INT AUTO_INCREMENT PRIMARY KEY,
     token VARCHAR(255) NOT NULL UNIQUE,
-    user_id INT NOT NULL,
+    user_id CHAR(36) NOT NULL,
     expires_at DATETIME NOT NULL,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (user_id) REFERENCES users(id)

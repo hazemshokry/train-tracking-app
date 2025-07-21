@@ -2,12 +2,14 @@
 
 from app.extensions import db
 from datetime import datetime
+from sqlalchemy.dialects.mysql import CHAR
+
 
 class UserReport(db.Model):
     __tablename__ = 'user_reports'
     
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    user_id = db.Column(CHAR(36), db.ForeignKey('users.id'), nullable=False)
     train_number = db.Column(db.String(255), nullable=False)
     operation_id = db.Column(db.Integer, db.ForeignKey('operations.id'), nullable=False)
     station_id = db.Column(db.Integer, db.ForeignKey('stations.id'), nullable=False)

@@ -34,7 +34,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'your-secret-key')
 
 # Serializer models
 user_model = api.model('User', {
-    'id': fields.Integer(readOnly=True, description='Unique identifier of the user'),
+    'id': fields.String(readOnly=True, description='Unique identifier of the user'),
     'username': fields.String(description='Username'),
     'email': fields.String(description='Email address'),
     'phone_number': fields.String(description='Phone number'),

@@ -2,12 +2,14 @@
 
 from app.extensions import db
 from datetime import datetime
+from sqlalchemy.dialects.mysql import CHAR
+
 
 class UserFavouriteTrain(db.Model):
     __tablename__ = 'user_favourite_trains'
 
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    user_id = db.Column(CHAR(36), db.ForeignKey('users.id'), nullable=False)
     train_number = db.Column(db.String(255), db.ForeignKey('trains.train_number'), nullable=False)
     added_at = db.Column(db.DateTime, default=datetime.utcnow)
 

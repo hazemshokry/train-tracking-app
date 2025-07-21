@@ -1,6 +1,8 @@
 # app/models/user_notification_settings.py
 
 from app.extensions import db
+from sqlalchemy.dialects.mysql import CHAR
+
 
 class UserNotificationSetting(db.Model):
     __tablename__ = 'usernotificationsettings'

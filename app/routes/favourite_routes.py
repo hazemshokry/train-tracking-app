@@ -12,13 +12,14 @@ api = Namespace('favourites', description='Favourite trains related operations')
 # Serializer models
 favourite_train_model = api.model('FavouriteTrain', {
     'id': fields.Integer(readOnly=True, description='Unique identifier of the favourite train entry'),
-    'train_number': fields.Integer(description='Train number'),
+    'user_id': fields.String(description='The user ID of the user who favourited the train'),
+    'train_number': fields.String(description='Train number'),
     'added_at': fields.DateTime(description='Date and time the train was added to favourites'),
     # 'notification_enabled': fields.Boolean(description='Whether notifications are enabled for this train'),
 })
 
 favourite_train_create_model = api.model('FavouriteTrainCreate', {
-    'train_number': fields.Integer(required=True, description='Train number'),
+    'train_number': fields.String(required=True, description='Train number'),
     # 'notification_enabled': fields.Boolean(description='Enable notifications', default=False),
 })
 
@@ -30,7 +31,7 @@ class FavouriteTrainList(Resource):
     def get(self):
         """List all favourite trains for the current user"""
         # user_id = request.current_user.id
-        user_id = 1  # Hardcoded user ID for testing
+        user_id = 'a4e8e122-0b29-4b8c-8a1a-7b7e1c1e8e8e'  # Hardcoded user ID for testing
         favourite_trains = UserFavouriteTrain.query.filter_by(user_id=user_id).all()
         return favourite_trains, 200
 
@@ -42,7 +43,7 @@ class FavouriteTrainList(Resource):
         """Add a train to the user's favourites"""
         data = api.payload
         # user_id = request.current_user.id
-        user_id = 1  # Hardcoded user ID for testing
+        user_id = 'a4e8e122-0b29-4b8c-8a1a-7b7e1c1e8e8e'  # Hardcoded user ID for testing
         train_number = data['train_number']
         # notification_enabled = data.get('notification_enabled', False)
 
@@ -72,7 +73,7 @@ class FavouriteTrainList(Resource):
     def delete(self):
         """Delete all favourite trains for the current user"""
         # user_id = request.current_user.id
-        user_id = 1  # Hardcoded user ID for testing
+        user_id = 'a4e8e122-0b29-4b8c-8a1a-7b7e1c1e8e8e'  # Hardcoded user ID for testing
         
         # Find all favourite train entries for the user
         favourite_trains = UserFavouriteTrain.query.filter_by(user_id=user_id).all()
@@ -87,7 +88,7 @@ class FavouriteTrainList(Resource):
 
         return {'message': 'All favourite trains deleted successfully'}, 200
 
-@api.route('/<int:train_number>')
+@api.route('/<string:train_number>')
 @api.param('train_number', 'The train number')
 class FavouriteTrainResource(Resource):
     # @api.doc(security='BearerAuth')  # Commented out for testing
@@ -95,7 +96,7 @@ class FavouriteTrainResource(Resource):
     def delete(self, train_number):
         """Remove a train from the user's favourites"""
         # user_id = request.current_user.id
-        user_id = 1  # Hardcoded user ID for testing
+        user_id = 'a4e8e122-0b29-4b8c-8a1a-7b7e1c1e8e8e'  # Hardcoded user ID for testing
 
         # Find the favourite train entry
         favourite_train = UserFavouriteTrain.query.filter_by(user_id=user_id, train_number=train_number).first()

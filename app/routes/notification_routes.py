@@ -13,7 +13,7 @@ api = Namespace('notifications', description='Notification related operations')
 # Serializer models
 notification_model = api.model('Notification', {
     'id': fields.Integer(readOnly=True, description='Unique identifier of the notification'),
-    'user_id': fields.Integer(description='ID of the user'),
+    'user_id': fields.String(description='ID of the user'),
     'train_number': fields.String(description='Train number'),
     'title': fields.String(description='Title of the notification'),
     'description': fields.String(description='Description of the notification'),
@@ -33,7 +33,7 @@ class NotificationList(Resource):
     @api.marshal_list_with(notification_model)
     def get(self):
         """List all notifications for the current user"""
-        user_id = 1  # Hardcoded for testing
+        user_id = "a4e8e122-0b29-4b8c-8a1a-7b7e1c1e8e8e"  # Hardcoded for testing
         notifications = Notification.query.filter_by(user_id=user_id).all()
         return notifications
 
@@ -43,7 +43,7 @@ class NotificationList(Resource):
     def post(self):
         """Create a new notification for the current user"""
         data = api.payload
-        user_id = 1  # Hardcoded for testing
+        user_id = "a4e8e122-0b29-4b8c-8a1a-7b7e1c1e8e8e"  # Hardcoded for testing
         train_number = data.get('train_number')
         title = data['title']
         description = data.get('description')
@@ -78,7 +78,7 @@ class NotificationReadAll(Resource):
     @api.response(200, 'All notifications marked as read')
     def put(self):
         """Mark all notifications as read for the current user"""
-        user_id = 1  # Hardcoded for testing
+        user_id = "a4e8e122-0b29-4b8c-8a1a-7b7e1c1e8e8e"  # Hardcoded for testing
         
         notifications = Notification.query.filter_by(user_id=user_id, is_read=False).all()
 
@@ -101,7 +101,7 @@ class NotificationResource(Resource):
         """Get a notification by ID"""
         notification = Notification.query.get_or_404(id)
         # Ensure the user is accessing their own notification
-        if 1 != notification.user_id: # Hardcoded for testing
+        if "a4e8e122-0b29-4b8c-8a1a-7b7e1c1e8e8e" != notification.user_id: # Hardcoded for testing
             api.abort(403, 'Access forbidden')
         return notification
 
@@ -111,7 +111,7 @@ class NotificationResource(Resource):
         """Mark a notification as read"""
         notification = Notification.query.get_or_404(id)
         # Ensure the user is updating their own notification
-        if 1 != notification.user_id: # Hardcoded for testing
+        if "a4e8e122-0b29-4b8c-8a1a-7b7e1c1e8e8e" != notification.user_id: # Hardcoded for testing
             api.abort(403, 'Access forbidden')
 
         notification.is_read = True
@@ -124,7 +124,7 @@ class NotificationResource(Resource):
         """Delete a notification by ID"""
         notification = Notification.query.get_or_404(id)
         # Ensure the user is deleting their own notification
-        if 1 != notification.user_id: # Hardcoded for testing
+        if "a4e8e122-0b29-4b8c-8a1a-7b7e1c1e8e8e" != notification.user_id: # Hardcoded for testing
             api.abort(403, 'Access forbidden')
 
         db.session.delete(notification)

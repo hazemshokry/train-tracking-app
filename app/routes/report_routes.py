@@ -20,7 +20,7 @@ api = Namespace('reports', description='User report related operations')
 # Model for displaying a report
 report_model = api.model('UserReport', {
     'id': fields.Integer(readOnly=True, description='Unique identifier of the report'),
-    'user_id': fields.Integer(description='ID of the user who submitted the report'),
+    'user_id': fields.String(description='ID of the user who submitted the report'),
     'train_number': fields.String(description='Train number'),
     'station_id': fields.Integer(description='Station ID'),
     'report_type': fields.String(description='Type of report', enum=['arrival', 'departure', 'onboard', 'offboard', 'delay', 'cancelled', 'passed_station']),
