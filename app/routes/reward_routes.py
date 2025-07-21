@@ -86,10 +86,12 @@ class RewardResource(Resource):
 
 @api.route('/total')
 class TotalRewards(Resource):
-    # @api.doc(security='BearerAuth')  # Commented out for testing
-    # @token_required  # Commented out for testing
+    # @api.doc(security='BearerAuth')
+    # @token_required
     def get(self):
         """Get total reward points for the current user"""
         user_id = 1  # Assume user ID 1 for testing
         total_points = db.session.query(db.func.sum(Reward.points)).filter_by(user_id=user_id).scalar() or 0
-        return {'user_id': user_id, 'total_points': total_points}, 200
+        
+        # Convert the Decimal result to an integer before returning
+        return {'user_id': user_id, 'total_points': int(total_points)}, 200
