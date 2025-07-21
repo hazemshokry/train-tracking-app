@@ -72,6 +72,26 @@ class NotificationList(Resource):
         
         return new_notification, 201
 
+@api.route('/read-all')
+class NotificationReadAll(Resource):
+    # @token_required
+    @api.response(200, 'All notifications marked as read')
+    def put(self):
+        """Mark all notifications as read for the current user"""
+        user_id = 1  # Hardcoded for testing
+        
+        notifications = Notification.query.filter_by(user_id=user_id, is_read=False).all()
+
+        if not notifications:
+            return {'message': 'No unread notifications to mark as read'}, 200
+
+        for notification in notifications:
+            notification.is_read = True
+        
+        db.session.commit()
+
+        return {'message': 'All notifications marked as read'}, 200
+
 @api.route('/<int:id>')
 @api.param('id', 'The notification identifier')
 class NotificationResource(Resource):

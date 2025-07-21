@@ -65,8 +65,29 @@ class FavouriteTrainList(Resource):
         db.session.commit()
 
         return new_favourite, 201
+    
+    # @api.doc(security='BearerAuth')  # Commented out for testing
+    # @token_required  # Commented out for testing
+    @api.response(200, 'All favourite trains deleted successfully')
+    def delete(self):
+        """Delete all favourite trains for the current user"""
+        # user_id = request.current_user.id
+        user_id = 1  # Hardcoded user ID for testing
+        
+        # Find all favourite train entries for the user
+        favourite_trains = UserFavouriteTrain.query.filter_by(user_id=user_id).all()
+        
+        if not favourite_trains:
+            return {'message': 'No favourite trains to delete'}, 200
 
-@api.route('/<string:train_number>')
+        for favourite in favourite_trains:
+            db.session.delete(favourite)
+        
+        db.session.commit()
+
+        return {'message': 'All favourite trains deleted successfully'}, 200
+
+@api.route('/<int:train_number>')
 @api.param('train_number', 'The train number')
 class FavouriteTrainResource(Resource):
     # @api.doc(security='BearerAuth')  # Commented out for testing
