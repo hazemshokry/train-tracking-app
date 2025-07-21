@@ -30,7 +30,7 @@ station_model = api.model('Station', {
 
 # Train model definition
 train_model = api.model('Train', {
-    'train_number': fields.Integer,
+    'train_number': fields.String,
     'train_type': fields.String,
     'departure_station': fields.Nested(station_model),
     'arrival_station': fields.Nested(station_model),
@@ -54,7 +54,7 @@ train_model = api.model('Train', {
 })
 
 train_summary_model = api.model('TrainSummary', {
-    'train_number': fields.Integer,
+    'train_number': fields.String,
     'train_type'  : fields.String,
     'departure_station': fields.Nested(station_model),
     'arrival_station'  : fields.Nested(station_model),
