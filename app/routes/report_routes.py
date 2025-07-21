@@ -72,7 +72,7 @@ class ReportList(Resource):
         """
         data = api.payload
         # user = request.current_user # Use this in production
-        user = User.query.get(1) # For testing
+        user = User.query.get("a4e8e122-0b29-4b8c-8a1a-7b7e1c1e8e8e") # For testing
         
         if not user:
             api.abort(401, 'User not found or not authenticated.')
@@ -119,7 +119,7 @@ class ReportList(Resource):
         if new_report.is_valid:
             points = round(confidence_score * 10)
             if points > 0:
-                reward = Reward(user_id=user.id, points=points, description=f"Report ({points} pts) for train {data['train_number']}")
+                reward = Reward(user_id=user.id, points=points, description=f"تقرير ({points} نقطة) للقطار {data['train_number']}")
                 db.session.add(reward)
 
         db.session.commit()

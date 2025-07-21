@@ -31,7 +31,7 @@ class RewardList(Resource):
     @api.marshal_list_with(reward_model)
     def get(self):
         """List all rewards for the current user"""
-        user_id = 1  # Assume user ID 1 for testing
+        user_id = "a4e8e122-0b29-4b8c-8a1a-7b7e1c1e8e8e"  # Assume user ID 1 for testing
         rewards = Reward.query.filter_by(user_id=user_id).all()
         return rewards
 
