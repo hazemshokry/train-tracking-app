@@ -287,7 +287,7 @@ def serialize_train(train,favourite_train_numbers,*,include_stations: bool = Tru
 @api.route('/')
 class TrainList(Resource):
     @api.expect(train_list_parser)
-    @api.marshal_with(paginated_response_model) # Use the new paginated response model
+    @api.marshal_with(paginated_response_model)
     def get(self):
         """
         List all trains with optional filters and pagination.
@@ -310,7 +310,8 @@ class TrainList(Resource):
         include_stations     = args.get('include_stations', False)
 
         # ── build the base query ───────────────────────────────────────────────
-        query = db.session.query(Train).distinct()
+        # CORRECTED: Removed .distinct() to resolve the SQL error.
+        query = db.session.query(Train)
 
         if departure_station_id and arrival_station_id:
             dep_sq = db.session.query(Route.train_number, Route.sequence_number).filter(Route.station_id == departure_station_id).subquery()
@@ -328,8 +329,26 @@ class TrainList(Resource):
             train_nums = db.session.query(Route.train_number).filter(Route.station_id == arrival_station_id).subquery().select()
             query = query.filter(Train.train_number.in_(train_nums))
 
+        # --- Order trains by scheduled departure time ---
+        # To get the departure time, we join with the Route table to find the
+        # record for the first station in the sequence (sequence_number=1).
+        
+        # Create an alias for the Route table to ensure our join is unambiguous.
+        departure_route = db.aliased(Route)
+        
+        # Join the query with the aliased Route table on the train number.
+        query = query.join(
+            departure_route,
+            Train.train_number == departure_route.train_number
+        )
+        
+        # Filter the joined records to only consider the first station of each route.
+        query = query.filter(departure_route.sequence_number == 1)
+        
+        # Order the results by the scheduled departure time of the first station.
+        query = query.order_by(departure_route.scheduled_departure_time)
+
         # --- Pagination (Adjusted) ---
-        # Use Flask-SQLAlchemy's paginate for easier pagination handling
         paginated_trains = query.paginate(page=page, per_page=per_page, error_out=False)
         trains = paginated_trains.items
 
@@ -340,7 +359,6 @@ class TrainList(Resource):
         ]
 
         # ── serialise ──────────────────────────────────────────────────────────
-        # Note: The raw Python dictionaries are created here
         train_list = [
             serialize_train(
                 train,
@@ -351,21 +369,18 @@ class TrainList(Resource):
         ]
 
         # --- Choose the right schema for marshalling the inner list ---
-        # This step is now handled by the @api.marshal_with decorator for documentation,
-        # but we need to pass the correct raw data for it to work.
-        # The `paginated_response_model` uses `train_summary_model` for documentation purposes.
-        # The actual output will have full details if `include_stations=True`.
         schema = train_model if include_stations else train_summary_model
         
         # --- Construct final response object ---
         return {
-            'trains': api.marshal(train_list, schema), # Manually marshal the list with the correct schema
+            'trains': api.marshal(train_list, schema),
             'current_page': paginated_trains.page,
             'total_pages': paginated_trains.pages,
             'per_page': paginated_trains.per_page,
             'has_next': paginated_trains.has_next,
             'total_items': paginated_trains.total
         }
+
 
 @api.route('/<string:train_number>')
 @api.param('train_number', 'The train number')

@@ -32,7 +32,7 @@ api = Namespace(
 # Secret key for JWT
 SECRET_KEY = os.environ.get('SECRET_KEY', 'your-secret-key')
 
-# Serializer models (add refresh token model)
+# Serializer models
 user_model = api.model('User', {
     'id': fields.Integer(readOnly=True, description='Unique identifier of the user'),
     'username': fields.String(description='Username'),
@@ -53,6 +53,13 @@ temp_token_model = api.model('TempToken', {
     'temp_token': fields.String(description='Temporary token for registration'),
 })
 
+# New response model for registration to include tokens and user data
+registration_response_model = api.model('RegistrationResponse', {
+    'access_token': fields.String(description='Access token for the new user'),
+    'refresh_token': fields.String(description='Refresh token for the new user'),
+    'user': fields.Nested(user_model)
+})
+
 
 # Authentication routes
 @api.route('/login/send_otp')
@@ -62,11 +69,6 @@ class LoginSendOTP(Resource):
         """Send OTP to the provided phone number regardless of registration status."""
         data = api.payload
         phone_number = data.get('phone_number')
-
-        # Remove the user existence check
-        # user = User.query.filter_by(phone_number=phone_number).first()
-        # if not user:
-        #     return {'message': 'Phone number not registered'}, 400
 
         # Generate OTP
         totp_secret = generate_totp_secret(phone_number)
@@ -96,7 +98,7 @@ class LoginValidateOTP(Resource):
         totp_secret = generate_totp_secret(phone_number)
         totp = pyotp.TOTP(totp_secret)
         
-        # otp_code = "000000"
+        # Uncomment the following lines for production to enforce OTP validation
         # if not totp.verify(otp_code, valid_window=1):
         #     return {'message': 'Invalid or expired OTP code'}, 400
 
@@ -192,9 +194,9 @@ class CompleteRegistration(Resource):
         'email': fields.String(required=True, description='Email address'),
     }))
     @api.doc(security='BearerAuth')
-    @api.marshal_with(user_model, code=201)
+    @api.marshal_with(registration_response_model, code=201)
     def post(self):
-        """Complete registration after OTP validation."""
+        """Complete registration and return user object with tokens."""
         # Get temp_token from headers
         auth_header = request.headers.get('Authorization')
         print(f"Authorization Header: {auth_header}")
@@ -205,10 +207,8 @@ class CompleteRegistration(Resource):
         parts = auth_header.strip().split()
 
         if len(parts) == 1:
-            # Token without 'Bearer' prefix
             temp_token = parts[0]
         elif len(parts) == 2 and parts[0].lower() == 'bearer':
-            # Token with 'Bearer' prefix
             temp_token = parts[1]
         else:
             return {'message': 'Invalid Authorization header format'}, 401
@@ -225,12 +225,6 @@ class CompleteRegistration(Resource):
         username = data.get('username')
         email = data.get('email')
 
-        # Ensure username and email are unique
-        # if User.query.filter_by(username=username).first():
-        #     return {'message': 'Username already exists'}, 400
-        # if User.query.filter_by(email=email).first():
-        #     return {'message': 'Email already exists'}, 400
-
         # Create new user
         new_user = User(
             username=username,
@@ -240,6 +234,12 @@ class CompleteRegistration(Resource):
         )
         db.session.add(new_user)
         db.session.commit()
+
+        # Generate access token for the new user
+        access_token = jwt.encode({
+            'user_id': new_user.id,
+            'exp': datetime.utcnow() + timedelta(minutes=15)
+        }, SECRET_KEY, algorithm='HS256')
 
         # Generate refresh token for the user
         refresh_token_str = str(uuid.uuid4())
@@ -252,20 +252,11 @@ class CompleteRegistration(Resource):
         db.session.add(refresh_token)
         db.session.commit()
 
-        user_data = {
-            'id': new_user.id,
-            'username': new_user.username,
-            'email': new_user.email,
-            'phone_number': new_user.phone_number,
-            'is_active': new_user.is_active,
-            'date_joined': new_user.date_joined.isoformat() if new_user.date_joined else None,
-            'last_login': new_user.last_login.isoformat() if new_user.last_login else None,
-        }
-
-        # Include the refresh token in the response
+        # Return the new tokens and the user object, letting marshal_with handle formatting
         return {
-            **user_data,
-            'refresh_token': refresh_token_str
+            'access_token': access_token,
+            'refresh_token': refresh_token_str,
+            'user': new_user
         }, 201
 
 @api.route('/logout')
