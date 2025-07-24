@@ -6,6 +6,7 @@ from app.models.route import Route
 from app.models.user_favourite_trains import UserFavouriteTrain
 from app.models.user_reports import UserReport
 from app.models.operations import Operation
+from app.models.train_subscription import TrainSubscription
 from app.extensions import db
 from sqlalchemy import func, or_, and_
 import statistics
@@ -37,6 +38,7 @@ train_model = api.model('Train', {
     'list_of_stations': fields.List(fields.Nested(station_model)),
     'number_of_stations': fields.Integer,
     'is_favourite': fields.Boolean,
+    'is_subscribed': fields.Boolean, # Added is_subscribed
     'notification_enabled': fields.Boolean,
     'last_reported_station': fields.Nested(api.model('LastReportedStation', {
         'name_ar': fields.String,
@@ -60,6 +62,7 @@ train_summary_model = api.model('TrainSummary', {
     'arrival_station'  : fields.Nested(station_model),
     'number_of_stations': fields.Integer,
     'is_favourite' : fields.Boolean,
+    'is_subscribed': fields.Boolean, # Added is_subscribed
     'notification_enabled': fields.Boolean,
     'last_reported_station': fields.Nested(api.model('LastReportedStationSummary', { # Renamed to avoid conflict
         'name_ar': fields.String,
@@ -107,8 +110,7 @@ def calculate_average_time(report_times):
     else:
         return report_times[0]
 
-def serialize_train(train,favourite_train_numbers,*,include_stations: bool = True,
-):
+def serialize_train(train, favourite_train_numbers, subscribed_train_numbers, *, include_stations: bool = True):
     """
     Build a JSON-serialisable dict for a Train.
 
@@ -118,6 +120,8 @@ def serialize_train(train,favourite_train_numbers,*,include_stations: bool = Tru
         ORM object for the train.
     favourite_train_numbers : list[int]
         List of train numbers the current user has marked as favourite.
+    subscribed_train_numbers : list[int]
+        List of train numbers the current user is subscribed to.
     include_stations : bool, default=True
         If False the returned dict omits the heavyweight `list_of_stations`
         array (used by the list endpoint to keep payloads light).
@@ -161,6 +165,7 @@ def serialize_train(train,favourite_train_numbers,*,include_stations: bool = Tru
             "arrival_station": None,
             "number_of_stations": 0,
             "is_favourite": train.train_number in favourite_train_numbers,
+            "is_subscribed": train.train_number in subscribed_train_numbers,
             "notification_enabled": False,
             "last_reported_station": None,
             "previous_station": None,
@@ -273,6 +278,7 @@ def serialize_train(train,favourite_train_numbers,*,include_stations: bool = Tru
         "arrival_station": arrival_station,
         "number_of_stations": len(routes),
         "is_favourite": train.train_number in favourite_train_numbers,
+        "is_subscribed": train.train_number in subscribed_train_numbers,
         "notification_enabled": False,
         "last_reported_station": last_reported_station,
         "previous_station": prev_station,
@@ -283,7 +289,6 @@ def serialize_train(train,favourite_train_numbers,*,include_stations: bool = Tru
         train_dict["list_of_stations"] = list_of_stations
 
     return train_dict
-
 @api.route('/')
 class TrainList(Resource):
     @api.expect(train_list_parser)
@@ -301,7 +306,7 @@ class TrainList(Resource):
         include_stations     : bool  if *true* include the heavy `list_of_stations`
                                      array; otherwise return the compact summary
         """
-        user_id = 1  # ← replace with your auth logic
+        user_id = 'a4e8e122-0b29-4b8c-8a1a-7b7e1c1e8e8e'  # Hardcoded user ID for testing
         args = train_list_parser.parse_args()
         departure_station_id = args.get('departure_station_id')
         arrival_station_id   = args.get('arrival_station_id')
@@ -310,7 +315,6 @@ class TrainList(Resource):
         include_stations     = args.get('include_stations', False)
 
         # ── build the base query ───────────────────────────────────────────────
-        # CORRECTED: Removed .distinct() to resolve the SQL error.
         query = db.session.query(Train)
 
         if departure_station_id and arrival_station_id:
@@ -330,39 +334,35 @@ class TrainList(Resource):
             query = query.filter(Train.train_number.in_(train_nums))
 
         # --- Order trains by scheduled departure time ---
-        # To get the departure time, we join with the Route table to find the
-        # record for the first station in the sequence (sequence_number=1).
-        
-        # Create an alias for the Route table to ensure our join is unambiguous.
         departure_route = db.aliased(Route)
-        
-        # Join the query with the aliased Route table on the train number.
         query = query.join(
             departure_route,
             Train.train_number == departure_route.train_number
         )
-        
-        # Filter the joined records to only consider the first station of each route.
         query = query.filter(departure_route.sequence_number == 1)
-        
-        # Order the results by the scheduled departure time of the first station.
         query = query.order_by(departure_route.scheduled_departure_time)
 
         # --- Pagination (Adjusted) ---
         paginated_trains = query.paginate(page=page, per_page=per_page, error_out=False)
         trains = paginated_trains.items
 
-        # ── favourites for the current user ────────────────────────────────────
+        # ── favourites and subscriptions for the current user ────────────────────────────────────
         favourite_train_numbers = [
             fav.train_number
             for fav in UserFavouriteTrain.query.filter_by(user_id=user_id).all()
         ]
+        subscribed_train_numbers = [
+            sub.train_number
+            for sub in TrainSubscription.query.filter_by(user_id=user_id).all()
+        ]
+
 
         # ── serialise ──────────────────────────────────────────────────────────
         train_list = [
             serialize_train(
                 train,
                 favourite_train_numbers,
+                subscribed_train_numbers,
                 include_stations=include_stations,
             )
             for train in trains
@@ -388,14 +388,15 @@ class TrainResource(Resource):
     @api.marshal_with(train_model) # No change here, returns a single object
     def get(self, train_number):
         """Get a specific train by train number"""
-        user_id = 1  # For testing purposes
+        user_id = 'a4e8e122-0b29-4b8c-8a1a-7b7e1c1e8e8e' # Hardcoded user ID for testing
         train = Train.query.filter_by(train_number=train_number).first()
         if not train:
             api.abort(404, f"Train {train_number} not found")
 
         favourite_train_numbers = [fav.train_number for fav in UserFavouriteTrain.query.filter_by(user_id=user_id).all()]
+        subscribed_train_numbers = [sub.train_number for sub in TrainSubscription.query.filter_by(user_id=user_id).all()]
         
         # By default, serialize_train includes all station details, which is correct for a single resource.
-        train_data = serialize_train(train, favourite_train_numbers)
+        train_data = serialize_train(train, favourite_train_numbers, subscribed_train_numbers)
 
         return train_data
