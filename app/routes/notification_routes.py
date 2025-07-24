@@ -27,6 +27,12 @@ notification_create_model = api.model('NotificationCreate', {
     'description': fields.String(description='Description of the notification'),
 })
 
+# Model for adding a device token
+device_token_model = api.model('DeviceToken', {
+    'user_id': fields.String(required=True, description='User ID'),
+    'token': fields.String(required=True, description='Device token'),
+})
+
 @api.route('/')
 class NotificationList(Resource):
     @token_required
@@ -78,6 +84,31 @@ class NotificationList(Resource):
         db.session.commit()
         
         return {'message': f'Notifications sent to {len(subscriptions)} users'}, 201
+
+@api.route('/device-token')
+class DeviceTokenResource(Resource):
+    @api.expect(device_token_model)
+    def post(self):
+        """Add a new device token"""
+        data = api.payload
+        user_id = data['user_id']
+        token = data['token']
+
+        # Check if the user exists
+        user = User.query.get(user_id)
+        if not user:
+            api.abort(404, 'User not found')
+
+        # Check if the token already exists
+        existing_token = DeviceToken.query.filter_by(token=token).first()
+        if existing_token:
+            return {'message': 'Device token already exists'}, 200
+
+        new_device_token = DeviceToken(user_id=user_id, token=token)
+        db.session.add(new_device_token)
+        db.session.commit()
+        
+        return {'message': 'Device token added successfully'}, 201
 
 @api.route('/read-all')
 class NotificationReadAll(Resource):

@@ -12,7 +12,8 @@ api = Namespace('rewards', description='Reward related operations')
 # Serializer models
 reward_model = api.model('Reward', {
     'id': fields.Integer(readOnly=True, description='Unique identifier of the reward'),
-    'user_id': fields.Integer(description='ID of the user'),
+    # --- FIX: Changed user_id to String to match the model ---
+    'user_id': fields.String(description='ID of the user'),
     'points': fields.Integer(description='Number of reward points'),
     'date_awarded': fields.DateTime(description='Date the reward was awarded'),
     'description': fields.String(description='Description of the reward'),
@@ -77,7 +78,7 @@ class RewardResource(Resource):
         """Delete a reward by ID"""
         reward = Reward.query.get_or_404(id)
         # Ensure the user is deleting their own reward
-        if reward.user_id != 1:  # Replace with `request.current_user.id` in production
+        if reward.user_id != "a4e8e122-0b29-4b8c-8a1a-7b7e1c1e8e8e":  # Replace with `request.current_user.id` in production
             api.abort(403, 'Access forbidden')
 
         db.session.delete(reward)
@@ -90,7 +91,7 @@ class TotalRewards(Resource):
     # @token_required
     def get(self):
         """Get total reward points for the current user"""
-        user_id = 1  # Assume user ID 1 for testing
+        user_id = "a4e8e122-0b29-4b8c-8a1a-7b7e1c1e8e8e"  # Assume user ID 1 for testing
         total_points = db.session.query(db.func.sum(Reward.points)).filter_by(user_id=user_id).scalar() or 0
         
         # Convert the Decimal result to an integer before returning

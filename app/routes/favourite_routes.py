@@ -4,6 +4,7 @@ from flask import request
 from flask_restx import Namespace, Resource, fields
 from app.models.user_favourite_trains import UserFavouriteTrain
 from app.models.train import Train
+from app.models.train_subscription import TrainSubscription
 from app.extensions import db
 # from app.utils.auth_util import token_required  # Keep this import commented out for testing
 from app.routes.train_routes import serialize_train, train_summary_model # Import serialize_train and train_summary_model
@@ -31,12 +32,15 @@ class FavouriteTrainList(Resource):
         user_id = 'a4e8e122-0b29-4b8c-8a1a-7b7e1c1e8e8e'  # Hardcoded user ID for testing
         favourite_trains = UserFavouriteTrain.query.filter_by(user_id=user_id).all()
         favourite_train_numbers = [fav.train_number for fav in favourite_trains]
+        
+        # --- FIX: Fetch subscribed train numbers ---
+        subscribed_train_numbers = [sub.train_number for sub in TrainSubscription.query.filter_by(user_id=user_id).all()]
 
         train_list = []
         for fav in favourite_trains:
             train = fav.train
-            # Serialize the train data to get the summary details
-            train_details = serialize_train(train, favourite_train_numbers, include_stations=False)
+            # --- FIX: Pass subscribed_train_numbers to serialize_train ---
+            train_details = serialize_train(train, favourite_train_numbers, subscribed_train_numbers, include_stations=False)
             train_details['added_at'] = fav.added_at # Add the added_at field
             train_list.append(train_details)
 
@@ -72,9 +76,12 @@ class FavouriteTrainList(Resource):
         db.session.add(new_favourite)
         db.session.commit()
         
-        # Serialize the response to include all the details
+        # --- FIX: Fetch subscribed train numbers for the response ---
         favourite_train_numbers = [fav.train_number for fav in UserFavouriteTrain.query.filter_by(user_id=user_id).all()]
-        train_details = serialize_train(new_favourite.train, favourite_train_numbers, include_stations=False)
+        subscribed_train_numbers = [sub.train_number for sub in TrainSubscription.query.filter_by(user_id=user_id).all()]
+        
+        # --- FIX: Pass subscribed_train_numbers to serialize_train ---
+        train_details = serialize_train(new_favourite.train, favourite_train_numbers, subscribed_train_numbers, include_stations=False)
         train_details['added_at'] = new_favourite.added_at
         
         return train_details, 201
