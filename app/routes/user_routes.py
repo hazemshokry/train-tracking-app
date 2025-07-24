@@ -42,6 +42,7 @@ user_model = api.model('User', {
     'date_joined': fields.DateTime(description='Date joined'),
     'last_login': fields.DateTime(description='Last login time'),
     'reliability_score': fields.Float(description='User reliability score'),
+    'device_token': fields.String(description='Firebase device token'),
 })
 
 token_model = api.model('Tokens', {
@@ -84,7 +85,8 @@ class LoginSendOTP(Resource):
 class LoginValidateOTP(Resource):
     @api.expect(api.model('OTPValidation', {
         'phone_number': fields.String(required=True),
-        'otp_code': fields.String(required=True)
+        'otp_code': fields.String(required=True),
+        'device_token': fields.String(description='Firebase device token')
     }))
     @api.response(200, 'Login successful', model=token_model)
     @api.response(201, 'Proceed to registration', model=temp_token_model)
@@ -93,6 +95,8 @@ class LoginValidateOTP(Resource):
         data = api.payload
         phone_number = data.get('phone_number').strip()
         otp_code = data.get('otp_code').strip()
+        device_token = data.get('device_token')
+
 
         # Validate OTP
         totp_secret = generate_totp_secret(phone_number)
@@ -132,6 +136,8 @@ class LoginValidateOTP(Resource):
                 db.session.add(refresh_token)
 
             user.last_login = datetime.utcnow()
+            if device_token:
+                user.device_token = device_token
             db.session.commit()
 
             return {
@@ -192,6 +198,7 @@ class CompleteRegistration(Resource):
     @api.expect(api.model('UserRegistration', {
         'username': fields.String(required=True, description='Username'),
         'email': fields.String(required=True, description='Email address'),
+        'device_token': fields.String(description='Firebase device token')
     }))
     @api.doc(security='BearerAuth')
     @api.marshal_with(registration_response_model, code=201)
@@ -224,6 +231,7 @@ class CompleteRegistration(Resource):
         data = api.payload
         username = data.get('username')
         email = data.get('email')
+        device_token = data.get('device_token')
 
         # Create new user
         new_user = User(
@@ -231,6 +239,7 @@ class CompleteRegistration(Resource):
             email=email,
             phone_number=phone_number,
             date_joined=datetime.utcnow(),
+            device_token=device_token,
         )
         db.session.add(new_user)
         db.session.commit()
