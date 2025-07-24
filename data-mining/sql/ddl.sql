@@ -10,7 +10,6 @@ CREATE TABLE IF NOT EXISTS users (
     is_active BOOLEAN DEFAULT TRUE,
     date_joined DATETIME DEFAULT CURRENT_TIMESTAMP,
     last_login DATETIME,
-    device_token VARCHAR(255) NULL,
     user_type ENUM('admin', 'verified', 'regular', 'new', 'flagged') DEFAULT 'new' NOT NULL,
     reliability_score FLOAT DEFAULT 0.5 NOT NULL,
     INDEX (username),
@@ -161,3 +160,21 @@ CREATE TABLE refresh_tokens (
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (user_id) REFERENCES users(id)
 );
+
+-- Step 1: Create the new device_tokens table
+CREATE TABLE device_tokens (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id CHAR(36) NOT NULL,
+    token VARCHAR(255) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    UNIQUE KEY unique_token (token),
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+);
+
+-- Step 2: Migrate existing device tokens from the users table
+-- This command moves any existing tokens to the new table.
+INSERT INTO device_tokens (user_id, token)
+SELECT id, device_token FROM users WHERE device_token IS NOT NULL AND device_token != '';
+
+-- Step 3: Drop the old device_token column from the users table
+ALTER TABLE users DROP COLUMN device_token;

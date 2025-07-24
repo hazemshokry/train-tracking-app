@@ -4,6 +4,7 @@ from flask import request, jsonify
 from flask_restx import Namespace, Resource, fields
 from app.models.user import User
 from app.models.refresh_token import RefreshToken
+from app.models.device_token import DeviceToken # Import the new model
 from app.extensions import db
 from datetime import datetime, timedelta
 import jwt
@@ -42,7 +43,6 @@ user_model = api.model('User', {
     'date_joined': fields.DateTime(description='Date joined'),
     'last_login': fields.DateTime(description='Last login time'),
     'reliability_score': fields.Float(description='User reliability score'),
-    'device_token': fields.String(description='Firebase device token'),
 })
 
 token_model = api.model('Tokens', {
@@ -136,8 +136,14 @@ class LoginValidateOTP(Resource):
                 db.session.add(refresh_token)
 
             user.last_login = datetime.utcnow()
+            
+            # Save the device token to the new table
             if device_token:
-                user.device_token = device_token
+                existing_device_token = DeviceToken.query.filter_by(token=device_token).first()
+                if not existing_device_token:
+                    new_device_token = DeviceToken(user_id=user.id, token=device_token)
+                    db.session.add(new_device_token)
+            
             db.session.commit()
 
             return {
@@ -239,7 +245,6 @@ class CompleteRegistration(Resource):
             email=email,
             phone_number=phone_number,
             date_joined=datetime.utcnow(),
-            device_token=device_token,
         )
         db.session.add(new_user)
         db.session.commit()
@@ -259,6 +264,12 @@ class CompleteRegistration(Resource):
             expires_at=expires_at
         )
         db.session.add(refresh_token)
+        
+        # Save the device token to the new table
+        if device_token:
+            new_device_token = DeviceToken(user_id=new_user.id, token=device_token)
+            db.session.add(new_device_token)
+        
         db.session.commit()
 
         # Return the new tokens and the user object, letting marshal_with handle formatting
@@ -270,11 +281,15 @@ class CompleteRegistration(Resource):
 
 @api.route('/logout')
 class LogoutResource(Resource):
-    @api.expect(api.model('LogoutRequest', {'refresh_token': fields.String(required=True)}))
+    @api.expect(api.model('LogoutRequest', {
+        'refresh_token': fields.String(required=True),
+        'device_token': fields.String(description='The device token to de-register')
+    }))
     def post(self):
         """Logout the user by revoking their refresh token."""
         data = api.payload
         refresh_token_str = data.get('refresh_token')
+        device_token_str = data.get('device_token')
 
         # Query the database for the refresh token
         refresh_token = RefreshToken.query.filter_by(token=refresh_token_str).first()
@@ -284,6 +299,13 @@ class LogoutResource(Resource):
 
         # Revoke the token by deleting it
         db.session.delete(refresh_token)
+        
+        # If a device token was provided, delete it as well
+        if device_token_str:
+            device_token = DeviceToken.query.filter_by(token=device_token_str).first()
+            if device_token:
+                db.session.delete(device_token)
+
         db.session.commit()
 
         return {'message': 'Logged out successfully'}, 200

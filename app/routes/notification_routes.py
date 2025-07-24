@@ -2,7 +2,7 @@
 
 from flask import request
 from flask_restx import Namespace, Resource, fields
-from app.models import Notification, User, Train
+from app.models import Notification, User, Train, DeviceToken # Import DeviceToken
 from app.extensions import db
 from datetime import datetime
 from app.utils.auth_utils import token_required
@@ -63,12 +63,14 @@ class NotificationList(Resource):
         db.session.add(new_notification)
         db.session.commit()
         
-        # --- Placeholder for Firebase Logic ---
-        # user = User.query.get(user_id)
-        # if user and user.device_token:
-        #     # Add your Firebase notification sending logic here
-        #     # e.g., send_firebase_notification(user.device_token, title, description)
-        #     print(f"Would send Firebase notification to token: {user.device_token}")
+        # --- Updated Firebase Logic ---
+        # Fetch all device tokens for the user
+        device_tokens = DeviceToken.query.filter_by(user_id=user_id).all()
+        if device_tokens:
+            # Loop through each token and send a notification
+            for dt in device_tokens:
+                # e.g., send_firebase_notification(dt.token, title, description)
+                print(f"Would send Firebase notification to token: {dt.token}")
         
         return new_notification, 201
 

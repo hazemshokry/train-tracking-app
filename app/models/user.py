@@ -23,9 +23,6 @@ class User(db.Model):
     date_joined = db.Column(db.DateTime, default=db.func.current_timestamp())
     last_login = db.Column(db.DateTime)
     
-    # --- ADDED FOR FIREBASE ---
-    device_token = db.Column(db.String(255), nullable=True) # To store Firebase device token
-    
     # --- THE FINAL FIX IS HERE ---
     # This tells SQLAlchemy to use VARCHAR instead of a native ENUM,
     # which resolves the case-sensitivity and mapping issue.
