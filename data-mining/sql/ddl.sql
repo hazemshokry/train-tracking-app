@@ -171,10 +171,14 @@ CREATE TABLE device_tokens (
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
 
--- Step 2: Migrate existing device tokens from the users table
--- This command moves any existing tokens to the new table.
-INSERT INTO device_tokens (user_id, token)
-SELECT id, device_token FROM users WHERE device_token IS NOT NULL AND device_token != '';
-
--- Step 3: Drop the old device_token column from the users table
-ALTER TABLE users DROP COLUMN device_token;
+-- Table: train_subscriptions
+DROP TABLE IF EXISTS train_subscriptions;
+CREATE TABLE train_subscriptions (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id CHAR(36) NOT NULL,
+    train_number VARCHAR(255) NOT NULL,
+    subscribed_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(id),
+    FOREIGN KEY (train_number) REFERENCES trains(train_number),
+    UNIQUE KEY (user_id, train_number)
+);

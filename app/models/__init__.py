@@ -11,7 +11,8 @@ from .notifications import Notification
 from .rewards import Reward
 from .operations import Operation
 from .user_notification_settings import UserNotificationSetting
-from .device_token import DeviceToken # Import the new model
+from .device_token import DeviceToken 
+from .train_subscription import TrainSubscription # Import the new model
 
 # Optionally, define __all__ to specify what is exported when 'from app.models import *' is used
 __all__ = [
@@ -26,5 +27,6 @@ __all__ = [
     'Reward',
     'UserNotificationSetting',
     'Operation',
-    'DeviceToken', # Add the new model to __all__
+    'DeviceToken', 
+    'TrainSubscription', # Add the new model to __all__
 ]
