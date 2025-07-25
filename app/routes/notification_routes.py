@@ -47,7 +47,9 @@ class NotificationList(Resource):
     @token_required
     @api.doc(security='BearerAuth')
     @api.expect(notification_create_model)
-    @api.marshal_with(notification_model, code=201)
+    # @api.marshal_with(notification_model, code=201)
+    @api.response(201, 'Notifications sent successfully') # Optional: for better Swagger docs
+
     def post(self):
         """Create a new notification for all users subscribed to a train"""
         data = api.payload
