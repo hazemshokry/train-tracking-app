@@ -285,6 +285,8 @@ class LogoutResource(Resource):
         'refresh_token': fields.String(required=True),
         'device_token': fields.String(description='The device token to de-register')
     }))
+    @token_required
+    @api.doc(security='BearerAuth')
     def post(self):
         """Logout the user by revoking their refresh token."""
         data = api.payload

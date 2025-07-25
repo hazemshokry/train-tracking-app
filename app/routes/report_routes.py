@@ -11,7 +11,7 @@ from app.services.validation_service import ValidationService
 from app.services.scoring_service import ScoringService
 
 # Assuming token_required is properly set up for authentication
-# from app.utils.auth_utils import token_required
+from app.utils.auth_utils import token_required
 
 api = Namespace('reports', description='User report related operations')
 
@@ -51,18 +51,19 @@ report_response_model = api.model('UserReportResponse', {
 
 @api.route('/me')
 class UserReportList(Resource):
-    # @token_required # Uncomment when auth is ready
+    @token_required
+    @api.doc(security='BearerAuth')
     @api.marshal_list_with(report_model)
     def get(self):
         """List all reports for the current user"""
-        # user_id = request.current_user.id # Use this in production
-        user_id = 1  # Assume user ID 1 for testing
+        user_id = request.current_user.id
         reports = UserReport.query.filter_by(user_id=user_id).order_by(UserReport.created_at.desc()).all()
         return reports
 
 @api.route('/')
 class ReportList(Resource):
-    # @token_required # Uncomment when auth is ready
+    @token_required
+    @api.doc(security='BearerAuth')
     @api.expect(report_create_model)
     @api.marshal_with(report_response_model, code=201)
     def post(self):
@@ -71,8 +72,7 @@ class ReportList(Resource):
         It assesses the report's quality and rewards the user accordingly.
         """
         data = api.payload
-        # user = request.current_user # Use this in production
-        user = User.query.get("a4e8e122-0b29-4b8c-8a1a-7b7e1c1e8e8e") # For testing
+        user = request.current_user
         
         if not user:
             api.abort(401, 'User not found or not authenticated.')
@@ -133,7 +133,8 @@ class ReportList(Resource):
 @api.route('/<int:id>')
 @api.param('id', 'The report identifier')
 class ReportResource(Resource):
-    # @token_required # Uncomment when auth is ready
+    @token_required
+    @api.doc(security='BearerAuth')
     @api.marshal_with(report_model)
     def get(self, id):
         """Get a specific report by its ID"""
@@ -141,14 +142,14 @@ class ReportResource(Resource):
         # Add logic here to ensure user can only access their own reports if needed
         return report
 
-    # @token_required # Uncomment when auth is ready
+    @token_required
+    @api.doc(security='BearerAuth')
     @api.response(204, 'Report deleted successfully')
     def delete(self, id):
         """Delete a report by its ID"""
         report = UserReport.query.get_or_404(id)
         # Add logic here to ensure user can only delete their own reports
-        # current_user_id = request.current_user.id
-        current_user_id = 1 # for testing
+        current_user_id = request.current_user.id
         if report.user_id != current_user_id:
             api.abort(403, "You are not authorized to delete this report.")
             

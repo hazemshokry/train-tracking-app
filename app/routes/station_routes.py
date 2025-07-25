@@ -5,11 +5,20 @@ from flask_restx import Namespace, Resource, fields
 from app.models.station import Station
 from app.extensions import db
 from math import radians, sin, cos, sqrt, atan2
+from app.utils.auth_utils import token_required
 
 
 api = Namespace('stations', description='Station related operations')
 
-# Serializer models
+# --- Updated: A more concise model for the station list endpoint ---
+station_list_model = api.model('StationList', {
+    'id': fields.Integer(readOnly=True, description='Unique identifier of the station'),
+    'name_en': fields.String(required=True, description='Station name in English'),
+    'name_ar': fields.String(required=True, description='Station name in Arabic'),
+})
+
+
+# Serializer model for single station details (create, get by ID, update)
 station_model = api.model('Station', {
     'id': fields.Integer(readOnly=True, description='Unique identifier of the station'),
     'name_en': fields.String(required=True, description='Station name in English'),
@@ -21,34 +30,20 @@ station_model = api.model('Station', {
 
 @api.route('/')
 class StationList(Resource):
-    @api.doc(security='apikey')
-    @api.marshal_list_with(station_model)
+    # @api.doc(security='BearerAuth')
+    # @token_required
+    @api.marshal_list_with(station_list_model) # --- FIX: Use the new, limited model ---
     def get(self):
         """List all stations"""
-        # Check for token in the header
-        # token = request.headers.get('Authorization')
-        # if not token:
-        #     api.abort(401, 'Token missing')
-
-        # For testing purposes, we accept any token
-        # In a real application, you'd validate the token here
-
         stations = Station.query.all()
         return stations
 
-    # @api.doc(security='apikey')
+    @api.doc(security='BearerAuth')
+    @token_required
     @api.expect(station_model)
     @api.marshal_with(station_model, code=201)
     def post(self):
         """Create a new station"""
-        # Check for token in the header
-        # token = request.headers.get('Authorization')
-        # if not token:
-        #     api.abort(401, 'Token missing')
-
-        # For testing purposes, we accept any token
-        # In a real application, you'd validate the token and check permissions
-
         data = api.payload
         new_station = Station(
             name_en=data['name_en'],
@@ -64,28 +59,20 @@ class StationList(Resource):
 @api.route('/<int:id>')
 @api.param('id', 'The station identifier')
 class StationResource(Resource):
-    # @api.doc(security='apikey')
+    @api.doc(security='BearerAuth')
+    @token_required
     @api.marshal_with(station_model)
     def get(self, id):
         """Get a station by ID"""
-        # Check for token in the header
-        # token = request.headers.get('Authorization')
-        # if not token:
-        #     api.abort(401, 'Token missing')
-
         station = Station.query.get_or_404(id)
         return station
 
-    # @api.doc(security='apikey')
+    @api.doc(security='BearerAuth')
+    @token_required
     @api.expect(station_model)
     @api.marshal_with(station_model)
     def put(self, id):
         """Update a station by ID"""
-        # Check for token in the header
-        # token = request.headers.get('Authorization')
-        # if not token:
-        #     api.abort(401, 'Token missing')
-
         station = Station.query.get_or_404(id)
         data = api.payload
 
@@ -98,15 +85,11 @@ class StationResource(Resource):
         db.session.commit()
         return station
 
-    # @api.doc(security='apikey')
+    @api.doc(security='BearerAuth')
+    @token_required
     @api.response(204, 'Station deleted')
     def delete(self, id):
         """Delete a station by ID"""
-        # Check for token in the header
-        # token = request.headers.get('Authorization')
-        # if not token:
-        #     api.abort(401, 'Token missing')
-
         station = Station.query.get_or_404(id)
         db.session.delete(station)
         db.session.commit()

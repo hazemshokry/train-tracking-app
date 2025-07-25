@@ -11,11 +11,11 @@ api = Namespace('subscriptions', description='Train subscription operations')
 @api.route('/<string:train_number>')
 @api.param('train_number', 'The train number to subscribe/unsubscribe from')
 class SubscriptionResource(Resource):
-    # @token_required
+    @token_required
+    @api.doc(security='BearerAuth')
     def post(self, train_number):
         """Subscribe to a train for notifications"""
-        # user_id = request.current_user.id
-        user_id = 'a4e8e122-0b29-4b8c-8a1a-7b7e1c1e8e8e'  # Hardcoded user ID for testing
+        user_id = request.current_user.id
         
         train = Train.query.get(train_number)
         if not train:
@@ -31,11 +31,11 @@ class SubscriptionResource(Resource):
         
         return {'message': f'Successfully subscribed to train {train_number}'}, 201
 
-    # @token_required
+    @token_required
+    @api.doc(security='BearerAuth')
     def delete(self, train_number):
         """Unsubscribe from a train"""
-        # user_id = request.current_user.id
-        user_id = 'a4e8e122-0b29-4b8c-8a1a-7b7e1c1e8e8e'  # Hardcoded user ID for testing
+        user_id = request.current_user.id
         
         subscription = TrainSubscription.query.filter_by(user_id=user_id, train_number=train_number).first()
         if not subscription:

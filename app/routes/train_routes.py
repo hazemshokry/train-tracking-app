@@ -12,6 +12,7 @@ from sqlalchemy import func, or_, and_
 import statistics
 from datetime import datetime, timedelta, timezone
 from flask_restx import inputs
+from app.utils.auth_utils import token_required
 
 api = Namespace('trains', description='Train related operations')
 
@@ -291,6 +292,8 @@ def serialize_train(train, favourite_train_numbers, subscribed_train_numbers, *,
     return train_dict
 @api.route('/')
 class TrainList(Resource):
+    @token_required
+    @api.doc(security='BearerAuth')
     @api.expect(train_list_parser)
     @api.marshal_with(paginated_response_model)
     def get(self):
@@ -306,7 +309,7 @@ class TrainList(Resource):
         include_stations     : bool  if *true* include the heavy `list_of_stations`
                                      array; otherwise return the compact summary
         """
-        user_id = 'a4e8e122-0b29-4b8c-8a1a-7b7e1c1e8e8e'  # Hardcoded user ID for testing
+        user_id = request.current_user.id
         args = train_list_parser.parse_args()
         departure_station_id = args.get('departure_station_id')
         arrival_station_id   = args.get('arrival_station_id')
@@ -385,10 +388,12 @@ class TrainList(Resource):
 @api.route('/<string:train_number>')
 @api.param('train_number', 'The train number')
 class TrainResource(Resource):
+    @token_required
+    @api.doc(security='BearerAuth')
     @api.marshal_with(train_model) # No change here, returns a single object
     def get(self, train_number):
         """Get a specific train by train number"""
-        user_id = 'a4e8e122-0b29-4b8c-8a1a-7b7e1c1e8e8e' # Hardcoded user ID for testing
+        user_id = request.current_user.id
         train = Train.query.filter_by(train_number=train_number).first()
         if not train:
             api.abort(404, f"Train {train_number} not found")
@@ -396,7 +401,6 @@ class TrainResource(Resource):
         favourite_train_numbers = [fav.train_number for fav in UserFavouriteTrain.query.filter_by(user_id=user_id).all()]
         subscribed_train_numbers = [sub.train_number for sub in TrainSubscription.query.filter_by(user_id=user_id).all()]
         
-        # By default, serialize_train includes all station details, which is correct for a single resource.
         train_data = serialize_train(train, favourite_train_numbers, subscribed_train_numbers)
 
         return train_data

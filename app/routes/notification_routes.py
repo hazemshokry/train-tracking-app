@@ -36,6 +36,7 @@ device_token_model = api.model('DeviceToken', {
 @api.route('/')
 class NotificationList(Resource):
     @token_required
+    @api.doc(security='BearerAuth')
     @api.marshal_list_with(notification_model)
     def get(self):
         """List all notifications for the current user"""
@@ -44,6 +45,7 @@ class NotificationList(Resource):
         return notifications
 
     @token_required
+    @api.doc(security='BearerAuth')
     @api.expect(notification_create_model)
     @api.marshal_with(notification_model, code=201)
     def post(self):
@@ -113,6 +115,7 @@ class DeviceTokenResource(Resource):
 @api.route('/read-all')
 class NotificationReadAll(Resource):
     @token_required
+    @api.doc(security='BearerAuth')
     @api.response(200, 'All notifications marked as read')
     def put(self):
         """Mark all notifications as read for the current user"""
@@ -134,6 +137,7 @@ class NotificationReadAll(Resource):
 @api.param('id', 'The notification identifier')
 class NotificationResource(Resource):
     @token_required
+    @api.doc(security='BearerAuth')
     @api.marshal_with(notification_model)
     def get(self, id):
         """Get a notification by ID"""
@@ -143,6 +147,7 @@ class NotificationResource(Resource):
         return notification
 
     @token_required
+    @api.doc(security='BearerAuth')
     @api.response(204, 'Notification marked as read')
     def put(self, id):
         """Mark a notification as read"""
@@ -155,6 +160,7 @@ class NotificationResource(Resource):
         return '', 204
 
     @token_required
+    @api.doc(security='BearerAuth')
     @api.response(204, 'Notification deleted')
     def delete(self, id):
         """Delete a notification by ID"""

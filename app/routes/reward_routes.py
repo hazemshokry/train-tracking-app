@@ -5,80 +5,50 @@ from flask_restx import Namespace, Resource, fields
 from app.models import Reward
 from app.extensions import db
 from datetime import datetime
-# from app.routes.user_routes import token_required  # Commented out for testing
+from app.utils.auth_utils import token_required
 
 api = Namespace('rewards', description='Reward related operations')
 
 # Serializer models
 reward_model = api.model('Reward', {
     'id': fields.Integer(readOnly=True, description='Unique identifier of the reward'),
-    # --- FIX: Changed user_id to String to match the model ---
     'user_id': fields.String(description='ID of the user'),
     'points': fields.Integer(description='Number of reward points'),
     'date_awarded': fields.DateTime(description='Date the reward was awarded'),
     'description': fields.String(description='Description of the reward'),
 })
 
-# Remove or restrict the create model if rewards are auto-generated
-# reward_create_model = api.model('RewardCreate', {
-#     'points': fields.Integer(required=True, description='Number of reward points'),
-#     'description': fields.String(description='Description of the reward'),
-# })
-
 @api.route('/')
 class RewardList(Resource):
-    # @api.doc(security='BearerAuth')  # Commented out for testing
-    # @token_required  # Commented out for testing
+    @token_required
+    @api.doc(security='BearerAuth')
     @api.marshal_list_with(reward_model)
     def get(self):
         """List all rewards for the current user"""
-        user_id = "a4e8e122-0b29-4b8c-8a1a-7b7e1c1e8e8e"  # Assume user ID 1 for testing
+        user_id = request.current_user.id
         rewards = Reward.query.filter_by(user_id=user_id).all()
         return rewards
-
-# Optionally, remove the POST endpoint for regular users
-# If you decide to keep it for admin purposes, ensure proper authentication and authorization
-# @api.route('/')
-# class RewardList(Resource):
-#     @api.expect(reward_create_model)
-#     @api.marshal_with(reward_model, code=201)
-#     def post(self):
-#         """Create a new reward"""
-#         data = api.payload
-#         user_id = request.current_user.id
-#         points = data['points']
-#         description = data.get('description')
-
-#         new_reward = Reward(
-#             user_id=user_id,
-#             points=points,
-#             description=description,
-#             date_awarded=datetime.utcnow()
-#         )
-#         db.session.add(new_reward)
-#         db.session.commit()
-#         return new_reward, 201
 
 @api.route('/<int:id>')
 @api.param('id', 'The reward identifier')
 class RewardResource(Resource):
-    # @api.doc(security='BearerAuth')  # Commented out for testing
-    # @token_required  # Commented out for testing
+    @token_required
+    @api.doc(security='BearerAuth')
     @api.marshal_with(reward_model)
     def get(self, id):
         """Get a reward by ID"""
         reward = Reward.query.get_or_404(id)
-        # Ensure the user is accessing their own reward
-        if reward.user_id != 1:  # Replace with `request.current_user.id` in production
+        if reward.user_id != request.current_user.id:
             api.abort(403, 'Access forbidden')
         return reward, 200
 
+    @token_required
+    @api.doc(security='BearerAuth')
     @api.response(204, 'Reward deleted')
     def delete(self, id):
         """Delete a reward by ID"""
         reward = Reward.query.get_or_404(id)
-        # Ensure the user is deleting their own reward
-        if reward.user_id != "a4e8e122-0b29-4b8c-8a1a-7b7e1c1e8e8e":  # Replace with `request.current_user.id` in production
+        if reward.user_id != request.current_user.id:
             api.abort(403, 'Access forbidden')
 
         db.session.delete(reward)
@@ -87,12 +57,11 @@ class RewardResource(Resource):
 
 @api.route('/total')
 class TotalRewards(Resource):
-    # @api.doc(security='BearerAuth')
-    # @token_required
+    @token_required
+    @api.doc(security='BearerAuth')
     def get(self):
         """Get total reward points for the current user"""
-        user_id = "a4e8e122-0b29-4b8c-8a1a-7b7e1c1e8e8e"  # Assume user ID 1 for testing
+        user_id = request.current_user.id
         total_points = db.session.query(db.func.sum(Reward.points)).filter_by(user_id=user_id).scalar() or 0
         
-        # Convert the Decimal result to an integer before returning
         return {'user_id': user_id, 'total_points': int(total_points)}, 200
